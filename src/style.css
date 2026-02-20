@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --color-penn-blue: #00043d;
+  --color-grape: #62109f;
+  --color-pacific-cyan: #00a7c3;
+  --color-eerie-black: #1a1a1a;
+  --color-white: #ffffff;
+}
+
 /* Playfair Display */
 
 @font-face {
