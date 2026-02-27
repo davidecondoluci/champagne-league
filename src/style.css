@@ -1,11 +1,51 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-weight: 300;
+}
+
 @theme {
   --color-penn-blue: #00043d;
   --color-grape: #62109f;
   --color-pacific-cyan: #00a7c3;
   --color-eerie-black: #1a1a1a;
   --color-white: #ffffff;
+
+  --font-playfair: "Playfair Display", serif;
+  --font-be-vietnam: "Be Vietnam Pro", sans-serif;
+}
+
+@layer base {
+  .material-symbols-outlined {
+    font-variation-settings:
+      "FILL" 1,
+      "wght" 200,
+      "GRAD" 0,
+      "opsz" 24;
+  }
+
+  h1 {
+    @apply text-6xl font-semibold md:text-8xl;
+  }
+  h2 {
+    @apply text-4xl font-semibold md:text-6xl;
+  }
+  h3 {
+    @apply text-2xl font-semibold md:text-4xl;
+  }
+  p {
+    @apply text-base;
+  }
+  a {
+    @apply text-base;
+  }
+  button {
+    @apply inline-flex items-center gap-2 rounded-full px-8 py-4 text-base uppercase transition-opacity hover:opacity-80;
+  }
 }
 
 /* Playfair Display */
@@ -310,4 +350,52 @@
   font-weight: 100;
   font-style: italic;
   font-display: swap;
+}
+
+/* Navbar link hover effect */
+.nav-link {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+}
+.nav-link .nav-link-hidden {
+  pointer-events: none;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+}
+.nav-link .nav-link-visible {
+  display: block;
+}
+.nav-link.hovered span {
+  pointer-events: none;
+}
+.nav-link span span {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Hide scrollbar for horizontal carousels */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Programma word swap animation */
+.prog-word {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  margin: -0.14em 0;
+}
+.prog-word span {
+  display: block;
+  padding: 0.14em 0;
+}
+.prog-paragraph:not(:first-child) .prog-word span {
+  transform: translate(0, 100%);
 }
