@@ -1,12 +1,27 @@
 import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Dettagli from "./components/Dettagli";
+import Programma from "./components/Programma";
+import Premi from "./components/Premi";
+import Partner from "./components/Partner";
+import Gallery from "./components/Gallery";
+import Divise from "./components/Divise";
+import Iscriviti from "./components/Iscriviti";
+import Contatti from "./components/Contatti";
 
 function App() {
   return (
     <>
       <Navbar />
-      <div className="flex items-center justify-center min-h-screen text-white bg-penn-blue">
-        <h1 className="text-4xl font-bold tracking-tight">Champagne League</h1>
-      </div>
+      <Hero />
+      <Programma />
+      <Dettagli />
+      <Premi />
+      <Partner />
+      <Gallery />
+      <Divise />
+      <Iscriviti />
+      <Contatti />
     </>
   );
 }
