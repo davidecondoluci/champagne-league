@@ -144,7 +144,7 @@ function Navbar() {
   return (
     <>
       {/* Navbar bar — always on top */}
-      <nav className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between px-6 py-4 md:px-8 md:py-5">
+      <nav className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between px-6 py-4 md:absolute md:px-8 md:py-5">
         {/* Logo */}
         <a href="#">
           <img
@@ -154,29 +154,22 @@ function Navbar() {
           />
         </a>
 
-        {/* Right side: Iscriviti + Menù */}
-        <div className="flex items-center gap-6">
-          <a
-            href="#iscriviti"
-            className={`font-normal uppercase transition-opacity hover:opacity-60 ${navTextColor}`}
-            onClick={() => setOpen(false)}
-          >
-            Iscriviti
-          </a>
-          <a
-            className={`cursor-pointer font-normal uppercase transition-opacity hover:opacity-60 ${navTextColor}`}
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Chiudi menu" : "Apri menu"}
-          >
-            {open ? "Chiudi" : "Menù"}
-          </a>
-        </div>
+        {/* Right side: menu toggle icon */}
+        <a
+          className={`padding-0 cursor-pointer transition-opacity hover:opacity-60 ${navTextColor}`}
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? "close" : "menu"}
+        >
+          <span className="material-symbols-outlined text-6xl">
+            {open ? "close" : "menu"}
+          </span>
+        </a>
       </nav>
 
       {/* Full-page overlay menu */}
       <div
         ref={overlayRef}
-        className="fixed inset-0 z-40 flex flex-col items-end justify-center bg-white pr-10 md:pr-20"
+        className="fixed inset-0 z-40 flex flex-col items-end justify-center bg-white pr-4 md:pr-8"
         style={{ visibility: "hidden", opacity: 0 }}
       >
         <ul className="flex flex-col items-end gap-4 md:gap-6">
