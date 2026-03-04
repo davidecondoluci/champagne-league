@@ -117,11 +117,10 @@ function Gallery() {
     <section
       ref={sectionRef}
       id="gallery"
-      data-navbar-theme="light"
-      className="relative h-screen w-full overflow-hidden bg-white"
+      className="relative mb-16 h-screen w-full overflow-hidden md:mb-24"
     >
       {/* Background title */}
-      <h2 className="font-playfair text-penn-blue/5 pointer-events-none absolute inset-0 flex items-center justify-center text-[20vw] whitespace-nowrap italic select-none">
+      <h2 className="font-playfair pointer-events-none absolute inset-0 flex items-center justify-center text-[20vw] whitespace-nowrap text-blue-900/5 italic select-none">
         Gallery
       </h2>
 
@@ -133,12 +132,7 @@ function Gallery() {
               key={i}
               src={src}
               alt={`Foto ${i + 1}`}
-              className="gallery-media"
-              style={{
-                willChange: "transform",
-                borderRadius: "8px",
-                display: "block",
-              }}
+              className="gallery-media block rounded-2xl will-change-transform"
             />
           ))}
         </div>

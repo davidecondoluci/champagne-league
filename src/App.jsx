@@ -1,7 +1,6 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Dettagli from "./components/Dettagli";
-import Programma from "./components/Programma";
 import Premi from "./components/Premi";
 import Partner from "./components/Partner";
 import Gallery from "./components/Gallery";
@@ -14,7 +13,6 @@ function App() {
     <>
       <Navbar />
       <Hero />
-      <Programma />
       <Dettagli />
       <Premi />
       <Partner />

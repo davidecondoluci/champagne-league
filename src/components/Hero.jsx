@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 
 // Funzione per calcolare quanto manca all'evento
-const TARGET_DATE = new Date("2026-06-27T00:00:00");
+const TARGET_DATE = new Date("2026-07-04T00:00:00");
 
 function getTimeLeft() {
   const diff = TARGET_DATE - new Date();
@@ -16,11 +17,11 @@ function getTimeLeft() {
 
 function CountdownUnit({ value, label }) {
   return (
-    <div className="bg-penn-blue/5 flex flex-col items-center justify-center rounded-2xl p-4">
-      <span className="text-penn-blue text-6xl font-bold md:text-8xl">
+    <div className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-blue-900/5 p-4">
+      <span className="text-6xl font-medium text-blue-900 md:text-8xl">
         {String(value).padStart(2, "0")}
       </span>
-      <span className="text-penn-blue mt-1 text-xs font-medium md:mt-2 md:text-sm">
+      <span className="text-xs font-medium text-blue-900 md:text-sm">
         {label}
       </span>
     </div>
@@ -30,8 +31,8 @@ function CountdownUnit({ value, label }) {
 // FUNZIONE PER GENERARE E SCARICARE IL FILE .ICS
 function downloadICS() {
   // Orario evento UTC (modifica se vuoi altro orario)
-  const start = "20260627T080000Z"; // 27 giugno 2026, ore 10:00 italiane (08:00 UTC), cambia se serve!
-  const end = "20260627T200000Z"; // 27 giugno 2026, ore 22:00 italiane (20:00 UTC)
+  const start = "20260704T080000Z"; // 4 luglio 2026, ore 10:00 italiane (08:00 UTC)
+  const end = "20260704T200000Z"; // 4 luglio 2026, ore 22:00 italiane (20:00 UTC)
   const icsContent = `
 BEGIN:VCALENDAR
 VERSION:2.0
@@ -61,37 +62,70 @@ END:VCALENDAR
   }, 0);
 }
 
+function wrapLetters(text, extraClass = "") {
+  return text.split("").map((char, i) =>
+    char === " " ? (
+      <span key={i}>&nbsp;</span>
+    ) : (
+      <span
+        key={i}
+        className={`hero-letter relative inline-block ${extraClass}`}
+      >
+        <span className="inline-block">{char}</span>
+        <span className="pointer-events-none absolute bottom-full left-0 inline-block">
+          {char}
+        </span>
+      </span>
+    ),
+  );
+}
+
 function Hero() {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft());
+  const h1Ref = useRef(null);
 
   useEffect(() => {
     const timer = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const h1 = h1Ref.current;
+    if (!h1) return;
+    const letters = h1.querySelectorAll(".hero-letter span:first-child");
+    const ctx = gsap.context(() => {
+      gsap.from(letters, {
+        yPercent: 100,
+        ease: "power3.out",
+        duration: 1,
+        stagger: { each: 0.04, from: "random" },
+        delay: 0.2,
+      });
+    }, h1);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section
-      data-navbar-theme="light"
-      className="text-penn-blue relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-white px-8 text-center"
-    >
+    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 text-center text-blue-900">
       {/* Date badge → BUTTON per download ICS */}
       <button
         onClick={downloadICS}
-        className="bg-penn-blue/5 text-penn-blue mb-10 cursor-pointer"
+        className="mb-6 cursor-pointer bg-blue-900/5 text-blue-900"
       >
-        <span className="material-symbols-outlined">calendar_month</span>
-        Sabato, 27 giugno 2026
+        <span className="material-symbols-rounded">calendar_month</span>
+        Sabato, 4 luglio 2026
       </button>
 
       {/* Resto invariato */}
-      <h1>
-        <span className="font-playfair text-grape italic">Il Torneo</span>
-        <br />
-        <span className="text-penn-blue">di calcio a 5</span>
+      <h1 ref={h1Ref}>
+        <span className="font-playfair text-grape-800 flex justify-center overflow-hidden italic">
+          {wrapLetters("Il Torneo")}
+        </span>
+        <span className="flex justify-center overflow-hidden text-blue-900">
+          {wrapLetters("di calcio a 5")}
+        </span>
       </h1>
-      <p className="text-penn-blue mt-6 text-lg md:text-2xl">
-        12 ore, 32 squadre
-        <br />
+      <p className="mt-6 text-lg text-blue-900 md:text-2xl">
         La Pinetina: Centro Sportivo Appiano Gentile
       </p>
       <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">

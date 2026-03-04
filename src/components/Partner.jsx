@@ -205,10 +205,9 @@ function Partner() {
   return (
     <section
       id="partner"
-      data-navbar-theme="dark"
-      className="bg-penn-blue overflow-hidden py-20 md:mt-[-50vh]"
+      className="flex h-screen flex-col items-center justify-center overflow-hidden bg-blue-900 md:mt-[-50vh] md:block md:h-auto md:py-20"
     >
-      <h2 className="mb-14 px-6 text-center text-white md:mb-16">
+      <h2 className="mb-14 px-4 text-center text-white md:mb-16 md:px-8">
         <span className="font-playfair italic">Partner </span>
         <span>2024</span>
       </h2>
