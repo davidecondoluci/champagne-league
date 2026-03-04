@@ -68,7 +68,7 @@ function NavLink({ label, href, onClick, dark, large }) {
       <a
         ref={itemRef}
         href={href}
-        className={`relative block cursor-pointer overflow-hidden leading-tight ${large ? "text-2xl md:text-4xl" : "text-sm"} ${dark ? "text-penn-blue" : "text-white"}`}
+        className={`relative block cursor-pointer overflow-hidden leading-tight ${large ? "text-2xl md:text-4xl" : "text-base"} ${dark ? "text-blue-900" : "text-white"}`}
         onMouseOver={handleMouseOver}
         onClick={onClick}
       >
@@ -136,31 +136,43 @@ function Navbar() {
   }, []);
 
   const navTextColor = open
-    ? "text-penn-blue"
+    ? "text-blue-900"
     : dark
-      ? "text-penn-blue"
+      ? "text-blue-900"
       : "text-white";
 
   return (
     <>
       {/* Navbar bar — always on top */}
-      <nav className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between px-6 py-4 md:absolute md:px-8 md:py-5">
+      <nav className="absolute top-0 right-0 left-0 z-50 flex items-center justify-between px-4 py-4 md:px-8">
         {/* Logo */}
         <a href="#">
           <img
             src={dark || open ? "/logo.svg" : "/logo-white.svg"}
             alt="Champagne League"
-            className="h-10 w-auto transition-all duration-300 md:h-12"
+            className="h-10 w-auto md:h-12"
           />
         </a>
 
-        {/* Right side: menu toggle icon */}
+        {/* Desktop links — hidden on mobile */}
+        <ul className="hidden items-center gap-6 md:flex">
+          {links.map((link) => (
+            <NavLink
+              key={link.href}
+              label={link.label}
+              href={link.href}
+              dark={dark}
+            />
+          ))}
+        </ul>
+
+        {/* Hamburger — mobile only */}
         <a
-          className={`padding-0 cursor-pointer transition-opacity hover:opacity-60 ${navTextColor}`}
+          className={`cursor-pointer transition-opacity hover:opacity-60 md:hidden ${navTextColor}`}
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "close" : "menu"}
         >
-          <span className="material-symbols-outlined text-6xl">
+          <span className="material-symbols-rounded text-6xl">
             {open ? "close" : "menu"}
           </span>
         </a>
@@ -169,10 +181,10 @@ function Navbar() {
       {/* Full-page overlay menu */}
       <div
         ref={overlayRef}
-        className="fixed inset-0 z-40 flex flex-col items-end justify-center bg-white pr-4 md:pr-8"
+        className="fixed inset-0 z-10 flex flex-col items-end justify-center bg-white pr-4"
         style={{ visibility: "hidden", opacity: 0 }}
       >
-        <ul className="flex flex-col items-end gap-4 md:gap-6">
+        <ul className="flex flex-col items-end gap-4">
           {links.map((link) => (
             <NavLink
               key={link.href}
