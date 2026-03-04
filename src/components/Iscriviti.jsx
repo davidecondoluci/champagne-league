@@ -1,210 +1,157 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverText from "./HoverText";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
   {
-    icon: "groups",
-    title: "1. Squadra",
-    desc: "Crea una squadra con i tuoi amici di massimo 10 giocatori",
-    bg: "var(--color-pacific-cyan)",
-    text: "var(--color-white)",
-    subtext: "var(--color-white)",
+    title: "1. Scarica Jessico",
+    desc: "Jessico è l'app dedicata ai calcetti: squadre, valutazioni, marcatori, assist e tornei — tutto in un posto.",
+    bg: "color-mix(in srgb, var(--color-grape-600) 80%, var(--color-blue-900))",
   },
   {
-    icon: "copyright",
-    title: "2. Capitano",
-    desc: "Una volta creata la tua squadra dovrete scegliere il vostro capitano, fondamentale per l'iscrizione",
-    bg: "var(--color-grape)",
-    text: "var(--color-white)",
-    subtext: "var(--color-white)",
+    title: "2. Iscriviti all'app",
+    desc: "Crea il tuo profilo su Jessico e accedi alla sezione tornei.",
+    bg: "color-mix(in srgb, var(--color-grape-600) 60%, var(--color-blue-900))",
   },
   {
-    icon: "signature",
-    title: "3. Iscrizione",
-    desc: "Successivamente il capitano dovrà versare la quota e compilare il modulo di iscrizione della squadra",
-    bg: "var(--color-penn-blue)",
-    text: "var(--color-white)",
-    subtext: "var(--color-white)",
+    title: "3. Entra nel torneo",
+    desc: "Inserisci il codice XXXX nella sezione torneo, oppure cerca 'Champagne League' direttamente nell'app.",
+    bg: "color-mix(in srgb, var(--color-grape-600) 40%, var(--color-blue-900))",
   },
   {
-    icon: "handshake",
-    title: "4. Incontro",
-    desc: "Il capitano dovrà raccogliere la quota di iscrizione della squadra per poi incontrarsi con un organizzatore dell'evento",
-    bg: "var(--color-eerie-black)",
-    text: "var(--color-white)",
-    subtext: "var(--color-white)",
+    title: "4. Unisciti",
+    desc: "Iscriviti come capitano, crea la tua squadra e invita i tuoi amici — oppure partecipa ad una squadra già esistente.",
+    bg: "color-mix(in srgb, var(--color-grape-600) 20%, var(--color-blue-900))",
   },
 ];
 
-const Z_INDICES = [3, 2, 4, 1];
-
 function Iscriviti() {
+  const pinHeightRef = useRef(null);
   const containerRef = useRef(null);
+  const circlesWrapRef = useRef(null);
+  const circleRefs = useRef([]);
+  const cardRefs = useRef([]);
 
   useEffect(() => {
+    const pinHeight = pinHeightRef.current;
     const container = containerRef.current;
-    if (!container) return;
+    const circlesWrap = circlesWrapRef.current;
+    const circles = circleRefs.current.filter(Boolean);
+    const cards = cardRefs.current.filter(Boolean);
+    if (!pinHeight || !container || !circlesWrap || !circles.length) return;
 
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    const cards = container.querySelectorAll(".step-card");
+    // Center circles horizontally via GSAP (prevents conflict with CSS transform)
+    gsap.set(circles, { xPercent: -50 });
 
-    // Apply desktop sizing and overlap via GSAP
-    if (!isMobile) {
-      gsap.set(cards, {
-        width: "22vw",
-        minWidth: 180,
-        maxWidth: 280,
-        aspectRatio: "0.85",
+    // Set initial card position: centred horizontally, pushed below viewport
+    gsap.set(cards, { xPercent: -50, y: "55vh" });
+
+    // Parallax on circles wrapper + pin the container
+    gsap.fromTo(
+      circlesWrap,
+      { y: "5%" },
+      {
+        y: "-5%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: pinHeight,
+          start: "top top",
+          end: "bottom bottom",
+          pin: container,
+          scrub: true,
+        },
+      },
+    );
+
+    const angle = 3;
+    const halfRange = ((circles.length - 1) * angle) / 2;
+    let rot = -halfRange;
+    const distPerCard =
+      (pinHeight.clientHeight - window.innerHeight) / circles.length;
+
+    circles.forEach((circle, i) => {
+      const targetRot = rot;
+
+      // Rotate the wheel spoke
+      gsap.to(circle, {
+        rotation: targetRot,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: pinHeight,
+          start: "top top-=" + distPerCard * i,
+          end: "+=" + distPerCard,
+          scrub: true,
+        },
       });
-      // Overlap cards: skip first
-      cards.forEach((card, i) => {
-        if (i > 0) gsap.set(card, { marginLeft: "-4vw" });
+
+      // Move card up to centre + apply same rotation
+      gsap.to(cards[i], {
+        rotation: targetRot,
+        y: "-50%", // override the initial y: "55vh" → centres card in viewport
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: pinHeight,
+          start: "top top-=" + distPerCard * i,
+          end: "+=" + distPerCard,
+          scrub: true,
+        },
       });
-    }
 
-    // Disable mouse effect on touch devices
-    const isTouch = window.matchMedia("(pointer: coarse)").matches;
-    if (isTouch) return;
-
-    const contents = container.querySelectorAll(".step-content");
-    const cardsLength = cards.length;
-    let currentPortion = 0;
-
-    // Random initial offset
-    cards.forEach((card) => {
-      gsap.set(card, {
-        xPercent: (Math.random() - 0.5) * 10,
-        yPercent: (Math.random() - 0.5) * 10,
-        rotation: (Math.random() - 0.5) * 15,
-      });
+      rot += angle;
     });
 
-    const handleMouseMove = (e) => {
-      const mouseX = e.clientX - container.getBoundingClientRect().left;
-      const percentage = mouseX / container.clientWidth;
-      const activePortion = Math.ceil(percentage * cardsLength);
-
-      if (
-        currentPortion !== activePortion &&
-        activePortion > 0 &&
-        activePortion <= cardsLength
-      ) {
-        if (currentPortion !== 0) resetPortion(currentPortion - 1);
-        currentPortion = activePortion;
-        newPortion(currentPortion - 1);
-      }
-    };
-
-    const handleMouseLeave = () => {
-      resetPortion(currentPortion - 1);
-      currentPortion = 0;
-      gsap.to(contents, {
-        xPercent: 0,
-        ease: "elastic.out(1, 0.75)",
-        duration: 0.8,
-      });
-    };
-
-    function resetPortion(index) {
-      if (index < 0 || index >= cardsLength) return;
-      gsap.to(cards[index], {
-        xPercent: (Math.random() - 0.5) * 10,
-        yPercent: (Math.random() - 0.5) * 10,
-        rotation: (Math.random() - 0.5) * 15,
-        scale: 1,
-        duration: 0.8,
-        ease: "elastic.out(1, 0.75)",
-      });
-    }
-
-    function newPortion(i) {
-      gsap.to(cards[i], {
-        xPercent: 0,
-        yPercent: 0,
-        rotation: 0,
-        scale: 1.05,
-        duration: 0.8,
-        ease: "elastic.out(1, 0.75)",
-      });
-
-      contents.forEach((content, index) => {
-        if (index !== i) {
-          gsap.to(content, {
-            xPercent: 80 / (index - i),
-            ease: "elastic.out(1, 0.75)",
-            duration: 0.8,
-          });
-        } else {
-          gsap.to(content, {
-            xPercent: 0,
-            ease: "elastic.out(1, 0.75)",
-            duration: 0.8,
-          });
-        }
-      });
-    }
-
-    container.addEventListener("mousemove", handleMouseMove);
-    container.addEventListener("mouseleave", handleMouseLeave);
-
     return () => {
-      container.removeEventListener("mousemove", handleMouseMove);
-      container.removeEventListener("mouseleave", handleMouseLeave);
+      ScrollTrigger.getAll().forEach((st) => st.kill());
     };
   }, []);
 
   return (
-    <section
-      id="iscriviti"
-      data-navbar-theme="light"
-      className="flex flex-col items-center justify-center bg-white px-6 py-24 md:min-h-screen md:px-12"
-    >
-      <h2 className="text-penn-blue mb-10 text-center md:mb-16">
-        <span>Come </span>
-        <span className="font-playfair italic">iscriversi</span>
-      </h2>
-
-      {/* Cards container */}
-      <div
-        ref={containerRef}
-        className="flex w-full max-w-5xl flex-col items-center gap-6 md:flex-row md:justify-center md:gap-0"
-      >
-        {steps.map((step, i) => (
-          <div
-            key={step.title}
-            className="step-card w-full max-w-sm shrink-0 will-change-transform"
-            style={{
-              zIndex: Z_INDICES[i],
-            }}
-          >
-            <div
-              className="step-content flex h-full w-full flex-col rounded-2xl p-6 text-left"
-              style={{
-                backgroundColor: step.bg,
-                color: step.text,
-              }}
-            >
-              <span
-                className="material-symbols-outlined"
-                style={{
-                  fontSize: "4rem",
-                  color: step.text,
-                }}
-              >
-                {step.icon}
-              </span>
-              <h3 className="mt-4">{step.title}</h3>
-              <p className="mt-3 text-white">{step.desc}</p>
+    <section id="iscriviti" className="overflow-hidden pb-16 md:pb-24">
+      {/* Fan-wheel scroll effect — pin-height drives the scroll distance */}
+      <div ref={pinHeightRef} className="h-[300vh]">
+        {/* This 100vh container gets pinned by GSAP */}
+        <div ref={containerRef} className="relative h-screen">
+          {/* Title — sticky so it only appears when section is in viewport */}
+          <div className="pointer-events-none absolute top-0 left-0 z-10 flex h-full w-full flex-col justify-between py-8">
+            <h2 className="w-full text-center text-blue-900">
+              <span>Come </span>
+              <span className="font-playfair italic">iscriversi</span>
+            </h2>
+            {/* Button at the bottom of the pinned viewport */}
+            <div className="pointer-events-auto flex w-full justify-center">
+              <button className="bg-blue-900 text-white">
+                <HoverText>Visita l'app</HoverText>
+              </button>
             </div>
           </div>
-        ))}
-      </div>
 
-      {/* CTA Button */}
-      <button href="#" className="bg-penn-blue mt-12 text-white">
-        <HoverText>Vai al modulo di iscrizione</HoverText>
-      </button>
+          {/* Circles wrapper — subtle y parallax */}
+          <div ref={circlesWrapRef} className="h-full">
+            {steps.map((step, i) => (
+              <div
+                key={i}
+                ref={(el) => (circleRefs.current[i] = el)}
+                className="absolute top-1/2 left-1/2 size-[250vw] rounded-full will-change-transform"
+              >
+                {/* Card at the top of the circle; GSAP moves it up on scroll */}
+                <div
+                  ref={(el) => (cardRefs.current[i] = el)}
+                  className="absolute top-0 left-1/2 flex w-[55vw] flex-col justify-end rounded-2xl p-4 will-change-transform md:w-[24vw] md:p-4"
+                  style={{ aspectRatio: "0.75", backgroundColor: step.bg }}
+                >
+                  <div>
+                    <h3 className="text-white">{step.title}</h3>
+                    <p className="mt-2 text-white">{step.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

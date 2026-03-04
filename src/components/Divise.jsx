@@ -21,61 +21,24 @@ const jerseys = [
 ];
 
 function Divise() {
-  const sectionRef = useRef(null);
-  const tiltRefs = useRef([]);
   const flipRefs = useRef([]);
   const flipMobileRefs = useRef([]);
-  const rotToX = useRef([]);
-  const rotToY = useRef([]);
+  const sliderRef = useRef(null);
   const [flippedMobile, setFlippedMobile] = useState([false, false, false]);
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const handleScroll = () => {
+    const el = sliderRef.current;
+    if (!el) return;
+    const index = Math.round(el.scrollLeft / el.offsetWidth);
+    setActiveSlide(Math.min(index, jerseys.length - 1));
+  };
 
   useEffect(() => {
-    const tilts = tiltRefs.current;
-
-    // GSAP quickTo for smooth tilt on each card
-    tilts.forEach((el, i) => {
-      rotToX.current[i] = gsap.quickTo(el, "rotationX", {
-        duration: 0.8,
-        ease: "elastic.out(1, 0.4)",
-      });
-      rotToY.current[i] = gsap.quickTo(el, "rotationY", {
-        duration: 0.8,
-        ease: "elastic.out(1, 0.4)",
-      });
-      gsap.set(el, { transformPerspective: 600 });
-    });
-
-    // Set perspective on mobile flip refs too
+    // Set perspective on mobile flip refs
     flipMobileRefs.current.forEach((el) => {
       if (el) gsap.set(el, { transformStyle: "preserve-3d" });
     });
-
-    const onMouseMove = (e) => {
-      tilts.forEach((el, i) => {
-        const bound = el.getBoundingClientRect();
-        const midX = bound.left + bound.width / 2;
-        const midY = bound.top + bound.height / 2;
-        const rotX = gsap.utils.clamp(-25, 25, (e.clientY - midY) / 10) * -1;
-        const rotY = gsap.utils.clamp(-25, 25, (e.clientX - midX) / 10);
-        rotToX.current[i](rotX);
-        rotToY.current[i](rotY);
-      });
-    };
-
-    const onMouseLeave = () => {
-      tilts.forEach((el, i) => {
-        rotToX.current[i](0);
-        rotToY.current[i](0);
-      });
-    };
-
-    const section = sectionRef.current;
-    section.addEventListener("mousemove", onMouseMove);
-    section.addEventListener("mouseleave", onMouseLeave);
-    return () => {
-      section.removeEventListener("mousemove", onMouseMove);
-      section.removeEventListener("mouseleave", onMouseLeave);
-    };
   }, []);
 
   const handleEnter = (i) => {
@@ -107,9 +70,7 @@ function Divise() {
   return (
     <section
       id="divise"
-      ref={sectionRef}
-      data-navbar-theme="light"
-      className="relative flex flex-col items-center justify-center gap-12 bg-white px-8 py-16"
+      className="relative mb-16 flex h-screen flex-col items-center justify-center gap-8 px-4 py-4 md:mb-24 md:gap-16 md:px-8"
     >
       {/* Header */}
       <div className="flex flex-col items-center gap-4">
@@ -118,7 +79,7 @@ function Divise() {
           alt="Brancostore"
           className="h-8 w-auto"
         />
-        <h3 className="text-penn-blue text-center">
+        <h3 className="text-center text-blue-900">
           <span className="font-playfair italic">Home</span>,{" "}
           <span className="font-playfair italic">Away</span> e{" "}
           <span className="font-playfair italic">Goalkeeper</span> Kit
@@ -153,18 +114,23 @@ function Divise() {
 
       {/* Cards */}
       {/* Mobile: snap scroll, 80vw cards so next card peeks */}
-      <div className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 md:hidden">
+      <div
+        ref={sliderRef}
+        onScroll={handleScroll}
+        className="flex w-full snap-x snap-mandatory gap-0 overflow-x-auto pb-2 md:hidden"
+      >
         {jerseys.map((jersey, i) => (
           <div
             key={i}
-            className="shrink-0 snap-start"
-            style={{ width: "80vw" }}
+            className="flex shrink-0 snap-start items-center justify-center"
+            style={{ width: "100%" }}
             onClick={() => handleMobileToggle(i)}
           >
             <div
               ref={(el) => (flipMobileRefs.current[i] = el)}
               style={{
-                width: "100%",
+                width: "70vw",
+                maxWidth: "280px",
                 position: "relative",
                 transformStyle: "preserve-3d",
                 perspective: "600px",
@@ -205,18 +171,24 @@ function Divise() {
         ))}
       </div>
 
-      {/* Desktop: tilt + flip row */}
+      {/* Dot indicators — mobile only */}
+      <div className="flex gap-2 md:hidden">
+        {jerseys.map((_, i) => (
+          <span
+            key={i}
+            className={`block h-1.5 rounded-full transition-all duration-300 ${
+              i === activeSlide ? "w-6 bg-blue-900" : "w-1.5 bg-blue-900/25"
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Desktop: flip row */}
       <div className="hidden w-full items-center justify-center gap-24 md:flex">
         {jerseys.map((jersey, i) => (
           <div
             key={i}
-            ref={(el) => (tiltRefs.current[i] = el)}
-            style={{
-              width: "20vw",
-              maxWidth: 300,
-              perspective: "600px",
-              willChange: "transform",
-            }}
+            style={{ width: "20vw", maxWidth: 300 }}
             onMouseEnter={() => handleEnter(i)}
             onMouseLeave={() => handleLeave(i)}
           >
@@ -265,9 +237,10 @@ function Divise() {
 
       {/* Store button */}
       <button
-        href="https://www.brancostore.it/champagneleague/"
-        target="_blank"
-        className="bg-penn-blue text-white"
+        onClick={() =>
+          window.open("https://www.brancostore.it/champagneleague/", "_blank")
+        }
+        className="cursor-pointer bg-blue-900 text-white"
       >
         <HoverText>Visita lo store</HoverText>
       </button>

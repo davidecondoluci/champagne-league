@@ -1,122 +1,129 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { Observer } from "gsap/observer";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import HoverText from "./HoverText";
 
-gsap.registerPlugin(Observer);
+gsap.registerPlugin(ScrollTrigger);
 
-const details = [
+const panels = [
   {
-    icon: "description",
-    title: "Iscrizione di 250€ a squadra",
-  },
-  { icon: "groups", title: "32 Squadre con massimo 10 giocatori" },
-  {
-    icon: "photo_camera",
-    title: "Foto e Video dell'evento e dei giocatori",
+    num: "01",
+    title: "Il Torneo",
+    text: "Calcio a 5 per 32 squadre da massimo 10 giocatori, con partite da 20 minuti. Le fasi garantite: gironi, ottavi, quarti, semifinale, finalina & finale.",
   },
   {
-    icon: "restaurant",
-    title: "Bar aperto tutto il giorno",
+    num: "02",
+    title: "L'Iscrizione",
+    text: "250€ a squadra. Include statistiche complete con marcatori e risultati, foto e video dell'evento e dei giocatori. Assicurazione infortuni a 5€ per giocatore, separata dall'iscrizione.",
   },
-  { icon: "personal_injury", title: "Assicurazione di 5€ sugli infortuni" },
-  { icon: "leaderboard", title: "Statistiche con marcatori e risultati" },
-  { icon: "directions_run", title: "Durata partita di 20 min" },
-  { icon: "pool", title: "Sconto piscina per i giocatori" },
-  { icon: "album", title: "Dj Set tutto il giorno" },
+  {
+    num: "03",
+    title: "La Giornata",
+    text: "Bar aperto tutto il giorno, DJ Set e uno sconto in piscina riservato a tutti i partecipanti.",
+    hasButton: true,
+  },
 ];
 
-// Duplicate for infinite loop
-const allCards = [...details, ...details];
+function wrapWords(el) {
+  const text = el.textContent;
+  el.innerHTML = text
+    .split(" ")
+    .map(
+      (word) =>
+        `<span style="position:relative;overflow:hidden;display:inline-block;margin:-0.12em 0;"><span style="display:block;padding:0.12em 0;">${word}</span></span>`,
+    )
+    .join(" ");
+}
 
 function Dettagli() {
+  const pinHeightRef = useRef(null);
   const containerRef = useRef(null);
+  const paraRefs = useRef([]);
 
   useEffect(() => {
+    const pinHeight = pinHeightRef.current;
     const container = containerRef.current;
-    if (!container) return;
+    const paras = paraRefs.current.filter(Boolean);
+    if (!pinHeight || !container || paras.length < 3) return;
 
-    let total = 0;
+    paras.forEach((para) => wrapWords(para));
 
-    const half = container.scrollWidth / 2;
-    const wrap = gsap.utils.wrap(-half, 0);
+    // Tutti i testi partono nascosti
+    paras.forEach((para) => {
+      gsap.set(para.querySelectorAll("span > span"), { y: "110%" });
+    });
 
-    const xTo = gsap.quickTo(container, "x", {
-      duration: 0.5,
-      ease: "power3",
-      modifiers: {
-        x: gsap.utils.unitize(wrap),
+    ScrollTrigger.create({
+      trigger: pinHeight,
+      start: "top top",
+      end: "bottom bottom",
+      pin: container,
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: pinHeight,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true,
       },
     });
 
-    // Precompute random scatter values (one per original card)
-    const itemValues = details.map(() => (Math.random() - 0.5) * 20);
-
-    const cards = container.querySelectorAll(".detail-card");
-    const tl = gsap.timeline({ paused: true });
-    tl.to(cards, {
-      rotate: (i) => itemValues[i % details.length],
-      xPercent: (i) => itemValues[i % details.length],
-      yPercent: (i) => itemValues[i % details.length],
-      scale: 0.9,
-      duration: 0.5,
-      ease: "back.inOut(3)",
+    paras.forEach((para, i) => {
+      const words = para.querySelectorAll("span > span");
+      tl.to(words, { y: "0%", duration: 1, stagger: 0.2, ease: "power4.out" });
+      if (i < paras.length - 1) {
+        tl.to({}, { duration: 0.8 }); // pausa tra un testo e il successivo
+      }
     });
 
-    const observer = Observer.create({
-      target: container,
-      type: "pointer,touch",
-      onPress: () => tl.play(),
-      onDrag: (self) => {
-        total += self.deltaX;
-        xTo(total);
-      },
-      onRelease: () => tl.reverse(),
-      onStop: () => tl.reverse(),
-    });
-
-    const tick = (_time, deltaTime) => {
-      total -= deltaTime / 10;
-      xTo(total);
-    };
-
-    gsap.ticker.add(tick);
-
-    return () => {
-      observer.kill();
-      gsap.ticker.remove(tick);
-      tl.kill();
-    };
+    return () => ScrollTrigger.getAll().forEach((st) => st.kill());
   }, []);
 
   return (
-    <section
-      id="dettagli"
-      data-navbar-theme="dark"
-      className="bg-penn-blue flex h-screen items-center overflow-hidden"
-    >
-      <div
-        ref={containerRef}
-        className="flex w-max cursor-grab gap-[1vw] px-[1vw] active:cursor-grabbing"
-        style={{ willChange: "transform" }}
-      >
-        {allCards.map((item, i) => (
-          <div
-            key={i}
-            className="detail-card flex h-[28vw] max-h-80 w-[24vw] max-w-xs shrink-0 flex-col justify-between rounded-2xl border border-white/10 bg-white/5 p-6 text-white backdrop-blur-sm"
-            style={{ willChange: "transform" }}
-          >
-            <span
-              className="material-symbols-outlined text-pacific-cyan"
-              style={{ fontSize: "2.5rem" }}
+    <section id="dettagli" className="bg-blue-900 text-white">
+      <div ref={pinHeightRef} className="h-[200vh] md:h-[300vh]">
+        <div
+          ref={containerRef}
+          className="flex h-screen flex-col justify-between p-4 md:px-8 md:py-24"
+        >
+          {/* Titolo sezione */}
+          <div className="flex flex-col items-start gap-6 border-b border-white/20 pb-8 md:flex-row md:items-end md:justify-between">
+            <h2 className="font-playfair text-white italic">Dettagli</h2>
+            <button
+              onClick={() =>
+                window.open("/Regolamento_Champagne_League_2026.pdf", "_blank")
+              }
+              className="shrink-0 bg-white text-blue-900"
             >
-              {item.icon}
-            </span>
-            <div>
-              <h3 className="text-xl font-semibold">{item.title}</h3>
-              <p className="mt-1 text-sm text-white/50">{item.desc}</p>
-            </div>
+              <HoverText>Regolamento</HoverText>
+            </button>
           </div>
-        ))}
+
+          {/* 3 colonne */}
+          <div className="grid h-full grid-cols-1 md:grid-cols-3">
+            {panels.map((panel, i) => (
+              <div
+                key={i}
+                className={`flex flex-col gap-4 px-0 py-4 md:justify-between md:p-8 ${i < 2 ? "border-b border-white/20 md:border-r md:border-b-0" : ""}`}
+              >
+                {/* Titolo colonna */}
+                <div className="flex items-start justify-between">
+                  <h3 className="text-white">{panel.title}</h3>
+                  <span className="text-white/20">({panel.num})</span>
+                </div>
+
+                {/* Testo */}
+                <p
+                  className="md:text-2xl"
+                  ref={(el) => (paraRefs.current[i] = el)}
+                >
+                  {panel.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
