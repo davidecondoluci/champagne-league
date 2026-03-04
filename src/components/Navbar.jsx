@@ -3,7 +3,6 @@ import gsap from "gsap";
 
 const links = [
   { label: "Dettagli", href: "#dettagli" },
-  { label: "Programma", href: "#programma" },
   { label: "Premi", href: "#premi" },
   { label: "Partner", href: "#partner" },
   { label: "Gallery", href: "#gallery" },
@@ -88,7 +87,6 @@ function NavLink({ label, href, onClick, dark, large }) {
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const [dark, setDark] = useState(false);
   const overlayRef = useRef(null);
 
   useEffect(() => {
@@ -118,28 +116,7 @@ function Navbar() {
     }
   }, [open]);
 
-  useEffect(() => {
-    const sections = document.querySelectorAll("[data-navbar-theme]");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const theme = entry.target.getAttribute("data-navbar-theme");
-            setDark(theme === "light");
-          }
-        });
-      },
-      { rootMargin: "-1px 0px -95% 0px", threshold: 0 },
-    );
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
-
-  const navTextColor = open
-    ? "text-blue-900"
-    : dark
-      ? "text-blue-900"
-      : "text-white";
+  const navTextColor = "text-blue-900";
 
   return (
     <>
@@ -148,7 +125,7 @@ function Navbar() {
         {/* Logo */}
         <a href="#">
           <img
-            src={dark || open ? "/logo.svg" : "/logo-white.svg"}
+            src="/logo.svg"
             alt="Champagne League"
             className="h-10 w-auto md:h-12"
           />
@@ -157,12 +134,7 @@ function Navbar() {
         {/* Desktop links — hidden on mobile */}
         <ul className="hidden items-center gap-6 md:flex">
           {links.map((link) => (
-            <NavLink
-              key={link.href}
-              label={link.label}
-              href={link.href}
-              dark={dark}
-            />
+            <NavLink key={link.href} label={link.label} href={link.href} dark />
           ))}
         </ul>
 
