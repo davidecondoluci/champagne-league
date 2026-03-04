@@ -5,22 +5,54 @@ html {
 }
 
 body {
+  font-family: "Be Vietnam Pro", sans-serif;
   font-weight: 200;
+  background-color: var(--color-white);
 }
 
 @theme {
-  --color-penn-blue: #00043d;
-  --color-grape: #62109f;
-  --color-pacific-cyan: #00a7c3;
+  --color-blue-900: #00043d;
+  --color-blue-800: #051752;
+  --color-blue-700: #0f205e;
+  --color-blue-600: #182868;
+  --color-blue-500: #1e2e70;
+  --color-blue-400: #3f4a83;
+  --color-blue-300: #5f6796;
+  --color-blue-200: #8a90b3;
+  --color-blue-100: #b8bcd2;
+  --color-blue-50: #e2e4ec;
+
+  --color-grape-900: #3d0a92;
+  --color-grape-800: #62109f;
+  --color-grape-700: #7313a7;
+  --color-grape-600: #8717ae;
+  --color-grape-500: #9619b4;
+  --color-grape-400: #a53fc0;
+  --color-grape-300: #b562cb;
+  --color-grape-200: #cb8fda;
+  --color-grape-100: #dfbce8;
+  --color-grape-50: #f2e4f5;
+
+  --color-cyan-900: #005b64;
+  --color-cyan-800: #007d90;
+  --color-cyan-700: #0091a9;
+  --color-cyan-600: #00a7c3;
+  --color-cyan-500: #04b5d6;
+  --color-cyan-400: #24c0dd;
+  --color-cyan-300: #4bcbe5;
+  --color-cyan-200: #7fdaee;
+  --color-cyan-100: #b1e9f5;
+  --color-cyan-50: #e0f6fb;
+
   --color-eerie-black: #1a1a1a;
-  --color-white: #fafafa;
+  --color-white: #f9f9f9;
 
   --font-playfair: "Playfair Display", serif;
   --font-be-vietnam: "Be Vietnam Pro", sans-serif;
 }
 
 @layer base {
-  .material-symbols-outlined {
+  .material-symbols-rounded {
     font-variation-settings:
       "FILL" 1,
       "wght" 200,
@@ -29,22 +61,22 @@ body {
   }
 
   h1 {
-    @apply text-6xl font-semibold md:text-8xl;
+    @apply text-6xl font-medium md:text-8xl;
   }
   h2 {
-    @apply text-4xl font-semibold md:text-6xl;
+    @apply text-4xl font-medium md:text-6xl;
   }
   h3 {
-    @apply text-2xl font-semibold md:text-4xl;
+    @apply text-2xl font-medium md:text-4xl;
   }
   p {
-    @apply text-base;
+    @apply text-base font-extralight;
   }
   a {
     @apply text-base;
   }
   button {
-    @apply inline-flex items-center gap-2 rounded-full px-8 py-4 text-base uppercase transition-opacity hover:opacity-80;
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-base uppercase transition-opacity hover:opacity-80 md:px-8 md:py-4;
   }
 }
 
