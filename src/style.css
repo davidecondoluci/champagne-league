@@ -11,6 +11,7 @@ body {
 }
 
 @theme {
+  /* Blue */
   --color-blue-900: #00043d;
   --color-blue-800: #051752;
   --color-blue-700: #0f205e;
@@ -21,7 +22,7 @@ body {
   --color-blue-200: #8a90b3;
   --color-blue-100: #b8bcd2;
   --color-blue-50: #e2e4ec;
-
+  /* Grape */
   --color-grape-900: #3d0a92;
   --color-grape-800: #62109f;
   --color-grape-700: #7313a7;
@@ -32,7 +33,7 @@ body {
   --color-grape-200: #cb8fda;
   --color-grape-100: #dfbce8;
   --color-grape-50: #f2e4f5;
-
+  /* Cyan */
   --color-cyan-900: #005b64;
   --color-cyan-800: #007d90;
   --color-cyan-700: #0091a9;
@@ -43,7 +44,18 @@ body {
   --color-cyan-200: #7fdaee;
   --color-cyan-100: #b1e9f5;
   --color-cyan-50: #e0f6fb;
-
+  /* Jessico Green */
+  --color-green-900: #005b31;
+  --color-green-800: #007a47;
+  --color-green-700: #008b53;
+  --color-green-600: #009d61;
+  --color-green-500: #00ac6c;
+  --color-green-400: #12b981;
+  --color-green-300: #54c597;
+  --color-green-200: #8bd5b4;
+  --color-green-100: #bae6d1;
+  --color-green-50: #e2f5ed;
+  /* Black & White */
   --color-eerie-black: #1a1a1a;
   --color-white: #f9f9f9;
 
