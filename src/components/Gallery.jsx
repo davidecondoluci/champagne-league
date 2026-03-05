@@ -69,7 +69,8 @@ function Gallery() {
       scrollTrigger: {
         trigger: section,
         pin: true,
-        scrub: true,
+        anticipatePin: 1,
+        scrub: 1,
         end: "+=" + distance,
       },
     });
@@ -132,7 +133,8 @@ function Gallery() {
               key={i}
               src={src}
               alt={`Foto ${i + 1}`}
-              className="gallery-media block rounded-2xl will-change-transform"
+              className="gallery-media block rounded-2xl"
+              decoding="async"
             />
           ))}
         </div>

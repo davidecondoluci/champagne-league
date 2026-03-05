@@ -6,6 +6,7 @@ const social = [
 ];
 
 const navLinks = [
+  { label: "Home", href: "#home" },
   { label: "Dettagli", href: "#dettagli" },
   { label: "Premi", href: "#premi" },
   { label: "Partner", href: "#partner" },
@@ -37,7 +38,7 @@ function Contatti() {
   return (
     <section
       id="contatti"
-      className="bg-eerie-black flex min-h-screen flex-col justify-between px-4 pt-20 pb-4 text-white md:px-8"
+      className="bg-eerie-black flex h-screen flex-col justify-center gap-16 px-4 pt-16 pb-4 text-white md:justify-between md:px-8 md:pt-20"
     >
       {/* Main grid */}
       <div className="grid grid-cols-1 gap-16 md:grid-cols-2">
@@ -52,7 +53,7 @@ function Contatti() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="group mt-2 flex max-w-md items-end gap-3 border-b-[0.5px] border-white/30 pb-2 transition-colors duration-300 focus-within:border-white"
+                className="group mt-2 flex max-w-md items-end gap-3 border-b-[0.5px] border-white/40 pb-2 transition-colors duration-300 focus-within:border-white"
               >
                 <input
                   type="email"
@@ -60,15 +61,17 @@ function Contatti() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="La tua email..."
-                  className="flex-1 bg-transparent text-base text-white placeholder-white/30 outline-none"
+                  className="flex-1 bg-transparent text-base text-white placeholder-white/40 outline-none"
                 />
                 <button
                   type="submit"
-                  className="flex shrink-0 cursor-pointer items-center gap-1 p-0 text-sm text-white/50 transition-colors duration-300 hover:text-white"
+                  className="group/btn flex shrink-0 cursor-pointer items-center gap-1 p-0 text-sm text-white/60 transition-colors duration-300 hover:text-white"
                 >
-                  <span class="material-symbols-rounded">
-                    subdirectory_arrow_right
-                  </span>
+                  <img
+                    src="/icons/enter.svg"
+                    alt=""
+                    className="h-4 w-auto opacity-60 transition-opacity duration-300 group-hover/btn:opacity-100"
+                  />
                   Invia
                 </button>
               </form>

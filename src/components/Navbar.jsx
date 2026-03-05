@@ -11,10 +11,11 @@ const links = [
   { label: "Contatti", href: "#contatti" },
 ];
 
-function NavLink({ label, href, onClick, dark, large }) {
+function NavLink({ label, href, onClick, large }) {
   const itemRef = useRef(null);
 
   const handleMouseOver = useCallback((e) => {
+    if (window.matchMedia("(hover: none)").matches) return;
     const item = itemRef.current;
     if (!item) return;
 
@@ -67,7 +68,7 @@ function NavLink({ label, href, onClick, dark, large }) {
       <a
         ref={itemRef}
         href={href}
-        className={`relative block cursor-pointer overflow-hidden leading-tight ${large ? "text-2xl md:text-4xl" : "text-base"} ${dark ? "text-blue-900" : "text-white"}`}
+        className={`relative block cursor-pointer overflow-hidden ${large ? "text-4xl" : "text-base"} text-blue-900`}
         onMouseOver={handleMouseOver}
         onClick={onClick}
       >
@@ -120,21 +121,16 @@ function Navbar() {
 
   return (
     <>
-      {/* Navbar bar — always on top */}
       <nav className="absolute top-0 right-0 left-0 z-50 flex items-center justify-between px-4 py-4 md:px-8">
         {/* Logo */}
         <a href="#">
-          <img
-            src="/logo.svg"
-            alt="Champagne League"
-            className="h-10 w-auto md:h-12"
-          />
+          <img src="/logo.svg" alt="Champagne League" className="h-12 w-auto" />
         </a>
 
         {/* Desktop links — hidden on mobile */}
         <ul className="hidden items-center gap-6 md:flex">
           {links.map((link) => (
-            <NavLink key={link.href} label={link.label} href={link.href} dark />
+            <NavLink key={link.href} label={link.label} href={link.href} />
           ))}
         </ul>
 
@@ -144,9 +140,11 @@ function Navbar() {
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "close" : "menu"}
         >
-          <span className="material-symbols-rounded text-6xl">
-            {open ? "close" : "menu"}
-          </span>
+          <img
+            src={open ? "/icons/close.svg" : "/icons/menu.svg"}
+            alt={open ? "Chiudi menu" : "Apri menu"}
+            className="h-4 w-auto"
+          />
         </a>
       </nav>
 
@@ -162,7 +160,6 @@ function Navbar() {
               key={link.href}
               label={link.label}
               href={link.href}
-              dark
               large
               onClick={() => setOpen(false)}
             />

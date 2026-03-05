@@ -92,27 +92,34 @@ function Hero() {
   useEffect(() => {
     const h1 = h1Ref.current;
     if (!h1) return;
-    const letters = h1.querySelectorAll(".hero-letter span:first-child");
+    const letters = h1.querySelectorAll(".hero-letter");
     const ctx = gsap.context(() => {
-      gsap.from(letters, {
-        yPercent: 100,
-        ease: "power3.out",
+      gsap.set(letters, { yPercent: 100 });
+      gsap.to(letters, {
+        yPercent: 0,
+        ease: "power1.inOut",
         duration: 1,
-        stagger: { each: 0.04, from: "random" },
-        delay: 0.2,
+        stagger: { each: 0.05, from: "random" },
       });
     }, h1);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 text-center text-blue-900">
+    <section
+      id="home"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 text-center text-blue-900"
+    >
       {/* Date badge → BUTTON per download ICS */}
       <button
         onClick={downloadICS}
         className="mb-6 cursor-pointer bg-blue-900/5 text-blue-900"
       >
-        <span className="material-symbols-rounded">calendar_month</span>
+        <img
+          src="/icons/calendar-month.svg"
+          alt=""
+          style={{ height: "1.25em", width: "auto" }}
+        />
         Sabato, 4 luglio 2026
       </button>
 

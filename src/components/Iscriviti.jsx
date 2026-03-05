@@ -1,30 +1,37 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverText from "./HoverText";
-
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
   {
-    title: "1. Scarica Jessico",
-    desc: "Jessico è l'app dedicata ai calcetti: squadre, valutazioni, marcatori, assist e tornei — tutto in un posto.",
-    bg: "color-mix(in srgb, var(--color-grape-600) 80%, var(--color-blue-900))",
+    icon: "/icons/jessico.svg",
+    title: "Scarica Jessico",
+    desc: "Jessico è l'app dedicata ai calcetti: squadre, valutazioni, marcatori, assist e tornei, tutto in un posto.",
+    bg: "var(--color-green-400)",
+    text: "var(--color-white)",
   },
   {
-    title: "2. Iscriviti all'app",
+    icon: "/icons/app-registration.svg",
+    title: "Iscriviti all'app",
     desc: "Crea il tuo profilo su Jessico e accedi alla sezione tornei.",
-    bg: "color-mix(in srgb, var(--color-grape-600) 60%, var(--color-blue-900))",
+    bg: "var(--color-green-600)",
+    text: "var(--color-white)",
   },
   {
-    title: "3. Entra nel torneo",
+    icon: "/icons/login.svg",
+    title: "Entra nel torneo",
     desc: "Inserisci il codice XXXX nella sezione torneo, oppure cerca 'Champagne League' direttamente nell'app.",
-    bg: "color-mix(in srgb, var(--color-grape-600) 40%, var(--color-blue-900))",
+    bg: "var(--color-green-700)",
+    text: "var(--color-white)",
   },
   {
-    title: "4. Unisciti",
-    desc: "Iscriviti come capitano, crea la tua squadra e invita i tuoi amici — oppure partecipa ad una squadra già esistente.",
-    bg: "color-mix(in srgb, var(--color-grape-600) 20%, var(--color-blue-900))",
+    icon: "/icons/person-add.svg",
+    title: "Unisciti",
+    desc: "Iscriviti come capitano, crea la tua squadra e invita i tuoi amici, oppure partecipa ad una squadra già esistente.",
+    bg: "var(--color-green-800)",
+    text: "var(--color-white)",
   },
 ];
 
@@ -116,14 +123,29 @@ function Iscriviti() {
         <div ref={containerRef} className="relative h-screen">
           {/* Title — sticky so it only appears when section is in viewport */}
           <div className="pointer-events-none absolute top-0 left-0 z-10 flex h-full w-full flex-col justify-between py-8">
-            <h2 className="w-full text-center text-blue-900">
+            <h2 className="text-center text-blue-900">
               <span>Come </span>
               <span className="font-playfair italic">iscriversi</span>
             </h2>
-            {/* Button at the bottom of the pinned viewport */}
+            {/* Store badges at the bottom of the pinned viewport */}
+            {/* <div className="pointer-events-auto flex w-full justify-center gap-4">
+              <a href="/jessico" aria-label="Scarica su App Store">
+                <img src="/app-store.svg" alt="App Store" className="h-12" />
+              </a>
+              <a href="/jessico" aria-label="Scarica su Google Play">
+                <img
+                  src="/google-play.svg"
+                  alt="Google Play"
+                  className="h-12"
+                />
+              </a>
+            </div> */}
             <div className="pointer-events-auto flex w-full justify-center">
-              <button className="bg-blue-900 text-white">
-                <HoverText>Visita l'app</HoverText>
+              <button
+                onClick={() => window.open("/jessico", "_blank")}
+                className="cursor-pointer bg-blue-900 text-white"
+              >
+                <HoverText>Scarica l'app</HoverText>
               </button>
             </div>
           </div>
@@ -139,12 +161,28 @@ function Iscriviti() {
                 {/* Card at the top of the circle; GSAP moves it up on scroll */}
                 <div
                   ref={(el) => (cardRefs.current[i] = el)}
-                  className="absolute top-0 left-1/2 flex w-[55vw] flex-col justify-end rounded-2xl p-4 will-change-transform md:w-[24vw] md:p-4"
-                  style={{ aspectRatio: "0.75", backgroundColor: step.bg }}
+                  className="absolute top-0 left-1/2 flex w-[55vw] flex-col justify-between rounded-2xl p-4 will-change-transform md:w-[24vw] md:p-8"
+                  style={{
+                    aspectRatio: "0.75",
+                    backgroundColor: step.bg,
+                    color: step.text,
+                  }}
                 >
+                  {step.icon && (
+                    <div>
+                      <img
+                        src={step.icon}
+                        alt=""
+                        draggable={false}
+                        className="h-12 w-auto md:h-24"
+                      />
+                    </div>
+                  )}
                   <div>
-                    <h3 className="text-white">{step.title}</h3>
-                    <p className="mt-2 text-white">{step.desc}</p>
+                    <h3 style={{ color: step.text }}>{step.title}</h3>
+                    <p className="mt-2 md:text-xl" style={{ color: step.text }}>
+                      {step.desc}
+                    </p>
                   </div>
                 </div>
               </div>

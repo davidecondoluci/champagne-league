@@ -136,53 +136,71 @@ function PartnerCard({ src, alt, padding, href }) {
 /* Infinite marquee row */
 function MarqueeRow({ items, direction = "left", speed = 28 }) {
   const trackRef = useRef(null);
-  const tweenRef = useRef(null);
+  // animRef holds mutable state shared between RAF ticks without re-renders
+  const animRef = useRef({
+    x: 0,
+    oneSetWidth: 0,
+    factor: 1,
+    raf: null,
+    last: null,
+  });
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
 
-    if (direction === "left") {
-      gsap.set(track, { xPercent: 0 });
-      tweenRef.current = gsap.to(track, {
-        xPercent: -50,
-        duration: speed,
-        ease: "none",
-        repeat: -1,
-      });
-    } else {
-      gsap.set(track, { xPercent: -50 });
-      tweenRef.current = gsap.to(track, {
-        xPercent: 0,
-        duration: speed,
-        ease: "none",
-        repeat: -1,
-      });
-    }
+    const initRaf = requestAnimationFrame(() => {
+      const state = animRef.current;
+      state.oneSetWidth = track.scrollWidth / 3;
+      // Right-direction starts one set back so wrapping is symmetric
+      state.x = direction === "right" ? -state.oneSetWidth : 0;
+      state.last = null;
 
-    return () => tweenRef.current?.kill();
+      const tick = (ts) => {
+        if (state.last === null) state.last = ts;
+        // Cap delta to avoid huge jump after a tab switch
+        const dt = Math.min((ts - state.last) / 1000, 0.1);
+        state.last = ts;
+
+        const pps = state.oneSetWidth / speed;
+        state.x += (direction === "left" ? -1 : 1) * pps * dt * state.factor;
+
+        // Seamless wrap — just shift by one set, never reset to origin
+        if (state.x <= -state.oneSetWidth) state.x += state.oneSetWidth;
+        if (state.x >= 0) state.x -= state.oneSetWidth;
+
+        gsap.set(track, { x: state.x });
+        state.raf = requestAnimationFrame(tick);
+      };
+
+      state.raf = requestAnimationFrame(tick);
+    });
+
+    return () => {
+      cancelAnimationFrame(initRaf);
+      if (animRef.current.raf) cancelAnimationFrame(animRef.current.raf);
+      animRef.current.last = null;
+    };
   }, [direction, speed]);
 
   const slowDown = () => {
-    if (tweenRef.current)
-      gsap.to(tweenRef.current, {
-        timeScale: 0.1,
-        duration: 0.6,
-        ease: "power2.out",
-      });
+    gsap.to(animRef.current, {
+      factor: 0.1,
+      duration: 0.6,
+      ease: "power2.out",
+    });
   };
 
   const speedUp = () => {
-    if (tweenRef.current)
-      gsap.to(tweenRef.current, {
-        timeScale: 1,
-        duration: 0.9,
-        ease: "power2.inOut",
-      });
+    gsap.to(animRef.current, {
+      factor: 1,
+      duration: 0.9,
+      ease: "power2.inOut",
+    });
   };
 
-  // Duplicate items to create the seamless loop
-  const doubled = [...items, ...items];
+  // Triple items to guarantee seamless loop on any screen width
+  const tripled = [...items, ...items, ...items];
 
   return (
     <div className="w-full overflow-hidden">
@@ -192,7 +210,7 @@ function MarqueeRow({ items, direction = "left", speed = 28 }) {
         onMouseEnter={slowDown}
         onMouseLeave={speedUp}
       >
-        {doubled.map((partner, i) => (
+        {tripled.map((partner, i) => (
           <PartnerCard key={`${partner.alt}-${i}`} {...partner} />
         ))}
       </div>
@@ -205,7 +223,7 @@ function Partner() {
   return (
     <section
       id="partner"
-      className="flex h-screen flex-col items-center justify-center overflow-hidden bg-blue-900 md:mt-[-50vh] md:block md:h-auto md:py-20"
+      className="mt-[-40vh] flex h-screen flex-col items-center justify-center overflow-hidden bg-blue-900 md:mt-[-60vh] md:block md:h-auto md:py-20"
     >
       <h2 className="mb-14 px-4 text-center text-white md:mb-16 md:px-8">
         <span className="font-playfair italic">Partner </span>

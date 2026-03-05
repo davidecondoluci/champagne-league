@@ -35,7 +35,7 @@ function wrapLetters(words) {
 
 const prizes = [
   {
-    icon: "trophy",
+    icon: "/icons/trophy-1.svg",
     title: "Primo Posto",
     desc: "Coming soon!",
     bg: "color-mix(in srgb, var(--color-cyan-600) 60%, var(--color-blue-900))",
@@ -43,7 +43,7 @@ const prizes = [
     text: "var(--color-white)",
   },
   {
-    icon: "workspace_premium",
+    icon: "/icons/trophy-2.svg",
     title: "Secondo Posto",
     desc: "Coming soon!",
     bg: "color-mix(in srgb, var(--color-cyan-600) 40%, var(--color-blue-900))",
@@ -51,7 +51,7 @@ const prizes = [
     text: "var(--color-white)",
   },
   {
-    icon: "military_tech",
+    icon: "/icons/trophy-3.svg",
     title: "Terzo Posto",
     desc: "Coming soon!",
     bg: "color-mix(in srgb, var(--color-cyan-600) 20%, var(--color-blue-900))",
@@ -59,7 +59,7 @@ const prizes = [
     text: "var(--color-white)",
   },
   {
-    icon: "shoe_cleats",
+    icon: "/icons/shoe-cleats.svg",
     title: "Miglior Giocatore",
     desc: "Coming soon!",
     bg: "color-mix(in srgb, var(--color-grape-900) 60%, var(--color-blue-900))",
@@ -67,7 +67,7 @@ const prizes = [
     text: "var(--color-white)",
   },
   {
-    icon: "sports_handball",
+    icon: "/icons/sports-handball.svg",
     title: "Miglior Portiere",
     desc: "Coming soon!",
     bg: "color-mix(in srgb, var(--color-grape-900) 40%, var(--color-blue-900))",
@@ -182,7 +182,7 @@ function Premi() {
       {/* Horizontal scroll pinned effect (all screens) */}
       <div
         ref={containerRef}
-        className="-mt-[110vh] flex h-screen flex-col justify-center overflow-hidden"
+        className="-mt-[30vh] flex h-screen flex-col justify-center overflow-hidden md:-mt-[70vh]"
       >
         <div
           ref={cardsContainerRef}
@@ -192,7 +192,7 @@ function Premi() {
             <div
               key={i}
               ref={(el) => (cardRefs.current[i] = el)}
-              className="flex aspect-3/4 w-[80vw] min-w-65 shrink-0 flex-col justify-between overflow-hidden rounded-2xl border-6 p-4 whitespace-normal md:w-[25vw]"
+              className="flex aspect-3/4 w-[80vw] min-w-65 shrink-0 flex-col justify-between overflow-hidden rounded-2xl border-6 p-4 whitespace-normal md:w-[25vw] md:p-8"
               style={{
                 backgroundColor: prize.bg,
                 borderColor: prize.border,
@@ -200,16 +200,16 @@ function Premi() {
               }}
             >
               <div>
-                <span
-                  className="material-symbols-rounded"
-                  style={{ fontSize: "8rem", color: prize.text }}
-                >
-                  {prize.icon}
-                </span>
+                <img
+                  src={prize.icon}
+                  alt=""
+                  draggable={false}
+                  className="h-12 w-auto md:h-24"
+                />
               </div>
               <div>
                 <h3 style={{ color: prize.text }}>{prize.title}</h3>
-                <p className="mt-2" style={{ color: prize.text }}>
+                <p className="mt-2 md:text-xl" style={{ color: prize.text }}>
                   {prize.desc}
                 </p>
               </div>

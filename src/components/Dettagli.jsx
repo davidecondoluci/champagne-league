@@ -8,17 +8,17 @@ gsap.registerPlugin(ScrollTrigger);
 const panels = [
   {
     num: "01",
-    title: "Il Torneo",
+    title: "Torneo",
     text: "Calcio a 5 per 32 squadre da massimo 10 giocatori, con partite da 20 minuti. Le fasi garantite: gironi, ottavi, quarti, semifinale, finalina & finale.",
   },
   {
     num: "02",
-    title: "L'Iscrizione",
-    text: "250€ a squadra. Include statistiche complete con marcatori e risultati, foto e video dell'evento e dei giocatori. Assicurazione infortuni a 5€ per giocatore, separata dall'iscrizione.",
+    title: "Iscrizione",
+    text: "250€ a squadra. Include statistiche complete con marcatori e risultati, foto e video dell'evento e dei giocatori. Assicurazione infortuni a 5€ per giocatore, fuori dall'iscrizione.",
   },
   {
     num: "03",
-    title: "La Giornata",
+    title: "Giornata",
     text: "Bar aperto tutto il giorno, DJ Set e uno sconto in piscina riservato a tutti i partecipanti.",
     hasButton: true,
   },
@@ -88,7 +88,7 @@ function Dettagli() {
           className="flex h-screen flex-col justify-between p-4 md:px-8 md:py-24"
         >
           {/* Titolo sezione */}
-          <div className="flex flex-col items-start gap-6 border-b border-white/20 pb-8 md:flex-row md:items-end md:justify-between">
+          <div className="flex flex-row items-end justify-between gap-6 border-b border-white/20 pb-8">
             <h2 className="font-playfair text-white italic">Dettagli</h2>
             <button
               onClick={() =>
