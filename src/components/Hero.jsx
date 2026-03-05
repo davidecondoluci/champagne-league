@@ -126,7 +126,7 @@ function Hero() {
         </span>
       </h1>
       <p className="mt-6 text-lg text-blue-900 md:text-2xl">
-        La Pinetina: Centro Sportivo Appiano Gentile
+        Centro Sportivo La Pinetina di Appiano Gentile
       </p>
       <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
         <CountdownUnit value={timeLeft.days} label="Giorni" />
