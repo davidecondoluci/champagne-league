@@ -31,8 +31,8 @@ function CountdownUnit({ value, label }) {
 // FUNZIONE PER GENERARE E SCARICARE IL FILE .ICS
 function downloadICS() {
   // Orario evento UTC (modifica se vuoi altro orario)
-  const start = "20260704T080000Z"; // 4 luglio 2026, ore 10:00 italiane (08:00 UTC)
-  const end = "20260704T200000Z"; // 4 luglio 2026, ore 22:00 italiane (20:00 UTC)
+  const start = "20260704T070000Z"; // 4 luglio 2026, ore 09:00 italiane CEST (07:00 UTC)
+  const end = "20260704T190000Z"; // 4 luglio 2026, ore 21:00 italiane CEST (19:00 UTC)
   const icsContent = `
 BEGIN:VCALENDAR
 VERSION:2.0
@@ -108,25 +108,21 @@ function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 text-center text-blue-900"
+      className="flex h-screen flex-col items-center justify-center overflow-hidden bg-white px-4 text-center text-blue-900"
     >
       {/* Date badge → BUTTON per download ICS */}
       <button
         onClick={downloadICS}
         className="mb-6 cursor-pointer bg-blue-900/5 text-blue-900"
       >
-        <img
-          src="/icons/calendar-month.svg"
-          alt=""
-          style={{ height: "1.25em", width: "auto" }}
-        />
-        Sabato, 4 luglio 2026
+        <img src="/icons/calendar-month.svg" alt="" className="h-6 w-auto" />
+        Sabato, 4 luglio 2026, ore 09:00
       </button>
 
       {/* Resto invariato */}
       <h1 ref={h1Ref}>
         <span className="font-playfair text-grape-800 flex justify-center overflow-hidden italic">
-          {wrapLetters("Il Torneo")}
+          {wrapLetters("Il Torneo 12h")}
         </span>
         <span className="flex justify-center overflow-hidden text-blue-900">
           {wrapLetters("di calcio a 5")}
