@@ -4,39 +4,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LINE1 = [
-  { text: "I", playfair: false },
-  { text: "Premi", playfair: true },
-];
-const LINE2 = [
-  { text: "che", playfair: false },
-  { text: "ti", playfair: false },
-  { text: "aspettano", playfair: false },
-];
-
-function wrapLetters(words) {
-  return words.map(({ text, playfair }, wi) => (
-    <span
-      key={wi}
-      className={`mr-4 inline-block ${playfair ? "font-playfair italic" : ""}`}
-    >
-      {text.split("").map((char, ci) => (
-        <span
-          key={ci}
-          className="premi-letter inline-block overflow-hidden"
-          style={{ verticalAlign: "bottom" }}
-        >
-          <span className="inline-block">{char}</span>
-        </span>
-      ))}
-    </span>
-  ));
-}
-
 const prizes = [
   {
     icon: "/icons/trophy-1.svg",
     title: "Primo Posto",
+    // desc: "800€ + Cena + Piscina",
     desc: "Coming soon!",
     bg: "color-mix(in srgb, var(--color-cyan-600) 60%, var(--color-blue-900))",
     border: "var(--color-cyan-100)",
@@ -45,6 +17,7 @@ const prizes = [
   {
     icon: "/icons/trophy-2.svg",
     title: "Secondo Posto",
+    // desc: "600€ + Cena",
     desc: "Coming soon!",
     bg: "color-mix(in srgb, var(--color-cyan-600) 40%, var(--color-blue-900))",
     border: "var(--color-cyan-200)",
@@ -53,14 +26,16 @@ const prizes = [
   {
     icon: "/icons/trophy-3.svg",
     title: "Terzo Posto",
+    // desc: "300€ + 3 calcetti",
     desc: "Coming soon!",
     bg: "color-mix(in srgb, var(--color-cyan-600) 20%, var(--color-blue-900))",
     border: "var(--color-cyan-300)",
     text: "var(--color-white)",
   },
   {
-    icon: "/icons/shoe-cleats.svg",
+    icon: "/icons/crown.svg",
     title: "Miglior Giocatore",
+    // desc: "Giro in Ferrari o Lamborghini",
     desc: "Coming soon!",
     bg: "color-mix(in srgb, var(--color-grape-900) 60%, var(--color-blue-900))",
     border: "var(--color-grape-200)",
@@ -69,49 +44,27 @@ const prizes = [
   {
     icon: "/icons/sports-handball.svg",
     title: "Miglior Portiere",
+    // desc: "Coppa e Guanti",
     desc: "Coming soon!",
     bg: "color-mix(in srgb, var(--color-grape-900) 40%, var(--color-blue-900))",
     border: "var(--color-grape-300)",
     text: "var(--color-white)",
   },
+  {
+    icon: "/icons/shoe-cleats.svg",
+    title: "Capocannoniere",
+    // desc: "Coppa e giro in barca",
+    desc: "Coming soon!",
+    bg: "color-mix(in srgb, var(--color-grape-900) 20%, var(--color-blue-900))",
+    border: "var(--color-grape-400)",
+    text: "var(--color-white)",
+  },
 ];
 
 function Premi() {
-  const titleSectionRef = useRef(null);
-  const titleContainerRef = useRef(null);
   const containerRef = useRef(null);
   const cardsContainerRef = useRef(null);
   const cardRefs = useRef([]);
-
-  // Title reveal animation
-  useEffect(() => {
-    const titleSection = titleSectionRef.current;
-    const titleContainer = titleContainerRef.current;
-    if (!titleSection || !titleContainer) return;
-
-    const letters = titleContainer.querySelectorAll(".premi-letter span");
-    const shuffled = Array.from(letters).sort(() => Math.random() - 0.5);
-    gsap.set(shuffled, { y: "110%" });
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: titleSection,
-          start: "top 80%",
-          toggleActions: "play none none reset",
-        },
-      });
-      shuffled.forEach((span, i) => {
-        tl.to(
-          span,
-          { y: "0%", ease: "power3.out", duration: 0.5 },
-          i * (0.6 / shuffled.length),
-        );
-      });
-    }, titleSection);
-
-    return () => ctx.revert();
-  }, []);
 
   // Horizontal scroll effect (all screens)
   useEffect(() => {
@@ -170,19 +123,20 @@ function Premi() {
   }, []);
 
   return (
-    <section id="premi" className="bg-blue-900">
+    <section id="premi" className="bg-blue-900 md:py-24">
       {/* Title */}
-      <div ref={titleSectionRef} className="flex items-center py-24 md:py-32">
-        <h2 ref={titleContainerRef} className="w-full text-center text-white">
-          <span className="block">{wrapLetters(LINE1)}</span>
-          <span className="block">{wrapLetters(LINE2)}</span>
+      <div className="flex items-center py-16 md:py-0">
+        <h2 className="w-full text-center text-white">
+          <span>I </span>
+          <span className="font-playfair italic">Premi</span>
+          <span className="block">che ti aspettano</span>
         </h2>
       </div>
 
       {/* Horizontal scroll pinned effect (all screens) */}
       <div
         ref={containerRef}
-        className="-mt-[30vh] flex h-screen flex-col justify-center overflow-hidden md:-mt-[70vh]"
+        className="flex h-screen flex-col justify-center overflow-hidden"
       >
         <div
           ref={cardsContainerRef}
@@ -192,7 +146,7 @@ function Premi() {
             <div
               key={i}
               ref={(el) => (cardRefs.current[i] = el)}
-              className="flex aspect-3/4 w-[80vw] min-w-65 shrink-0 flex-col justify-between overflow-hidden rounded-2xl border-6 p-4 whitespace-normal md:w-[25vw] md:p-8"
+              className="flex aspect-3/4 w-[80vw] min-w-65 shrink-0 flex-col justify-between overflow-hidden rounded-2xl border-6 p-4 whitespace-normal md:w-[28vw] md:p-8"
               style={{
                 backgroundColor: prize.bg,
                 borderColor: prize.border,
@@ -204,7 +158,7 @@ function Premi() {
                   src={prize.icon}
                   alt=""
                   draggable={false}
-                  className="h-12 w-auto md:h-24"
+                  className="h-24"
                 />
               </div>
               <div>

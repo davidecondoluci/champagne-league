@@ -151,21 +151,23 @@ function MarqueeRow({ items, direction = "left", speed = 28 }) {
 
     const initRaf = requestAnimationFrame(() => {
       const state = animRef.current;
-      state.oneSetWidth = track.scrollWidth / 3;
-      // Right-direction starts one set back so wrapping is symmetric
+
+      // offsetLeft is unaffected by CSS transforms (parent rotation) — gives exact layout width
+      const items = track.children;
+      const n = Math.round(items.length / 5);
+      state.oneSetWidth = items[n].offsetLeft - items[0].offsetLeft;
+
       state.x = direction === "right" ? -state.oneSetWidth : 0;
       state.last = null;
 
       const tick = (ts) => {
         if (state.last === null) state.last = ts;
-        // Cap delta to avoid huge jump after a tab switch
         const dt = Math.min((ts - state.last) / 1000, 0.1);
         state.last = ts;
 
         const pps = state.oneSetWidth / speed;
         state.x += (direction === "left" ? -1 : 1) * pps * dt * state.factor;
 
-        // Seamless wrap — just shift by one set, never reset to origin
         if (state.x <= -state.oneSetWidth) state.x += state.oneSetWidth;
         if (state.x >= 0) state.x -= state.oneSetWidth;
 
@@ -199,8 +201,8 @@ function MarqueeRow({ items, direction = "left", speed = 28 }) {
     });
   };
 
-  // Triple items to guarantee seamless loop on any screen width
-  const tripled = [...items, ...items, ...items];
+  // Repeat items 5× to guarantee seamless loop on any screen width
+  const tripled = [...items, ...items, ...items, ...items, ...items];
 
   return (
     <div className="w-full overflow-hidden">
@@ -210,8 +212,8 @@ function MarqueeRow({ items, direction = "left", speed = 28 }) {
         onMouseEnter={slowDown}
         onMouseLeave={speedUp}
       >
-        {tripled.map((partner, i) => (
-          <PartnerCard key={`${partner.alt}-${i}`} {...partner} />
+        {tripled.map((p, i) => (
+          <PartnerCard key={`${p.alt}-${i}`} {...p} />
         ))}
       </div>
     </div>
@@ -223,9 +225,9 @@ function Partner() {
   return (
     <section
       id="partner"
-      className="mt-[-40vh] flex h-screen flex-col items-center justify-center overflow-hidden bg-blue-900 md:mt-[-60vh] md:block md:h-auto md:py-20"
+      className="flex h-screen flex-col items-center justify-center overflow-hidden bg-blue-900"
     >
-      <h2 className="mb-14 px-4 text-center text-white md:mb-16 md:px-8">
+      <h2 className="mb-12 px-4 text-center text-white">
         <span className="font-playfair italic">Partner </span>
         <span>2024</span>
       </h2>
