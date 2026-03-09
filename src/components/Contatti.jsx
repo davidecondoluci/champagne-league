@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { lenis } from "../lenis.js";
 
 const social = [
   { label: "Instagram", href: "https://www.instagram.com/champagneleague_" },
   { label: "Tik Tok", href: "https://www.tiktok.com/@champagneleague_" },
 ];
 
-const navLinks = [
+const links = [
   { label: "Home", href: "#home" },
   { label: "Dettagli", href: "#dettagli" },
   { label: "Premi", href: "#premi" },
@@ -13,6 +14,7 @@ const navLinks = [
   { label: "Gallery", href: "#gallery" },
   { label: "Divise", href: "#divise" },
   { label: "Iscriviti", href: "#iscriviti" },
+  { label: "Contatti", href: "#contatti" },
 ];
 
 const contatti = [
@@ -68,7 +70,7 @@ function Contatti() {
                   className="group/btn flex shrink-0 cursor-pointer items-center gap-1 p-0 text-sm text-white/60 transition-colors duration-300 hover:text-white"
                 >
                   <img
-                    src="/icons/enter.svg"
+                    src="/icons/subdirectory-arrow-right.svg"
                     alt=""
                     className="h-4 w-auto opacity-60 transition-opacity duration-300 group-hover/btn:opacity-100"
                   />
@@ -91,10 +93,14 @@ function Contatti() {
               Menu
             </p>
             <ul className="flex flex-col gap-2">
-              {navLinks.map((l) => (
+              {links.map((l) => (
                 <li key={l.href}>
                   <a
                     href={l.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      lenis.scrollTo(l.href);
+                    }}
                     className="bg-[linear-gradient(currentColor,currentColor)] bg-size-[0%_1px] bg-bottom-left bg-no-repeat transition-[background-size] duration-300 hover:bg-size-[100%_1px]"
                   >
                     {l.label}
