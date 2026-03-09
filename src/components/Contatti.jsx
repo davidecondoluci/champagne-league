@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { lenis } from "../lenis.js";
 
+const FORMSPREE_ID = "xlgpgnnw"; // ← sostituisci con il tuo ID da formspree.io
+
 const social = [
   { label: "Instagram", href: "https://www.instagram.com/champagneleague_" },
   { label: "Tik Tok", href: "https://www.tiktok.com/@champagneleague_" },
@@ -27,47 +29,80 @@ const contatti = [
 
 function Contatti() {
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email.trim()) {
-      setSubmitted(true);
-      setEmail("");
+    if (!email.trim()) return;
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ email, message }),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+        setEmail("");
+        setMessage("");
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
     }
   };
 
   return (
     <section
       id="contatti"
-      className="bg-eerie-black flex h-screen flex-col justify-center gap-16 px-4 pt-16 pb-4 text-white md:justify-between md:px-8 md:pt-20"
+      className="bg-eerie-black flex min-h-screen flex-col justify-between gap-12 p-4 text-white md:h-screen md:gap-0 md:px-8 md:pt-20 md:pb-6"
     >
       {/* Main grid */}
-      <div className="grid grid-cols-1 gap-16 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-16">
         {/* Left — headline + CTA */}
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-6">
           <h2>Vuoi saperne di più?</h2>
           <div className="flex flex-col gap-3">
             {submitted ? (
-              <p className="mt-2 text-white/60">
+              <p className="mt-2 text-white">
                 Grazie! Ti risponderemo al più presto.
+              </p>
+            ) : error ? (
+              <p className="mt-2 text-red-400">
+                Qualcosa è andato storto. Riprova.
               </p>
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="group mt-2 flex max-w-md items-end gap-3 border-b-[0.5px] border-white/40 pb-2 transition-colors duration-300 focus-within:border-white"
+                className="mt-2 flex max-w-md flex-col gap-4"
               >
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="La tua email..."
-                  className="flex-1 bg-transparent text-base text-white placeholder-white/40 outline-none"
-                />
+                <div className="flex items-end gap-4 border-b border-white/40 pb-2 transition-colors duration-300 focus-within:border-white">
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="La tua email..."
+                    className="flex-1 bg-transparent text-base text-white placeholder-white/40 outline-none"
+                  />
+                </div>
+                <div className="flex items-end gap-4 border-b border-white/40 pb-2 transition-colors duration-300 focus-within:border-white">
+                  <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Il tuo messaggio..."
+                    rows={3}
+                    className="flex-1 resize-none bg-transparent text-base text-white placeholder-white/40 outline-none"
+                  />
+                </div>
                 <button
                   type="submit"
-                  className="group/btn flex shrink-0 cursor-pointer items-center gap-1 p-0 text-sm text-white/60 transition-colors duration-300 hover:text-white"
+                  className="group/btn flex w-fit cursor-pointer items-center gap-1 p-0 text-sm text-white/60 transition-colors duration-300 hover:text-white"
                 >
                   <img
                     src="/icons/subdirectory-arrow-right.svg"
