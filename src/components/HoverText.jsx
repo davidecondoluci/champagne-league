@@ -12,6 +12,7 @@ export default function HoverText({ children }) {
 
     const visibleSpans = item.querySelectorAll(".nav-link-visible span");
     const hiddenSpans = item.querySelectorAll(".nav-link-hidden span");
+    const hiddenContainer = item.querySelector(".nav-link-hidden");
 
     if (!gsap.isTweening(visibleSpans) && item.classList.contains("hovered")) {
       item.classList.remove("hovered");
@@ -23,6 +24,7 @@ export default function HoverText({ children }) {
         e.target,
       );
 
+      gsap.set(hiddenContainer, { opacity: 1 });
       gsap.to(visibleSpans, {
         yPercent: 100,
         ease: "back.out(2)",
@@ -37,6 +39,7 @@ export default function HoverText({ children }) {
         onComplete: () => {
           gsap.set(visibleSpans, { clearProps: "all" });
           gsap.set(hiddenSpans, { clearProps: "all" });
+          gsap.set(hiddenContainer, { clearProps: "opacity" });
           item.classList.remove("hovered");
         },
       });
@@ -48,16 +51,22 @@ export default function HoverText({ children }) {
     char === " " ? (
       <span key={i}>&nbsp;</span>
     ) : (
-      <span key={i} className="letter">
+      <span key={i} className="letter inline-block will-change-transform">
         {char}
       </span>
     ),
   );
 
   return (
-    <span ref={itemRef} className="nav-link" onMouseOver={handleMouseOver}>
-      <span className="nav-link-hidden">{letters}</span>
-      <span className="nav-link-visible">{letters}</span>
+    <span
+      ref={itemRef}
+      className="relative block cursor-pointer overflow-hidden"
+      onMouseOver={handleMouseOver}
+    >
+      <span className="nav-link-hidden pointer-events-none absolute bottom-full left-0 opacity-0">
+        {letters}
+      </span>
+      <span className="nav-link-visible block">{letters}</span>
     </span>
   );
 }

@@ -88,13 +88,13 @@ function Dettagli() {
           className="flex h-screen flex-col justify-between p-4 md:px-8 md:py-24"
         >
           {/* Titolo sezione */}
-          <div className="flex flex-row items-end justify-between gap-6 border-b border-white/20 pb-8">
+          <div className="flex flex-row justify-between gap-6 border-b border-white/20 pb-8">
             <h2 className="font-playfair text-white italic">Dettagli</h2>
             <button
               onClick={() =>
                 window.open("/Regolamento_Champagne_League_2026.pdf", "_blank")
               }
-              className="shrink-0 bg-white text-blue-900"
+              className="shrink-0 cursor-pointer bg-white text-blue-900"
             >
               <HoverText>Regolamento</HoverText>
             </button>

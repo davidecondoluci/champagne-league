@@ -1,13 +1,8 @@
 @import "tailwindcss";
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   font-family: "Be Vietnam Pro", sans-serif;
   font-weight: 200;
-  background-color: var(--color-white);
 }
 
 @theme {
@@ -396,30 +391,6 @@ body {
   font-display: swap;
 }
 
-/* Navbar link hover effect */
-.nav-link {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  display: block;
-}
-.nav-link .nav-link-hidden {
-  pointer-events: none;
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-}
-.nav-link .nav-link-visible {
-  display: block;
-}
-.nav-link.hovered span {
-  pointer-events: none;
-}
-.nav-link span span {
-  display: inline-block;
-  will-change: transform;
-}
-
 /* Hide scrollbar for horizontal carousels */
 .scrollbar-hide {
   -ms-overflow-style: none;
@@ -427,19 +398,4 @@ body {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
-}
-
-/* Programma word swap animation */
-.prog-word {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  margin: -0.14em 0;
-}
-.prog-word span {
-  display: block;
-  padding: 0.14em 0;
-}
-.prog-paragraph:not(:first-child) .prog-word span {
-  transform: translate(0, 100%);
 }

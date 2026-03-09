@@ -118,10 +118,10 @@ function Gallery() {
     <section
       ref={sectionRef}
       id="gallery"
-      className="relative mb-16 h-screen w-full overflow-hidden md:mb-24"
+      className="relative h-screen w-full overflow-hidden bg-white"
     >
       {/* Background title */}
-      <h2 className="font-playfair pointer-events-none absolute inset-0 flex items-center justify-center text-[20vw] whitespace-nowrap text-blue-900/5 italic select-none">
+      <h2 className="font-playfair pointer-events-none absolute inset-0 flex items-center justify-center text-[24vw] whitespace-nowrap text-blue-900/5 italic select-none">
         Gallery
       </h2>
 

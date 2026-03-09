@@ -70,7 +70,7 @@ function Divise() {
   return (
     <section
       id="divise"
-      className="relative mb-16 flex h-screen flex-col items-center justify-center gap-8 px-4 py-4 md:mb-24 md:gap-16 md:px-8"
+      className="relative flex h-screen flex-col items-center justify-center gap-8 bg-white px-4 py-4 md:gap-16"
     >
       {/* Header */}
       <div className="flex flex-col items-center gap-4">
@@ -117,7 +117,7 @@ function Divise() {
       <div
         ref={sliderRef}
         onScroll={handleScroll}
-        className="flex w-full snap-x snap-mandatory gap-0 overflow-x-auto pb-2 md:hidden"
+        className="scrollbar-hide flex w-full snap-x snap-mandatory gap-0 overflow-x-auto pb-2 md:hidden"
       >
         {jerseys.map((jersey, i) => (
           <div

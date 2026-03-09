@@ -22,7 +22,7 @@ const steps = [
   {
     icon: "/icons/login.svg",
     title: "Entra nel torneo",
-    desc: "Inserisci il codice XXXX nella sezione torneo, oppure cerca 'Champagne League' direttamente nell'app.",
+    desc: "Inserisci il codice 4IZ276U nella sezione torneo, oppure cerca 'Champagne League' direttamente nell'app.",
     bg: "var(--color-green-700)",
     text: "var(--color-white)",
   },
@@ -97,7 +97,7 @@ function Iscriviti() {
       // Move card up to centre + apply same rotation
       gsap.to(cards[i], {
         rotation: targetRot,
-        y: "-50%", // override the initial y: "55vh" → centres card in viewport
+        y: "-40%", // slightly below centre
         ease: "power1.out",
         scrollTrigger: {
           trigger: pinHeight,
@@ -116,13 +116,13 @@ function Iscriviti() {
   }, []);
 
   return (
-    <section id="iscriviti" className="overflow-hidden pb-16 md:pb-24">
+    <section id="iscriviti" className="overflow-hidden bg-white">
       {/* Fan-wheel scroll effect — pin-height drives the scroll distance */}
       <div ref={pinHeightRef} className="h-[300vh]">
         {/* This 100vh container gets pinned by GSAP */}
         <div ref={containerRef} className="relative h-screen">
           {/* Title — sticky so it only appears when section is in viewport */}
-          <div className="pointer-events-none absolute top-0 left-0 z-10 flex h-full w-full flex-col justify-between py-8">
+          <div className="pointer-events-none absolute top-0 left-0 z-10 flex h-full w-full flex-col justify-between py-24 md:py-12">
             <h2 className="text-center text-blue-900">
               <span>Come </span>
               <span className="font-playfair italic">iscriversi</span>
@@ -142,7 +142,7 @@ function Iscriviti() {
             </div> */}
             <div className="pointer-events-auto flex w-full justify-center">
               <button
-                onClick={() => window.open("/jessico", "_blank")}
+                onClick={() => window.open("https://jessico.app/", "_blank")}
                 className="cursor-pointer bg-blue-900 text-white"
               >
                 <HoverText>Scarica l'app</HoverText>
@@ -161,9 +161,8 @@ function Iscriviti() {
                 {/* Card at the top of the circle; GSAP moves it up on scroll */}
                 <div
                   ref={(el) => (cardRefs.current[i] = el)}
-                  className="absolute top-0 left-1/2 flex w-[55vw] flex-col justify-between rounded-2xl p-4 will-change-transform md:w-[24vw] md:p-8"
+                  className="absolute top-0 left-1/2 flex aspect-3/4 w-[60vw] flex-col justify-between rounded-2xl p-4 will-change-transform md:w-[24vw] md:p-8"
                   style={{
-                    aspectRatio: "0.75",
                     backgroundColor: step.bg,
                     color: step.text,
                   }}
@@ -174,7 +173,7 @@ function Iscriviti() {
                         src={step.icon}
                         alt=""
                         draggable={false}
-                        className="h-12 w-auto md:h-24"
+                        className="h-18 w-auto md:h-24"
                       />
                     </div>
                   )}

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
+import { lenis } from "../lenis.js";
 
 const links = [
   { label: "Dettagli", href: "#dettagli" },
@@ -21,6 +22,7 @@ function NavLink({ label, href, onClick, large }) {
 
     const visibleSpans = item.querySelectorAll("[data-nav='visible'] span");
     const hiddenSpans = item.querySelectorAll("[data-nav='hidden'] span");
+    const hiddenContainer = item.querySelector("[data-nav='hidden']");
 
     if (!gsap.isTweening(visibleSpans) && item.classList.contains("hovered")) {
       item.classList.remove("hovered");
@@ -32,6 +34,7 @@ function NavLink({ label, href, onClick, large }) {
         e.target,
       );
 
+      gsap.set(hiddenContainer, { opacity: 1 });
       gsap.to(visibleSpans, {
         yPercent: 100,
         ease: "back.out(2)",
@@ -47,6 +50,7 @@ function NavLink({ label, href, onClick, large }) {
         onComplete: () => {
           gsap.set(visibleSpans, { clearProps: "all" });
           gsap.set(hiddenSpans, { clearProps: "all" });
+          gsap.set(hiddenContainer, { clearProps: "opacity" });
           item.classList.remove("hovered");
         },
       });
@@ -64,22 +68,30 @@ function NavLink({ label, href, onClick, large }) {
   );
 
   return (
-    <li className="overflow-hidden">
+    <li>
       <a
         ref={itemRef}
         href={href}
-        className={`relative block cursor-pointer overflow-hidden ${large ? "text-4xl" : "text-base"} text-blue-900`}
+        className={`block cursor-pointer ${large ? "text-4xl" : "text-base"} text-blue-900`}
         onMouseOver={handleMouseOver}
-        onClick={onClick}
+        onClick={(e) => {
+          if (href.startsWith("#")) {
+            e.preventDefault();
+            lenis.scrollTo(href);
+          }
+          onClick?.();
+        }}
       >
-        <span
-          data-nav="hidden"
-          className="pointer-events-none absolute bottom-full left-0"
-        >
-          {letters}
-        </span>
-        <span data-nav="visible" className="block">
-          {letters}
+        <span className="relative -mb-[0.2em] block overflow-hidden pb-[0.2em]">
+          <span
+            data-nav="hidden"
+            className="pointer-events-none absolute bottom-full left-0 opacity-0"
+          >
+            {letters}
+          </span>
+          <span data-nav="visible" className="block">
+            {letters}
+          </span>
         </span>
       </a>
     </li>
