@@ -8,8 +8,7 @@ const prizes = [
   {
     icon: "/icons/trophy-1.svg",
     title: "Primo Posto",
-    // desc: "800€ + Cena + Piscina",
-    desc: "Coming soon!",
+    desc: "Trofeo + Champagne + 1 tessera per 20 ingressi in piscina in Pinetina (dal valore di 320€) + Iscrizione gratuita alla prossima edizione",
     bg: "color-mix(in srgb, var(--color-cyan-600) 60%, var(--color-blue-900))",
     border: "var(--color-cyan-100)",
     text: "var(--color-white)",
@@ -17,8 +16,7 @@ const prizes = [
   {
     icon: "/icons/trophy-2.svg",
     title: "Secondo Posto",
-    // desc: "600€ + Cena",
-    desc: "Coming soon!",
+    desc: "Trofeo + Sconto 200€ presso il ristorante La Pinetina",
     bg: "color-mix(in srgb, var(--color-cyan-600) 40%, var(--color-blue-900))",
     border: "var(--color-cyan-200)",
     text: "var(--color-white)",
@@ -26,8 +24,7 @@ const prizes = [
   {
     icon: "/icons/trophy-3.svg",
     title: "Terzo Posto",
-    // desc: "300€ + 3 calcetti",
-    desc: "Coming soon!",
+    desc: "Trofeo + Un'ora di calcetto con aperitivo post calcetto in Pinetina (E-Bar)",
     bg: "color-mix(in srgb, var(--color-cyan-600) 20%, var(--color-blue-900))",
     border: "var(--color-cyan-300)",
     text: "var(--color-white)",
@@ -35,8 +32,7 @@ const prizes = [
   {
     icon: "/icons/crown.svg",
     title: "Miglior Giocatore",
-    // desc: "Giro in Ferrari o Lamborghini",
-    desc: "Coming soon!",
+    desc: "Trofeo + Maglia miglior giocatore",
     bg: "color-mix(in srgb, var(--color-grape-900) 60%, var(--color-blue-900))",
     border: "var(--color-grape-200)",
     text: "var(--color-white)",
@@ -44,21 +40,19 @@ const prizes = [
   {
     icon: "/icons/sports-handball.svg",
     title: "Miglior Portiere",
-    // desc: "Coppa e Guanti",
-    desc: "Coming soon!",
+    desc: "Trofeo + Maglia miglior portiere + Guanti da portiere",
     bg: "color-mix(in srgb, var(--color-grape-900) 40%, var(--color-blue-900))",
     border: "var(--color-grape-300)",
     text: "var(--color-white)",
   },
-  {
-    icon: "/icons/shoe-cleats.svg",
-    title: "Capocannoniere",
-    // desc: "Coppa e giro in barca",
-    desc: "Coming soon!",
-    bg: "color-mix(in srgb, var(--color-grape-900) 20%, var(--color-blue-900))",
-    border: "var(--color-grape-400)",
-    text: "var(--color-white)",
-  },
+  // {
+  //   icon: "/icons/shoe-cleats.svg",
+  //   title: "Capocannoniere",
+  //   desc: "Coming soon!",
+  //   bg: "color-mix(in srgb, var(--color-grape-900) 20%, var(--color-blue-900))",
+  //   border: "var(--color-grape-400)",
+  //   text: "var(--color-white)",
+  // },
 ];
 
 function Premi() {
@@ -127,9 +121,8 @@ function Premi() {
       {/* Title */}
       <div className="flex items-center py-16 md:py-0">
         <h2 className="w-full text-center text-white">
-          <span>I </span>
-          <span className="font-playfair italic">Premi</span>
-          <span className="block">che ti aspettano</span>
+          <span className="font-playfair italic">Premi </span>
+          <span>2024</span>
         </h2>
       </div>
 

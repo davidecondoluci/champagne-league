@@ -22,7 +22,7 @@ const steps = [
   {
     icon: "/icons/login.svg",
     title: "Entra nel torneo",
-    desc: "Inserisci il codice 4IZ276U nella sezione torneo, oppure cerca 'Champagne League' direttamente nell'app.",
+    desc: "Inserisci il codice CHAM2026 nella sezione torneo, oppure cerca 'Champagne League' direttamente nell'app.",
     bg: "var(--color-green-700)",
     text: "var(--color-white)",
   },

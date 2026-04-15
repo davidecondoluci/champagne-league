@@ -14,7 +14,7 @@ const panels = [
   {
     num: "02",
     title: "Iscrizione",
-    text: "250€ a squadra. Include statistiche complete con marcatori e risultati, foto e video dell'evento e dei giocatori. Assicurazione infortuni a 5€ per giocatore, fuori dall'iscrizione.",
+    text: "Da 250€ a squadra. Include statistiche complete con marcatori e risultati, foto e video dell'evento e dei giocatori. Assicurazione infortuni a 5€ per giocatore, fuori dall'iscrizione.",
   },
   {
     num: "03",
