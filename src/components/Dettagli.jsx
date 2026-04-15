@@ -9,12 +9,12 @@ const panels = [
   {
     num: "01",
     title: "Torneo",
-    text: "Calcio a 5 per 32 squadre da massimo 10 giocatori, con partite da 20 minuti. Le fasi garantite: gironi, ottavi, quarti, semifinale, finalina & finale.",
+    text: "Calcio a 5 per 32 squadre da massimo 10 giocatori, con partite da 20 minuti. Le fasi disputate: gironi, ottavi, quarti, semifinale, finalina & finale.",
   },
   {
     num: "02",
     title: "Iscrizione",
-    text: "Da 250€ a squadra. Include statistiche complete con marcatori e risultati, foto e video dell'evento e dei giocatori. Assicurazione infortuni a 5€ per giocatore, fuori dall'iscrizione.",
+    text: "L'iscrizione includeva statistiche complete con marcatori e risultati, foto e video dell'evento e dei giocatori. Assicurazione infortuni disponibile per ogni giocatore.",
   },
   {
     num: "03",
@@ -89,7 +89,10 @@ function Dettagli() {
         >
           {/* Titolo sezione */}
           <div className="flex flex-row justify-between gap-6 border-b border-white/20 pb-8">
-            <h2 className="font-playfair text-white italic">Dettagli</h2>
+            <h2 className="text-white">
+              <span className="font-playfair italic">Dettagli </span>
+              <span>2024</span>
+            </h2>
             <button
               onClick={() =>
                 window.open("/Regolamento_Champagne_League_2026.pdf", "_blank")
