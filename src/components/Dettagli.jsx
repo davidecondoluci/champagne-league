@@ -97,7 +97,7 @@ function Dettagli() {
               onClick={() =>
                 window.open("/Regolamento_Champagne_League_2026.pdf", "_blank")
               }
-              className="shrink-0 cursor-pointer bg-white text-blue-900"
+              className="shrink-0 cursor-pointer self-start bg-white text-blue-900"
             >
               <HoverText>Regolamento</HoverText>
             </button>
