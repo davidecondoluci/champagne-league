@@ -8,7 +8,8 @@ const prizes = [
   {
     icon: "/icons/trophy-1.svg",
     title: "Primo Posto",
-    desc: "800€ + Trofeo + Champagne + 1 tessera per 20 ingressi in piscina in Pinetina (dal valore di 320€) + Iscrizione gratuita alla prossima edizione",
+    value: "1.500\u20AC",
+    desc: "Coppa + iscrizione gratuita alla prossima edizione",
     bg: "color-mix(in srgb, var(--color-cyan-600) 60%, var(--color-blue-900))",
     border: "var(--color-cyan-100)",
     text: "var(--color-white)",
@@ -16,7 +17,8 @@ const prizes = [
   {
     icon: "/icons/trophy-2.svg",
     title: "Secondo Posto",
-    desc: "500€ + Trofeo + Sconto 200€ presso il ristorante La Pinetina",
+    value: "Cena",
+    desc: "Coppa + cena per la squadra offerta dai partner",
     bg: "color-mix(in srgb, var(--color-cyan-600) 40%, var(--color-blue-900))",
     border: "var(--color-cyan-200)",
     text: "var(--color-white)",
@@ -24,7 +26,8 @@ const prizes = [
   {
     icon: "/icons/trophy-3.svg",
     title: "Terzo Posto",
-    desc: "200€ + Trofeo + Un'ora di calcetto con aperitivo post calcetto in Pinetina (E-Bar)",
+    value: "Aperitivo",
+    desc: "Coppa + aperitivo per la squadra offerto dai partner",
     bg: "color-mix(in srgb, var(--color-cyan-600) 20%, var(--color-blue-900))",
     border: "var(--color-cyan-300)",
     text: "var(--color-white)",
@@ -32,27 +35,30 @@ const prizes = [
   {
     icon: "/icons/crown.svg",
     title: "Miglior Giocatore",
-    desc: "Trofeo + Maglia miglior giocatore",
+    value: "Soon",
+    desc: "Coppa + Buono WSE da 2.700\u20AC (3 livelli Full Access) + premi extra TBA",
     bg: "color-mix(in srgb, var(--color-grape-900) 60%, var(--color-blue-900))",
     border: "var(--color-grape-200)",
     text: "var(--color-white)",
   },
   {
-    icon: "/icons/sports-handball.svg",
-    title: "Miglior Portiere",
-    desc: "Trofeo + Maglia miglior portiere + Guanti da portiere",
+    icon: "/icons/shoe-cleats.svg",
+    title: "Capocannoniere",
+    value: "Soon",
+    desc: "Coppa + Buono WSE da 1.700\u20AC (3 livelli in sede) + premi extra TBA",
     bg: "color-mix(in srgb, var(--color-grape-900) 40%, var(--color-blue-900))",
     border: "var(--color-grape-300)",
     text: "var(--color-white)",
   },
-  // {
-  //   icon: "/icons/shoe-cleats.svg",
-  //   title: "Capocannoniere",
-  //   desc: "Coming soon!",
-  //   bg: "color-mix(in srgb, var(--color-grape-900) 20%, var(--color-blue-900))",
-  //   border: "var(--color-grape-400)",
-  //   text: "var(--color-white)",
-  // },
+  {
+    icon: "/icons/sports-handball.svg",
+    title: "Miglior Portiere",
+    value: "Soon",
+    desc: "Coppa + Buono WSE da 1.700\u20AC (3 livelli in sede) + premi extra TBA",
+    bg: "color-mix(in srgb, var(--color-grape-900) 20%, var(--color-blue-900))",
+    border: "var(--color-grape-400)",
+    text: "var(--color-white)",
+  },
 ];
 
 function Premi() {
@@ -122,7 +128,7 @@ function Premi() {
       <div className="flex items-center py-16 md:py-0">
         <h2 className="w-full text-center text-white">
           <span className="font-playfair italic">Premi </span>
-          <span>2024</span>
+          <span>2026</span>
         </h2>
       </div>
 
@@ -155,8 +161,22 @@ function Premi() {
                 />
               </div>
               <div>
-                <h3 style={{ color: prize.text }}>{prize.title}</h3>
-                <p className="mt-2 md:text-xl" style={{ color: prize.text }}>
+                <p
+                  className="text-sm tracking-widest uppercase opacity-60"
+                  style={{ color: prize.text }}
+                >
+                  {prize.title}
+                </p>
+                <p
+                  className="font-playfair mt-2 text-5xl italic md:text-7xl"
+                  style={{ color: prize.text }}
+                >
+                  {prize.value}
+                </p>
+                <p
+                  className="mt-4 text-base font-extralight md:text-lg"
+                  style={{ color: prize.text }}
+                >
                   {prize.desc}
                 </p>
               </div>

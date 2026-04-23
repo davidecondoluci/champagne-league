@@ -5,8 +5,10 @@ import { lenis } from "../lenis.js";
 const links = [
   { label: "Dettagli", href: "#dettagli" },
   { label: "Premi", href: "#premi" },
+  { label: "Pacchetti", href: "#pacchetti" },
   { label: "Partner", href: "#partner" },
   { label: "Gallery", href: "#gallery" },
+  { label: "Storico", href: "#storico" },
   { label: "Divise", href: "#divise" },
   { label: "Iscriviti", href: "#iscriviti" },
   { label: "Contatti", href: "#contatti" },

@@ -9,17 +9,17 @@ const panels = [
   {
     num: "01",
     title: "Torneo",
-    text: "Calcio a 5 per 32 squadre da massimo 10 giocatori, con partite da 20 minuti. Le fasi disputate: gironi, ottavi, quarti, semifinale, finalina & finale.",
+    text: "32 squadre da massimo 10 giocatori, 4 campi sintetici nuovi e 4-8 arbitri di gara. Partite da 2 tempi di 10 minuti. Fasi: gironi, ottavi, quarti, semifinali, finalina e finale.",
   },
   {
     num: "02",
     title: "Iscrizione",
-    text: "L'iscrizione includeva statistiche complete con marcatori e risultati, foto e video dell'evento e dei giocatori. Assicurazione infortuni disponibile per ogni giocatore.",
+    text: "250\u20AC a squadra + 5\u20AC a giocatore di assicurazione sportiva. Iscrizioni aperte fino al 27 giugno 2026 sull'app Jessico con il codice CHAM2026.",
   },
   {
     num: "03",
     title: "Giornata",
-    text: "Bar aperto tutto il giorno, DJ Set e uno sconto in piscina riservato a tutti i partecipanti.",
+    text: "Bar e ristoro tutto il giorno, DJ set, piscina dalle 15:00, calcio-tennis, ping pong e calcetto balilla. After party con ingresso libero dalle 21:00.",
     hasButton: true,
   },
 ];
@@ -91,7 +91,7 @@ function Dettagli() {
           <div className="flex flex-row justify-between gap-6 border-b border-white/20 pb-8">
             <h2 className="text-white">
               <span className="font-playfair italic">Dettagli </span>
-              <span>2024</span>
+              <span>2026</span>
             </h2>
             <Button
               onClick={() =>

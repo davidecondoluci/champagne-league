@@ -6,30 +6,38 @@ gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
   {
+    num: "01",
     icon: "/icons/jessico.svg",
+    label: "Passo 1",
     title: "Scarica Jessico",
-    desc: "Jessico è l'app dedicata ai calcetti: squadre, valutazioni, marcatori, assist e tornei, tutto in un posto.",
+    desc: "L'app ufficiale per tornei, squadre e statistiche live. Disponibile su App Store e Google Play.",
     bg: "var(--color-green-400)",
     text: "var(--color-white)",
   },
   {
+    num: "02",
     icon: "/icons/app-registration.svg",
-    title: "Iscriviti all'app",
-    desc: "Crea il tuo profilo su Jessico e accedi alla sezione tornei.",
+    label: "Passo 2",
+    title: "Crea il profilo",
+    desc: "Registrati in pochi secondi e accedi alla sezione Tornei dell'app.",
     bg: "var(--color-green-600)",
     text: "var(--color-white)",
   },
   {
+    num: "03",
     icon: "/icons/login.svg",
-    title: "Entra nel torneo",
-    desc: "Inserisci il codice CHAM2026 nella sezione torneo, oppure cerca 'Champagne League' direttamente nell'app.",
+    label: "Passo 3",
+    title: "CHAM2026",
+    desc: "Inserisci il codice torneo o cerca \u201CChampagne League\u201D direttamente nell'app.",
     bg: "var(--color-green-700)",
     text: "var(--color-white)",
   },
   {
+    num: "04",
     icon: "/icons/person-add.svg",
-    title: "Unisciti",
-    desc: "Iscriviti come capitano, crea la tua squadra e invita i tuoi amici, oppure partecipa ad una squadra già esistente.",
+    label: "Passo 4",
+    title: "Forma la squadra",
+    desc: "250\u20AC a squadra + 5\u20AC a giocatore. Iscrizioni aperte fino al 27 giugno 2026.",
     bg: "var(--color-green-800)",
     text: "var(--color-white)",
   },
@@ -178,8 +186,22 @@ function Iscriviti() {
                     </div>
                   )}
                   <div>
-                    <h3 style={{ color: step.text }}>{step.title}</h3>
-                    <p className="mt-2 md:text-xl" style={{ color: step.text }}>
+                    <p
+                      className="text-sm tracking-widest uppercase opacity-60"
+                      style={{ color: step.text }}
+                    >
+                      {step.label}
+                    </p>
+                    <p
+                      className="font-playfair mt-2 text-4xl italic md:text-5xl"
+                      style={{ color: step.text }}
+                    >
+                      {step.title}
+                    </p>
+                    <p
+                      className="mt-4 text-sm font-extralight md:text-base"
+                      style={{ color: step.text }}
+                    >
                       {step.desc}
                     </p>
                   </div>

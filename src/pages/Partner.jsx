@@ -229,7 +229,7 @@ function Partner() {
     >
       <h2 className="mb-12 px-4 text-center text-white">
         <span className="font-playfair italic">Partner </span>
-        <span>2024</span>
+        <span>2026</span>
       </h2>
 
       <div
