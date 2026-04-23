@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { lenis } from "../lenis.js";
+import Button from "../components/Button";
 
 const FORMSPREE_ID = "xlgpgnnw"; // ← sostituisci con il tuo ID da formspree.io
 
@@ -100,9 +101,10 @@ function Contatti() {
                     className="flex-1 resize-none bg-transparent text-base text-white placeholder-white/40 outline-none"
                   />
                 </div>
-                <button
+                <Button
                   type="submit"
-                  className="group/btn flex w-fit cursor-pointer items-center gap-1 p-0 text-sm text-white/60 transition-colors duration-300 hover:text-white"
+                  className="group/btn flex w-fit items-center gap-1 p-0 text-sm text-white/60 transition-colors duration-300 hover:text-white"
+                  withHover={false}
                 >
                   <img
                     src="/icons/subdirectory-arrow-right.svg"
@@ -110,7 +112,7 @@ function Contatti() {
                     className="h-4 w-auto opacity-60 transition-opacity duration-300 group-hover/btn:opacity-100"
                   />
                   Invia
-                </button>
+                </Button>
               </form>
             )}
           </div>

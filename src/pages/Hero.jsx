@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import Button from "../components/Button";
 
 // Funzione per calcolare quanto manca all'evento
 const TARGET_DATE = new Date("2026-07-04T00:00:00");
@@ -111,13 +112,14 @@ function Hero() {
       className="flex h-screen flex-col items-center justify-center overflow-hidden bg-white px-4 text-center text-blue-900"
     >
       {/* Date badge → BUTTON per download ICS */}
-      <button
+      <Button
         onClick={downloadICS}
-        className="mb-6 cursor-pointer bg-blue-900/5 text-blue-900"
+        className="mb-6 bg-blue-900/5 text-blue-900"
+        withHover={false}
       >
         <img src="/icons/calendar-month.svg" alt="" className="h-6 w-auto" />
         Sabato, 4 luglio 2026, ore 09:00
-      </button>
+      </Button>
 
       {/* Resto invariato */}
       <h1 ref={h1Ref}>

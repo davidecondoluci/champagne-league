@@ -1,12 +1,12 @@
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Dettagli from "./components/Dettagli";
-import Premi from "./components/Premi";
-import Partner from "./components/Partner";
-import Gallery from "./components/Gallery";
-import Divise from "./components/Divise";
-import Iscriviti from "./components/Iscriviti";
-import Contatti from "./components/Contatti";
+import Hero from "./pages/Hero";
+import Dettagli from "./pages/Dettagli";
+import Premi from "./pages/Premi";
+import Partner from "./pages/Partner";
+import Gallery from "./pages/Gallery";
+import Divise from "./pages/Divise";
+import Iscriviti from "./pages/Iscriviti";
+import Contatti from "./pages/Contatti";
 
 function App() {
   return (

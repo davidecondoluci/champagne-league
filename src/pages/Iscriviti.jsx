@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import HoverText from "./HoverText";
+import Button from "../components/Button";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
@@ -141,12 +141,12 @@ function Iscriviti() {
               </a>
             </div> */}
             <div className="pointer-events-auto flex w-full justify-center">
-              <button
+              <Button
                 onClick={() => window.open("https://jessico.app/", "_blank")}
-                className="cursor-pointer bg-blue-900 text-white"
+                className="bg-blue-900 text-white"
               >
-                <HoverText>Scarica l'app</HoverText>
-              </button>
+                Scarica l'app
+              </Button>
             </div>
           </div>
 

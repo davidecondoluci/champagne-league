@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import HoverText from "./HoverText";
+import Button from "../components/Button";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -93,14 +93,14 @@ function Dettagli() {
               <span className="font-playfair italic">Dettagli </span>
               <span>2024</span>
             </h2>
-            <button
+            <Button
               onClick={() =>
                 window.open("/Regolamento_Champagne_League_2026.pdf", "_blank")
               }
-              className="shrink-0 cursor-pointer self-start bg-white text-blue-900"
+              className="shrink-0 self-end bg-white text-blue-900 md:self-start"
             >
-              <HoverText>Regolamento</HoverText>
-            </button>
+              Regolamento
+            </Button>
           </div>
 
           {/* 3 colonne */}

@@ -8,7 +8,7 @@ const prizes = [
   {
     icon: "/icons/trophy-1.svg",
     title: "Primo Posto",
-    desc: "Trofeo + Champagne + 1 tessera per 20 ingressi in piscina in Pinetina (dal valore di 320€) + Iscrizione gratuita alla prossima edizione",
+    desc: "800€ + Trofeo + Champagne + 1 tessera per 20 ingressi in piscina in Pinetina (dal valore di 320€) + Iscrizione gratuita alla prossima edizione",
     bg: "color-mix(in srgb, var(--color-cyan-600) 60%, var(--color-blue-900))",
     border: "var(--color-cyan-100)",
     text: "var(--color-white)",
@@ -16,7 +16,7 @@ const prizes = [
   {
     icon: "/icons/trophy-2.svg",
     title: "Secondo Posto",
-    desc: "Trofeo + Sconto 200€ presso il ristorante La Pinetina",
+    desc: "500€ + Trofeo + Sconto 200€ presso il ristorante La Pinetina",
     bg: "color-mix(in srgb, var(--color-cyan-600) 40%, var(--color-blue-900))",
     border: "var(--color-cyan-200)",
     text: "var(--color-white)",
@@ -24,7 +24,7 @@ const prizes = [
   {
     icon: "/icons/trophy-3.svg",
     title: "Terzo Posto",
-    desc: "Trofeo + Un'ora di calcetto con aperitivo post calcetto in Pinetina (E-Bar)",
+    desc: "200€ + Trofeo + Un'ora di calcetto con aperitivo post calcetto in Pinetina (E-Bar)",
     bg: "color-mix(in srgb, var(--color-cyan-600) 20%, var(--color-blue-900))",
     border: "var(--color-cyan-300)",
     text: "var(--color-white)",

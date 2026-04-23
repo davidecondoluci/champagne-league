@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import HoverText from "./HoverText";
+import Button from "../components/Button";
 
 const jerseys = [
   {
@@ -236,14 +236,14 @@ function Divise() {
       </div>
 
       {/* Store button */}
-      <button
+      <Button
         onClick={() =>
           window.open("https://www.brancostore.it/champagneleague/", "_blank")
         }
-        className="cursor-pointer bg-blue-900 text-white"
+        className="bg-blue-900 text-white"
       >
-        <HoverText>Visita lo store</HoverText>
-      </button>
+        Visita lo store
+      </Button>
     </section>
   );
 }
