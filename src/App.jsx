@@ -15,12 +15,12 @@ function App() {
     <>
       <Navbar />
       <Hero />
+      <Storico />
       <Dettagli />
       <Premi />
       <Pacchetti />
       <Partner />
       <Gallery />
-      <Storico />
       <Divise />
       <Iscriviti />
       <Contatti />
