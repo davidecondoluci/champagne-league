@@ -4,10 +4,10 @@ const packages = [
   {
     num: "01",
     name: "Esperto",
-    price: "+15\u20AC",
+    price: "+15€",
     perks: [
       "Pranzo con bibita o birra",
-      "Free entry con drink all\u2019After Party",
+      "Free entry con drink all’After Party",
     ],
     bg: "var(--color-blue-700)",
     border: "var(--color-blue-300)",
@@ -16,11 +16,11 @@ const packages = [
   {
     num: "02",
     name: "Campione",
-    price: "+30\u20AC",
+    price: "+30€",
     recommended: true,
     perks: [
       "Pranzo con bibita o birra",
-      "Free entry con drink all\u2019After Party",
+      "Free entry con drink all’After Party",
       "Ingresso piscina dalle 15:00",
       "50% di sconto per un accompagnatore",
     ],
@@ -31,9 +31,9 @@ const packages = [
   {
     num: "03",
     name: "Leggenda",
-    price: "+45\u20AC",
+    price: "+45€",
     perks: [
-      "Tutto ci\u00f2 incluso nel Campione",
+      "Tutto ciò incluso nel Campione",
       "Maglia personalizzata Champagne League",
     ],
     bg: "var(--color-cyan-700)",
@@ -46,7 +46,7 @@ function Pacchetti() {
   return (
     <section
       id="pacchetti"
-      className="flex min-h-screen flex-col items-center justify-center gap-12 bg-white px-4 py-16 md:gap-16 md:py-24"
+      className="flex min-h-screen flex-col items-center justify-center gap-12 bg-white px-4 py-16 md:h-screen md:gap-10 md:py-0"
     >
       <div className="flex flex-col items-center gap-4 text-center">
         <h2 className="text-blue-900">
@@ -63,7 +63,7 @@ function Pacchetti() {
         {packages.map((pkg) => (
           <div
             key={pkg.name}
-            className="flex aspect-3/4 flex-col justify-between overflow-hidden rounded-2xl border-6 p-6 md:p-8"
+            className="flex flex-col overflow-hidden rounded-2xl border-6 p-6 md:p-8"
             style={{
               backgroundColor: pkg.bg,
               borderColor: pkg.border,
@@ -86,7 +86,7 @@ function Pacchetti() {
             </div>
 
             {/* Bottom: label + prezzo + perks */}
-            <div className="flex flex-col gap-3">
+            <div className="mt-4 flex flex-col gap-3">
               <p
                 className="text-xs tracking-widest uppercase opacity-60"
                 style={{ color: pkg.text }}
