@@ -124,11 +124,11 @@ function Iscriviti() {
   }, []);
 
   return (
-    <section id="iscriviti" className="overflow-hidden bg-white">
+    <section id="iscriviti" className="relative overflow-hidden bg-white">
       {/* Fan-wheel scroll effect — pin-height drives the scroll distance */}
-      <div ref={pinHeightRef} className="h-[300vh]">
+      <div ref={pinHeightRef} className="h-[250vh] md:h-[300vh]">
         {/* This 100vh container gets pinned by GSAP */}
-        <div ref={containerRef} className="relative h-screen">
+        <div ref={containerRef} className="relative h-[100dvh]">
           {/* Title — sticky so it only appears when section is in viewport */}
           <div className="pointer-events-none absolute top-0 left-0 z-10 flex h-full w-full flex-col justify-between py-24 md:py-12">
             <h2 className="text-center text-blue-900">
