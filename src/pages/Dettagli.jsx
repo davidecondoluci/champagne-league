@@ -14,7 +14,7 @@ const panels = [
   {
     num: "02",
     title: "Iscrizione",
-    text: "250\u20AC a squadra + 5\u20AC a giocatore di assicurazione sportiva. Iscrizioni aperte fino al 27 giugno 2026 sull'app Jessico con il codice CHAM2026.",
+    text: "250\u20AC a squadra + 5\u20AC a giocatore di assicurazione sportiva. Iscrizioni aperte fino al 20 giugno 2026 sull'app Jessico con il codice CHAM2026.",
   },
   {
     num: "03",
