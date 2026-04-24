@@ -58,6 +58,7 @@ function Gallery() {
       gsap.set(media, {
         x: (Math.random() - 0.5) * 0.16 * W,
         y: (Math.random() - 0.5) * 0.1 * W,
+        force3D: true,
       });
     });
 
@@ -66,11 +67,13 @@ function Gallery() {
     const scrollTween = gsap.to(container, {
       x: -distance,
       ease: "none",
+      force3D: true,
       scrollTrigger: {
         trigger: section,
         pin: true,
         anticipatePin: 1,
         scrub: 1,
+        fastScrollEnd: true,
         end: "+=" + distance,
       },
     });
@@ -81,6 +84,7 @@ function Gallery() {
         yPercent: (Math.random() - 0.5) * 300,
         xPercent: Math.random() * 400,
         ease: "power1.out",
+        force3D: true,
         scrollTrigger: {
           trigger: media,
           containerAnimation: scrollTween,
@@ -98,6 +102,7 @@ function Gallery() {
           yPercent: (Math.random() - 0.5) * 300,
           xPercent: -Math.random() * 400,
           ease: "power1.in",
+          force3D: true,
           scrollTrigger: {
             trigger: media,
             containerAnimation: scrollTween,
@@ -121,7 +126,10 @@ function Gallery() {
       className="relative h-screen w-full overflow-hidden bg-white"
     >
       {/* Background title */}
-      <h2 className="font-playfair pointer-events-none absolute inset-0 flex items-center justify-center text-[24vw] whitespace-nowrap text-blue-900/5 italic select-none">
+      <h2
+        className="font-playfair pointer-events-none absolute inset-0 flex items-center justify-center whitespace-nowrap text-blue-900/5 italic select-none"
+        style={{ fontSize: "24vw" }}
+      >
         Gallery
       </h2>
 
@@ -135,6 +143,7 @@ function Gallery() {
               alt={`Foto ${i + 1}`}
               className="gallery-media block rounded-2xl"
               decoding="async"
+              style={{ willChange: "transform" }}
             />
           ))}
         </div>
