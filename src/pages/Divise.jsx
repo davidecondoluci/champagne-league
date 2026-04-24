@@ -21,11 +21,13 @@ const jerseys = [
 ];
 
 function Divise() {
-  const flipRefs = useRef([]);
-  const flipMobileRefs = useRef([]);
   const sliderRef = useRef(null);
-  const [flippedMobile, setFlippedMobile] = useState([false, false, false]);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [flippedMobile, setFlippedMobile] = useState([false, false, false]);
+
+  // front image refs: [mobile[0..2], desktop[0..2]]
+  const mobileFrontRefs = useRef([]);
+  const desktopFrontRefs = useRef([]);
 
   const handleScroll = () => {
     const el = sliderRef.current;
@@ -35,35 +37,39 @@ function Divise() {
   };
 
   useEffect(() => {
-    // Set perspective on mobile flip refs
-    flipMobileRefs.current.forEach((el) => {
-      if (el) gsap.set(el, { transformStyle: "preserve-3d" });
+    // Pre-decode all jersey images
+    jerseys.forEach(({ front, back }) => {
+      [front, back].forEach((src) => {
+        const img = new window.Image();
+        img.src = src;
+        img.decode().catch(() => {});
+      });
     });
   }, []);
-
-  const handleEnter = (i) => {
-    gsap.to(flipRefs.current[i], {
-      rotationY: 180,
-      duration: 0.55,
-      ease: "power3.inOut",
-    });
-  };
-
-  const handleLeave = (i) => {
-    gsap.to(flipRefs.current[i], {
-      rotationY: 0,
-      duration: 0.55,
-      ease: "power3.inOut",
-    });
-  };
 
   const handleMobileToggle = (i) => {
     const next = !flippedMobile[i];
     setFlippedMobile((prev) => prev.map((v, idx) => (idx === i ? next : v)));
-    gsap.to(flipMobileRefs.current[i], {
-      rotationY: next ? 180 : 0,
-      duration: 0.55,
-      ease: "power3.inOut",
+    gsap.to(mobileFrontRefs.current[i], {
+      autoAlpha: next ? 0 : 1,
+      duration: 0.4,
+      ease: "power2.inOut",
+    });
+  };
+
+  const handleEnter = (i) => {
+    gsap.to(desktopFrontRefs.current[i], {
+      autoAlpha: 0,
+      duration: 0.4,
+      ease: "power2.inOut",
+    });
+  };
+
+  const handleLeave = (i) => {
+    gsap.to(desktopFrontRefs.current[i], {
+      autoAlpha: 1,
+      duration: 0.4,
+      ease: "power2.inOut",
     });
   };
 
@@ -87,33 +93,7 @@ function Divise() {
         </h3>
       </div>
 
-      {/* GPU primer: back images rendered off-screen with opacity 0.001 so the browser
-           uploads textures before the first flip — avoids first-flip lag */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "fixed",
-          left: "-9999px",
-          top: 0,
-          pointerEvents: "none",
-        }}
-      >
-        {jerseys.map((jersey, i) => (
-          <img
-            key={i}
-            src={jersey.back}
-            alt=""
-            style={{
-              opacity: 0.001,
-              willChange: "transform",
-              transform: "translate3d(0,0,0)",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Cards */}
-      {/* Mobile: snap scroll, 80vw cards so next card peeks */}
+      {/* Mobile: snap scroll */}
       <div
         ref={sliderRef}
         onScroll={handleScroll}
@@ -127,32 +107,27 @@ function Divise() {
             onClick={() => handleMobileToggle(i)}
           >
             <div
-              ref={(el) => (flipMobileRefs.current[i] = el)}
               style={{
                 width: "70vw",
                 maxWidth: "280px",
                 position: "relative",
-                transformStyle: "preserve-3d",
-                perspective: "600px",
-                willChange: "transform",
               }}
             >
-              <img
-                src={jersey.front}
-                alt={`${jersey.label} fronte`}
-                draggable={false}
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  display: "block",
-                  backfaceVisibility: "hidden",
-                  WebkitBackfaceVisibility: "hidden",
-                }}
-              />
+              {/* Back — base layer */}
               <img
                 src={jersey.back}
                 alt={`${jersey.label} retro`}
                 draggable={false}
+                decoding="async"
+                style={{ width: "100%", height: "auto", display: "block" }}
+              />
+              {/* Front — fades out on click */}
+              <img
+                ref={(el) => (mobileFrontRefs.current[i] = el)}
+                src={jersey.front}
+                alt={`${jersey.label} fronte`}
+                draggable={false}
+                decoding="async"
                 style={{
                   width: "100%",
                   height: "auto",
@@ -160,10 +135,6 @@ function Divise() {
                   position: "absolute",
                   top: 0,
                   left: 0,
-                  backfaceVisibility: "hidden",
-                  WebkitBackfaceVisibility: "hidden",
-                  transform: "rotateY(180deg)",
-                  willChange: "transform",
                 }}
               />
             </div>
@@ -177,60 +148,50 @@ function Divise() {
           <span
             key={i}
             className={`block h-1.5 rounded-full transition-all duration-300 ${
-              i === activeSlide ? "w-6 bg-blue-900" : "w-1.5 bg-blue-900/25"
+              i === activeSlide ? "w-6 bg-blue-900" : "w-2 bg-blue-900/25"
             }`}
           />
         ))}
       </div>
 
-      {/* Desktop: flip row */}
+      {/* Desktop: hover fade */}
       <div className="hidden w-full items-center justify-center gap-24 md:flex">
         {jerseys.map((jersey, i) => (
           <div
             key={i}
-            style={{ width: "20vw", maxWidth: 300 }}
+            style={{
+              width: "20vw",
+              maxWidth: 300,
+              position: "relative",
+              cursor: "default",
+            }}
             onMouseEnter={() => handleEnter(i)}
             onMouseLeave={() => handleLeave(i)}
           >
-            <div
-              ref={(el) => (flipRefs.current[i] = el)}
+            {/* Back — base layer */}
+            <img
+              src={jersey.back}
+              alt={`${jersey.label} retro`}
+              draggable={false}
+              decoding="async"
+              style={{ width: "100%", height: "auto", display: "block" }}
+            />
+            {/* Front — fades out on hover */}
+            <img
+              ref={(el) => (desktopFrontRefs.current[i] = el)}
+              src={jersey.front}
+              alt={`${jersey.label} fronte`}
+              draggable={false}
+              decoding="async"
               style={{
                 width: "100%",
-                position: "relative",
-                transformStyle: "preserve-3d",
-                willChange: "transform",
+                height: "auto",
+                display: "block",
+                position: "absolute",
+                top: 0,
+                left: 0,
               }}
-            >
-              <img
-                src={jersey.front}
-                alt={`${jersey.label} fronte`}
-                draggable={false}
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  display: "block",
-                  backfaceVisibility: "hidden",
-                  WebkitBackfaceVisibility: "hidden",
-                }}
-              />
-              <img
-                src={jersey.back}
-                alt={`${jersey.label} retro`}
-                draggable={false}
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  display: "block",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  backfaceVisibility: "hidden",
-                  WebkitBackfaceVisibility: "hidden",
-                  transform: "rotateY(180deg)",
-                  willChange: "transform",
-                }}
-              />
-            </div>
+            />
           </div>
         ))}
       </div>
