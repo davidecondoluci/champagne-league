@@ -174,7 +174,7 @@ function Iscriviti() {
                       ) : (
                         <span
                           className="material-symbols-rounded"
-                          style={{ fontSize: "clamp(9rem, 22vw, 6rem)" }}
+                          style={{ fontSize: "clamp(5rem, 14vw, 7.5rem)" }}
                         >
                           {step.icon}
                         </span>
