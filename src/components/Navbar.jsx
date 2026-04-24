@@ -7,10 +7,10 @@ const links = [
   { label: "Premi", href: "#premi" },
   { label: "Pacchetti", href: "#pacchetti" },
   { label: "Partner", href: "#partner" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Storico", href: "#storico" },
-  { label: "Divise", href: "#divise" },
   { label: "Iscriviti", href: "#iscriviti" },
+  { label: "Storia", href: "#storia" },
+  { label: "Divise", href: "#divise" },
+  { label: "Gallery", href: "#gallery" },
   { label: "Contatti", href: "#contatti" },
 ];
 
@@ -154,11 +154,12 @@ function Navbar() {
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "close" : "menu"}
         >
-          <img
-            src={open ? "/icons/close.svg" : "/icons/menu.svg"}
-            alt={open ? "Chiudi menu" : "Apri menu"}
-            className="h-4 w-auto"
-          />
+          <span
+            className="material-symbols-rounded"
+            style={{ fontSize: "1.75rem" }}
+          >
+            {open ? "close" : "menu"}
+          </span>
         </a>
       </nav>
 
