@@ -19,7 +19,7 @@ function getTimeLeft() {
 function CountdownUnit({ value, label }) {
   return (
     <div className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-blue-900/5 p-4">
-      <span className="text-6xl font-medium text-blue-900 md:text-8xl">
+      <span className="w-[2ch] text-center text-6xl font-medium text-blue-900 tabular-nums md:text-8xl">
         {String(value).padStart(2, "0")}
       </span>
       <span className="text-xs font-medium text-blue-900 md:text-sm">
@@ -117,7 +117,12 @@ function Hero() {
         className="mb-6 bg-blue-900/5 text-blue-900"
         withHover={false}
       >
-        <img src="/icons/calendar-month.svg" alt="" className="h-6 w-auto" />
+        <span
+          className="material-symbols-rounded"
+          style={{ fontSize: "clamp(1rem, 2vw, 1.5rem)" }}
+        >
+          calendar_month
+        </span>
         Sabato, 4 luglio 2026, ore 09:00
       </Button>
 
