@@ -6,7 +6,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const prizes = [
   {
-    icon: "/icons/trophy-1.svg",
+    icon: "emoji_events",
     title: "Primo Posto",
     value: "1.500\u20AC",
     desc: "Coppa + iscrizione gratuita alla prossima edizione",
@@ -15,7 +15,7 @@ const prizes = [
     text: "var(--color-white)",
   },
   {
-    icon: "/icons/trophy-2.svg",
+    icon: "emoji_events",
     title: "Secondo Posto",
     value: "Cena",
     desc: "Coppa + cena per la squadra offerta dai partner",
@@ -24,7 +24,7 @@ const prizes = [
     text: "var(--color-white)",
   },
   {
-    icon: "/icons/trophy-3.svg",
+    icon: "emoji_events",
     title: "Terzo Posto",
     value: "Aperitivo",
     desc: "Coppa + aperitivo per la squadra offerto dai partner",
@@ -33,7 +33,7 @@ const prizes = [
     text: "var(--color-white)",
   },
   {
-    icon: "/icons/crown.svg",
+    icon: "crown",
     title: "Miglior Giocatore",
     value: "Soon",
     desc: "Coppa + Buono WSE da 2.700\u20AC (3 livelli Full Access) + premi extra TBA",
@@ -42,7 +42,7 @@ const prizes = [
     text: "var(--color-white)",
   },
   {
-    icon: "/icons/shoe-cleats.svg",
+    icon: "shoe_cleats",
     title: "Capocannoniere",
     value: "Soon",
     desc: "Coppa + Buono WSE da 1.700\u20AC (3 livelli in sede) + premi extra TBA",
@@ -51,7 +51,7 @@ const prizes = [
     text: "var(--color-white)",
   },
   {
-    icon: "/icons/sports-handball.svg",
+    icon: "sports_handball",
     title: "Miglior Portiere",
     value: "Soon",
     desc: "Coppa + Buono WSE da 1.700\u20AC (3 livelli in sede) + premi extra TBA",
@@ -145,7 +145,7 @@ function Premi() {
             <div
               key={i}
               ref={(el) => (cardRefs.current[i] = el)}
-              className="flex aspect-3/4 w-[80vw] min-w-65 shrink-0 flex-col justify-between overflow-hidden rounded-2xl border-6 p-4 whitespace-normal md:w-[28vw] md:p-8"
+              className="flex aspect-3/4 w-[80vw] min-w-64 shrink-0 flex-col justify-between overflow-hidden rounded-2xl border p-4 whitespace-normal md:w-[28vw] md:p-8"
               style={{
                 backgroundColor: prize.bg,
                 borderColor: prize.border,
@@ -153,12 +153,12 @@ function Premi() {
               }}
             >
               <div>
-                <img
-                  src={prize.icon}
-                  alt=""
-                  draggable={false}
-                  className="h-24"
-                />
+                <span
+                  className="material-symbols-rounded"
+                  style={{ fontSize: "clamp(9rem, 22vw, 6rem)" }}
+                >
+                  {prize.icon}
+                </span>
               </div>
               <div>
                 <p
@@ -167,12 +167,12 @@ function Premi() {
                 >
                   {prize.title}
                 </p>
-                <p
-                  className="font-playfair mt-2 text-5xl italic md:text-7xl"
+                <h3
+                  className="mt-2 text-4xl font-medium md:text-6xl"
                   style={{ color: prize.text }}
                 >
                   {prize.value}
-                </p>
+                </h3>
                 <p
                   className="mt-4 text-base font-extralight md:text-lg"
                   style={{ color: prize.text }}

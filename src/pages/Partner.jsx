@@ -4,56 +4,6 @@ import gsap from "gsap";
 // padding: V H — wide logos need less H to fill the card; square logos need more.
 const partners = [
   {
-    src: "/partner/aixam.svg",
-    alt: "Aixam",
-    href: "https://www.aixam.com",
-  },
-  {
-    src: "/partner/archivio.svg",
-    alt: "Archivio",
-    href: "https://archivio.bar/",
-  },
-  {
-    src: "/partner/autentiko.svg",
-    alt: "Autentiko",
-    href: "https://www.autentiko.it",
-  },
-  {
-    src: "/partner/autovittani.svg",
-    alt: "Autovittani",
-    href: "https://www.autovittani.it",
-  },
-  {
-    src: "/partner/brancostore.svg",
-    alt: "Branco Store",
-    href: "https://www.brancostore.it",
-  },
-  {
-    src: "/partner/colombo-cafe.svg",
-    alt: "Colombo Café",
-    href: "https://www.instagram.com/colombo_cafe/",
-  },
-  {
-    src: "/partner/easy-driver.svg",
-    alt: "Easy Driver",
-    href: "https://www.autoscuolacatelli.it/",
-  },
-  {
-    src: "/partner/ferramenta.svg",
-    alt: "Ferramenta Crippa Daniele",
-    href: "https://www.ferramentacrippa.it/",
-  },
-  {
-    src: "/partner/la-pinetina.svg",
-    alt: "La Pinetina",
-    href: "https://www.pinetina.it/",
-  },
-  {
-    src: "/partner/lam.svg",
-    alt: "LAM",
-    href: "https://www.lamautoricambi.it/",
-  },
-  {
     src: "/partner/mc.svg",
     alt: "McDonald's",
     href: "https://www.mcdonalds.it",
@@ -64,33 +14,44 @@ const partners = [
     href: "https://www.instagram.com/orgoglio_comasco/",
   },
   {
-    src: "/partner/ox.svg",
-    alt: "OX",
-    href: "https://www.oxpubandgrill.it/vertemate/",
+    src: "/partner/brancostore.svg",
+    alt: "Branco Store",
+    href: "https://www.brancostore.it",
   },
   {
-    src: "/partner/stampa-la-tua-tshirt.svg",
-    alt: "Stampa la tua T-shirt",
-    href: "https://stampalatuatshirt.it/",
+    src: "/partner/bak-pasticceria.svg",
+    alt: "BAK Pasticceria",
+    href: "https://www.pasticceriabak.com/",
   },
   {
-    src: "/partner/il-bussolotto.svg",
-    alt: "Tabaccheria Il Bussolotto",
+    src: "/partner/fk-pizzeria.svg",
+    alt: "FK Pizzeria",
+    href: "https://fkpizza.com/laterrazza/",
   },
   {
-    src: "/partner/upcotech.svg",
-    alt: "Upcotech",
-    href: "https://www.upcotech.it/",
+    src: "/partner/jessico.svg",
+    alt: "Jessico",
+    href: "http://www.jessico.app/",
   },
   {
-    src: "/partner/wehere.svg",
-    alt: "WeHere",
-    href: "https://www.instagram.com/wehere.it/",
+    src: "/partner/lariosport.svg",
+    alt: "Lario Sport",
+    href: "http://www.lariosport.it/",
+  },
+  {
+    src: "/partner/sydney-pasticceria.svg",
+    alt: "Sydney Pasticceria",
+    href: "https://www.instagram.com/sydney2000.pasticceria.gelato/",
+  },
+  {
+    src: "/partner/wall-street-english.svg",
+    alt: "Wall Street English",
+    href: "https://www.wallstreetenglish.it/scuola-inglese/como/",
   },
 ];
 
-const row1 = partners.slice(0, 8);
-const row2 = partners.slice(8);
+const row1 = partners.slice(0, 4);
+const row2 = partners.slice(4);
 
 /* Single partner card */
 function PartnerCard({ src, alt, padding, href }) {
@@ -118,7 +79,7 @@ function PartnerCard({ src, alt, padding, href }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group mx-2 flex h-40 w-40 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-6 md:mx-3 md:h-56 md:w-56"
+      className="group mx-2 flex h-40 w-40 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-6 md:mx-4 md:h-56 md:w-56"
       style={{ padding }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -225,7 +186,7 @@ function Partner() {
   return (
     <section
       id="partner"
-      className="flex h-screen flex-col items-center justify-center overflow-hidden bg-blue-900"
+      className="flex h-screen flex-col items-center justify-center overflow-hidden bg-blue-900 pb-16 md:pb-0"
     >
       <h2 className="mb-12 px-4 text-center text-white">
         <span className="font-playfair italic">Partner </span>

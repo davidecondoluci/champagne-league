@@ -74,30 +74,51 @@ function Dettagli() {
 
         paras.forEach((para, i) => {
           const words = para.querySelectorAll("span > span");
-          tl.to(words, { y: "0%", duration: 1, stagger: 0.05, ease: "power4.out" });
+          tl.to(words, {
+            y: "0%",
+            duration: 1,
+            stagger: 0.05,
+            ease: "power4.out",
+          });
           if (i < paras.length - 1) {
             tl.to({}, { duration: 0.8 }); // pausa tra un testo e il successivo
           }
         });
       });
 
-      // Mobile: Nessun pin, animazione allo scroll normale
+      // Mobile: Pin + scrub come desktop
       mm.add("(max-width: 767px)", () => {
         paras.forEach((para) => {
           gsap.set(para.querySelectorAll("span > span"), { y: "110%" });
         });
-        paras.forEach((para) => {
+
+        ScrollTrigger.create({
+          trigger: pinHeight,
+          start: "top top",
+          end: "bottom bottom",
+          pin: container,
+        });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pinHeight,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true,
+          },
+        });
+
+        paras.forEach((para, i) => {
           const words = para.querySelectorAll("span > span");
-          gsap.to(words, {
+          tl.to(words, {
             y: "0%",
             duration: 1,
-            stagger: 0.02,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: para,
-              start: "top 85%",
-            },
+            stagger: 0.05,
+            ease: "power4.out",
           });
+          if (i < paras.length - 1) {
+            tl.to({}, { duration: 0.8 });
+          }
         });
       });
     });
@@ -106,11 +127,14 @@ function Dettagli() {
   }, []);
 
   return (
-    <section id="dettagli" className="bg-blue-900 text-white relative overflow-hidden">
-      <div ref={pinHeightRef} className="md:h-[300vh]">
+    <section
+      id="dettagli"
+      className="relative overflow-hidden bg-blue-900 text-white"
+    >
+      <div ref={pinHeightRef} className="h-[250vh] md:h-[300vh]">
         <div
           ref={containerRef}
-          className="flex flex-col justify-between p-4 md:px-8 py-16 md:py-24 md:h-screen"
+          className="flex h-screen flex-col justify-between p-4 py-16 md:px-8 md:py-24"
         >
           {/* Titolo sezione */}
           <div className="flex flex-row justify-between gap-6 border-b border-white/20 pb-8">

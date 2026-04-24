@@ -2,43 +2,36 @@ import Button from "../components/Button";
 
 const packages = [
   {
-    num: "01",
     name: "Esperto",
     price: "+15€",
+    unit: "a giocatore",
     perks: [
       "Pranzo con bibita o birra",
-      "Free entry con drink all’After Party",
+      "Free entry con drink all'After Party",
     ],
-    bg: "var(--color-blue-700)",
-    border: "var(--color-blue-300)",
-    text: "var(--color-white)",
+    recommended: false,
   },
   {
-    num: "02",
     name: "Campione",
     price: "+30€",
-    recommended: true,
+    unit: "a giocatore",
     perks: [
       "Pranzo con bibita o birra",
-      "Free entry con drink all’After Party",
+      "Free entry con drink all'After Party",
       "Ingresso piscina dalle 15:00",
       "50% di sconto per un accompagnatore",
     ],
-    bg: "var(--color-grape-700)",
-    border: "var(--color-grape-200)",
-    text: "var(--color-white)",
+    recommended: true,
   },
   {
-    num: "03",
     name: "Leggenda",
     price: "+45€",
+    unit: "a giocatore",
     perks: [
       "Tutto ciò incluso nel Campione",
       "Maglia personalizzata Champagne League",
     ],
-    bg: "var(--color-cyan-700)",
-    border: "var(--color-cyan-200)",
-    text: "var(--color-white)",
+    recommended: false,
   },
 ];
 
@@ -46,85 +39,92 @@ function Pacchetti() {
   return (
     <section
       id="pacchetti"
-      className="flex min-h-screen flex-col items-center justify-center gap-12 bg-white px-4 py-16 md:h-screen md:gap-10 md:py-0"
+      className="flex min-h-screen flex-col items-center justify-center gap-8 bg-blue-900 px-4 py-16 md:h-screen md:gap-8 md:py-0"
     >
-      <div className="flex flex-col items-center gap-4 text-center">
-        <h2 className="text-blue-900">
+      <div className="flex flex-col items-center gap-4 text-center text-white">
+        <h2>
           <span>Pacchetti </span>
           <span className="font-playfair italic">extra</span>
         </h2>
-        <p className="max-w-xl text-blue-900/70 md:text-lg">
+        <p className="max-w-xl md:text-lg">
           Personalizza la tua esperienza. Acquistabili in fase di iscrizione
-          sull&apos;app Jessico a un prezzo migliore rispetto alla giornata.
+          sull'app Jessico a un prezzo migliore rispetto alla giornata.
         </p>
       </div>
 
-      <div className="grid w-full max-w-6xl grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+      <div className="grid w-full max-w-5xl grid-cols-1 gap-4 md:grid-cols-3 md:items-start md:gap-6">
         {packages.map((pkg) => (
           <div
             key={pkg.name}
-            className="flex flex-col overflow-hidden rounded-2xl border-6 p-6 md:p-8"
-            style={{
-              backgroundColor: pkg.bg,
-              borderColor: pkg.border,
-              color: pkg.text,
-            }}
+            className={`relative flex flex-col rounded-2xl p-6 md:p-8 ${
+              pkg.recommended
+                ? "text-white md:scale-105 md:shadow-2xl"
+                : "border border-white/10 bg-white/5 text-white"
+            }`}
+            style={
+              pkg.recommended
+                ? {
+                    backgroundColor:
+                      "color-mix(in srgb, var(--color-grape-800) 80%, transparent)",
+                    border: "1px solid var(--color-grape-600)",
+                  }
+                : {}
+            }
           >
-            {/* Top: numero decorativo + badge consigliato */}
-            <div className="flex items-start justify-between">
-              <p
-                className="font-playfair text-7xl font-black italic opacity-20 md:text-9xl"
-                style={{ color: pkg.text }}
-              >
-                {pkg.num}
-              </p>
-              {pkg.recommended && (
-                <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-medium tracking-wider uppercase">
-                  Consigliato
-                </span>
-              )}
+            {/* Nome + badge */}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <p className="text-2xl font-medium text-white">{pkg.name}</p>
+                {pkg.recommended && (
+                  <span
+                    className="rounded-full px-3 py-1 text-xs font-medium tracking-widest whitespace-nowrap text-white uppercase"
+                    style={{ backgroundColor: "var(--color-grape-500)" }}
+                  >
+                    Consigliato
+                  </span>
+                )}
+              </div>
             </div>
 
-            {/* Bottom: label + prezzo + perks */}
-            <div className="mt-4 flex flex-col gap-3">
-              <p
-                className="text-xs tracking-widest uppercase opacity-60"
-                style={{ color: pkg.text }}
-              >
-                {pkg.name}
-              </p>
-              <p
-                className="font-playfair text-5xl italic md:text-6xl"
-                style={{ color: pkg.text }}
-              >
+            {/* Prezzo */}
+            <div className="my-6 flex flex-col">
+              <span className="text-6xl font-medium md:text-7xl">
                 {pkg.price}
-              </p>
-              <ul className="mt-2 flex flex-col gap-1.5">
-                {pkg.perks.map((perk) => (
-                  <li
-                    key={perk}
-                    className="flex items-start gap-2 text-sm font-extralight md:text-base"
-                    style={{ color: pkg.text }}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-current opacity-50"
-                    />
-                    <span>{perk}</span>
-                  </li>
-                ))}
-              </ul>
+              </span>
+              <span className="text-sm text-white/60">{pkg.unit}</span>
             </div>
+
+            {/* Perks */}
+            <ul className="mb-6 flex flex-1 list-disc flex-col gap-1.5 pl-4">
+              {pkg.perks.map((perk) => (
+                <li
+                  key={perk}
+                  className={`text-sm md:text-base ${
+                    pkg.recommended ? "text-white/60" : "text-white/60"
+                  }`}
+                >
+                  {perk}
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA */}
+            <Button
+              onClick={() => window.open("https://jessico.app/", "_blank")}
+              className={`w-full justify-center ${
+                pkg.recommended ? "text-white" : "bg-white/10 text-white"
+              }`}
+              style={
+                pkg.recommended
+                  ? { backgroundColor: "var(--color-grape-500)" }
+                  : {}
+              }
+            >
+              Acquista su Jessico
+            </Button>
           </div>
         ))}
       </div>
-
-      <Button
-        onClick={() => window.open("https://jessico.app/", "_blank")}
-        className="bg-blue-900 text-white"
-      >
-        Acquista su Jessico
-      </Button>
     </section>
   );
 }
