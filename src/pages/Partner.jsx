@@ -48,6 +48,11 @@ const partners = [
     alt: "Wall Street English",
     href: "https://www.wallstreetenglish.it/scuola-inglese/como/",
   },
+  {
+    src: "/partner/le-noir.svg",
+    alt: "Le Noir Studio",
+    href: "https://www.instagram.com/le_noir_studio_",
+  },
 ];
 
 const row1 = partners.slice(0, 4);
@@ -113,10 +118,9 @@ function MarqueeRow({ items, direction = "left", speed = 28 }) {
     const initRaf = requestAnimationFrame(() => {
       const state = animRef.current;
 
-      // offsetLeft is unaffected by CSS transforms (parent rotation) — gives exact layout width
-      const items = track.children;
-      const n = Math.round(items.length / 5);
-      state.oneSetWidth = items[n].offsetLeft - items[0].offsetLeft;
+      // scrollWidth / 5 gives the exact width of one set without any integer rounding
+      // (offsetLeft rounds to pixels, causing a visible seam at the wrap point)
+      state.oneSetWidth = track.scrollWidth / 5;
 
       state.x = direction === "right" ? -state.oneSetWidth : 0;
       state.last = null;

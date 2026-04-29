@@ -159,11 +159,11 @@ function Storia() {
       </div>
 
       {/* Subtitle */}
-      <p className="mx-auto max-w-lg text-center md:text-lg">
-        Nata alla Pinetina con un'idea semplice — trattare ogni giocatore come
-        un professionista — ogni edizione ha alzato l'asticella: campi
-        sintetici, premi più grandi, gestione live con l'app Jessico e un after
-        party con ingresso libero.
+      <p className="mx-auto max-w-2xl text-center md:text-lg">
+        Nata alla Pinetina con un'idea semplice: trattare ogni giocatore come un
+        professionista. Ogni edizione ha alzato l'asticella: campi sintetici,
+        premi più grandi, gestione live con l'app Jessico e un after party con
+        ingresso libero.
       </p>
     </section>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Button from "../components/Button";
+import Navbar from "../components/Navbar";
 
 // Funzione per calcolare quanto manca all'evento
 const TARGET_DATE = new Date("2026-07-04T00:00:00");
@@ -19,12 +20,10 @@ function getTimeLeft() {
 function CountdownUnit({ value, label }) {
   return (
     <div className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-blue-900/5 p-4">
-      <span className="w-[2ch] text-center text-6xl font-medium text-blue-900 tabular-nums md:text-8xl">
+      <span className="w-[2ch] text-center text-5xl font-medium text-blue-900 tabular-nums md:text-8xl">
         {String(value).padStart(2, "0")}
       </span>
-      <span className="text-xs font-medium text-blue-900 md:text-sm">
-        {label}
-      </span>
+      <span className="text-xs text-blue-900 md:text-sm">{label}</span>
     </div>
   );
 }
@@ -109,40 +108,46 @@ function Hero() {
   return (
     <section
       id="home"
-      className="flex h-screen flex-col items-center justify-center overflow-hidden bg-white px-4 text-center text-blue-900"
+      className="flex min-h-screen flex-col overflow-hidden bg-white text-blue-900 md:h-screen"
     >
-      {/* Date badge → BUTTON per download ICS */}
-      <Button
-        onClick={downloadICS}
-        className="mb-6 bg-blue-900/5 text-blue-900"
-        withHover={false}
-      >
-        <span
-          className="material-symbols-rounded"
-          style={{ fontSize: "clamp(1rem, 2vw, 1.5rem)" }}
+      <Navbar />
+      <div className="flex flex-1 flex-col items-center justify-center px-4 text-center">
+        {/* Date badge → testo cliccabile per download ICS */}
+        <a
+          onClick={downloadICS}
+          className="mb-6 inline-flex cursor-pointer items-center text-lg text-blue-900 md:text-xl"
         >
-          calendar_month
-        </span>
-        Sabato, 4 luglio 2026, ore 09:00
-      </Button>
+          Sabato, 4 luglio 2026, ore 09:00
+        </a>
 
-      {/* Resto invariato */}
-      <h1 ref={h1Ref}>
-        <span className="font-playfair text-grape-800 flex justify-center overflow-hidden italic">
-          {wrapLetters("Il Torneo 12h")}
-        </span>
-        <span className="flex justify-center overflow-hidden text-blue-900">
-          {wrapLetters("di calcio a 5")}
-        </span>
-      </h1>
-      <p className="mt-6 text-lg text-blue-900 md:text-2xl">
-        Centro Sportivo La Pinetina di Appiano Gentile
-      </p>
-      <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <CountdownUnit value={timeLeft.days} label="Giorni" />
-        <CountdownUnit value={timeLeft.hours} label="Ore" />
-        <CountdownUnit value={timeLeft.minutes} label="Minuti" />
-        <CountdownUnit value={timeLeft.seconds} label="Secondi" />
+        {/* Resto invariato */}
+        <h1 ref={h1Ref}>
+          <span className="font-playfair text-grape-800 flex justify-center overflow-hidden italic">
+            {wrapLetters("Il Torneo 12h")}
+          </span>
+          <span className="flex justify-center overflow-hidden text-blue-900">
+            {wrapLetters("di calcio a 5")}
+          </span>
+        </h1>
+        <p className="mt-6 text-xl text-blue-900 md:text-2xl">
+          Centro Sportivo La Pinetina di Appiano Gentile
+        </p>
+        <div className="mt-8 grid grid-cols-4 gap-4 md:mt-12">
+          <CountdownUnit value={timeLeft.days} label="Giorni" />
+          <CountdownUnit value={timeLeft.hours} label="Ore" />
+          <CountdownUnit value={timeLeft.minutes} label="Minuti" />
+          <CountdownUnit value={timeLeft.seconds} label="Secondi" />
+        </div>
+        <Button
+          onClick={() =>
+            document
+              .getElementById("iscriviti")
+              ?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="mt-8 bg-blue-900 text-white"
+        >
+          Come iscriversi
+        </Button>
       </div>
     </section>
   );

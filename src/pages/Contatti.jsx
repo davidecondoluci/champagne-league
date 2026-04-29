@@ -8,7 +8,7 @@ const contatti = [
     label: "info@champagneleague.it",
     href: "https://mail.google.com/mail/?view=cm&to=info@champagneleague.it",
   },
-  { label: "+39 331 468 7907", href: "https://wa.me/393476415786" },
+  { label: "+39 331 468 7907", href: "https://wa.me/3314687907" },
 ];
 
 function Contatti() {
@@ -98,7 +98,7 @@ function Contatti() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Informativa sulla raccolta
+              Informativa sulla raccolta dei cookie
             </a>
           </div>
         </div>

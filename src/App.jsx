@@ -1,4 +1,3 @@
-import Navbar from "./components/Navbar";
 import Hero from "./pages/Hero";
 import Dettagli from "./pages/Dettagli";
 import Premi from "./pages/Premi";
@@ -13,7 +12,6 @@ import Contatti from "./pages/Contatti";
 function App() {
   return (
     <>
-      <Navbar />
       <Hero />
       <Dettagli />
       <Premi />

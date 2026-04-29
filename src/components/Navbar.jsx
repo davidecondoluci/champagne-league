@@ -135,7 +135,7 @@ function Navbar() {
 
   return (
     <>
-      <nav className="absolute top-0 right-0 left-0 z-50 flex items-center justify-between px-4 py-4 md:px-8">
+      <nav className="z-50 flex items-center justify-between px-4 py-4 md:px-8">
         {/* Logo */}
         <a href="#">
           <img src="/logo.svg" alt="Champagne League" className="h-12 w-auto" />
