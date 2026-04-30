@@ -115,7 +115,7 @@ function Hero() {
         {/* Date badge → testo cliccabile per download ICS */}
         <a
           onClick={downloadICS}
-          className="mb-6 inline-flex cursor-pointer items-center text-lg text-blue-900 md:text-xl"
+          className="mb-6 inline-flex cursor-pointer items-center text-lg text-blue-900 md:text-xl bg-[linear-gradient(currentColor,currentColor)] bg-size-[0%_1px] bg-bottom-left bg-no-repeat transition-[background-size] duration-300 hover:bg-size-[100%_1px]"
         >
           Sabato, 4 luglio 2026, ore 09:00
         </a>

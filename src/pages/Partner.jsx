@@ -102,82 +102,87 @@ function PartnerCard({ src, alt, padding, href }) {
 /* Infinite marquee row */
 function MarqueeRow({ items, direction = "left", speed = 28 }) {
   const trackRef = useRef(null);
-  // animRef holds mutable state shared between RAF ticks without re-renders
-  const animRef = useRef({
-    x: 0,
-    oneSetWidth: 0,
-    factor: 1,
-    raf: null,
-    last: null,
-  });
+  const tweenRef = useRef(null);
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
 
-    const initRaf = requestAnimationFrame(() => {
-      const state = animRef.current;
+    const ctx = gsap.context(() => {
+      const updateTween = () => {
+        if (tweenRef.current) tweenRef.current.kill();
 
-      // scrollWidth / 5 gives the exact width of one set without any integer rounding
-      // (offsetLeft rounds to pixels, causing a visible seam at the wrap point)
-      state.oneSetWidth = track.scrollWidth / 5;
+        // 15 total sets. Width of one set is strictly total width / 15.
+        // We use Math.floor or similar? getBoundingClientRect gives precision.
+        const totalWidth = track.getBoundingClientRect().width;
+        const oneSetWidth = totalWidth / 15;
+        const duration = oneSetWidth / speed;
 
-      state.x = direction === "right" ? -state.oneSetWidth : 0;
-      state.last = null;
-
-      const tick = (ts) => {
-        if (state.last === null) state.last = ts;
-        const dt = Math.min((ts - state.last) / 1000, 0.1);
-        state.last = ts;
-
-        const pps = state.oneSetWidth / speed;
-        state.x += (direction === "left" ? -1 : 1) * pps * dt * state.factor;
-
-        if (state.x <= -state.oneSetWidth) state.x += state.oneSetWidth;
-        if (state.x >= 0) state.x -= state.oneSetWidth;
-
-        gsap.set(track, { x: state.x });
-        state.raf = requestAnimationFrame(tick);
+        if (direction === "left") {
+          gsap.fromTo(
+            track,
+            { x: 0 },
+            {
+              x: -oneSetWidth,
+              ease: "none",
+              duration: duration,
+              repeat: -1,
+            }
+          );
+        } else {
+          // For right direction, start shifted left by one set.
+          // Because there are 14 more sets to the right, there will NEVER be a gap.
+          gsap.fromTo(
+            track,
+            { x: -oneSetWidth },
+            {
+              x: 0,
+              ease: "none",
+              duration: duration,
+              repeat: -1,
+            }
+          );
+        }
+        tweenRef.current = gsap.getTweensOf(track)[0];
       };
 
-      state.raf = requestAnimationFrame(tick);
+      // Ensure layout is finished
+      requestAnimationFrame(updateTween);
+
+      const observer = new ResizeObserver(updateTween);
+      observer.observe(track);
+
+      return () => observer.disconnect();
     });
 
-    return () => {
-      cancelAnimationFrame(initRaf);
-      if (animRef.current.raf) cancelAnimationFrame(animRef.current.raf);
-      animRef.current.last = null;
-    };
-  }, [direction, speed]);
+    return () => ctx.revert();
+  }, [direction, speed, items.length]);
 
   const slowDown = () => {
-    gsap.to(animRef.current, {
-      factor: 0.1,
-      duration: 0.6,
-      ease: "power2.out",
-    });
+    if (tweenRef.current) {
+      gsap.to(tweenRef.current, { timeScale: 0.1, duration: 0.6, ease: "power2.out" });
+    }
   };
 
   const speedUp = () => {
-    gsap.to(animRef.current, {
-      factor: 1,
-      duration: 0.9,
-      ease: "power2.inOut",
-    });
+    if (tweenRef.current) {
+      gsap.to(tweenRef.current, { timeScale: 1, duration: 0.9, ease: "power2.inOut" });
+    }
   };
 
-  // Repeat items 5× to guarantee seamless loop on any screen width
-  const tripled = [...items, ...items, ...items, ...items, ...items];
+  // Repeat items 15 times to guarantee that even shifting left by 1 set
+  // leaves 14 sets to indefinitely cover the right side of any screen width.
+  const multiplied = Array(15).fill(items).flat();
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className="flex w-full overflow-hidden">
       <div
         ref={trackRef}
         className="flex w-max py-2"
         onMouseEnter={slowDown}
         onMouseLeave={speedUp}
       >
-        {tripled.map((p, i) => (
+        {multiplied.map((p, i) => (
           <PartnerCard key={`${p.alt}-${i}`} {...p} />
         ))}
       </div>

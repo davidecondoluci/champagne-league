@@ -40,7 +40,7 @@ const stats = [
   {
     num: 1200,
     suffix: "+",
-    label: "All'After Party",
+    label: "Persone all'After Party",
     thousands: true,
     color: "var(--color-cyan-500)",
   },
