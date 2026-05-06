@@ -19,7 +19,7 @@ const panels = [
   {
     num: "03",
     title: "Giornata",
-    text: "Bar e ristoro tutto il giorno, DJ set, piscina dalle 15:00, calcio-tennis, ping pong e calcetto balilla. After party con ingresso libero dalle 21:00.",
+    text: "Bar e ristoro tutto il giorno, DJ set, piscina dalle 15:00, calcio-tennis, ping pong e calcetto balilla. After party con ingresso libero dalle 22:00 Al Patio presso La Pinetina.",
     hasButton: true,
   },
 ];
