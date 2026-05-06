@@ -53,10 +53,15 @@ const partners = [
     alt: "Le Noir Studio",
     href: "https://www.instagram.com/le_noir_studio_",
   },
+  {
+    src: "/partner/powsh.svg",
+    alt: "Powsh",
+    href: "https://powshpet.com/",
+  },
 ];
 
-const row1 = partners.slice(0, 4);
-const row2 = partners.slice(4);
+const row1 = partners.slice(0, 6);
+const row2 = partners.slice(6);
 
 /* Single partner card */
 function PartnerCard({ src, alt, padding, href }) {
@@ -99,8 +104,9 @@ function PartnerCard({ src, alt, padding, href }) {
   );
 }
 
-/* Infinite marquee row */
-function MarqueeRow({ items, direction = "left", speed = 28 }) {
+/* Infinite marquee — GSAP modifiers: anima verso un numero enorme, il modifier
+   wrappa matematicamente il valore ogni frame → zero reset, zero scatto. */
+function MarqueeRow({ items, direction = "left", speed = 32 }) {
   const trackRef = useRef(null);
   const tweenRef = useRef(null);
 
@@ -108,81 +114,52 @@ function MarqueeRow({ items, direction = "left", speed = 28 }) {
     const track = trackRef.current;
     if (!track) return;
 
-    const ctx = gsap.context(() => {
-      const updateTween = () => {
-        if (tweenRef.current) tweenRef.current.kill();
+    const raf = requestAnimationFrame(() => {
+      const oneSetWidth = track.scrollWidth / 5;
+      // 500 set-widths di distanza = ~16.000 secondi a speed=32 → mai si ferma
+      const bigDist = oneSetWidth * 500;
 
-        // 15 total sets. Width of one set is strictly total width / 15.
-        // We use Math.floor or similar? getBoundingClientRect gives precision.
-        const totalWidth = track.getBoundingClientRect().width;
-        const oneSetWidth = totalWidth / 15;
-        const duration = oneSetWidth / speed;
-
-        if (direction === "left") {
-          gsap.fromTo(
-            track,
-            { x: 0 },
-            {
-              x: -oneSetWidth,
-              ease: "none",
-              duration: duration,
-              repeat: -1,
-            }
-          );
-        } else {
-          // For right direction, start shifted left by one set.
-          // Because there are 14 more sets to the right, there will NEVER be a gap.
-          gsap.fromTo(
-            track,
-            { x: -oneSetWidth },
-            {
-              x: 0,
-              ease: "none",
-              duration: duration,
-              repeat: -1,
-            }
-          );
-        }
-        tweenRef.current = gsap.getTweensOf(track)[0];
-      };
-
-      // Ensure layout is finished
-      requestAnimationFrame(updateTween);
-
-      const observer = new ResizeObserver(updateTween);
-      observer.observe(track);
-
-      return () => observer.disconnect();
+      gsap.set(track, { x: 0 });
+      tweenRef.current = gsap.to(track, {
+        x: direction === "left" ? -bigDist : bigDist,
+        duration: (bigDist / oneSetWidth) * speed,
+        ease: "none",
+        modifiers: {
+          x: gsap.utils.unitize((x) => {
+            const v = parseFloat(x);
+            // left: 0 → -oneSetWidth → 0 → … (wrapping negativo)
+            // right: 0 → -oneSetWidth (partenza visiva) → 0 → … (wrapping positivo)
+            return direction === "left"
+              ? -(Math.abs(v) % oneSetWidth)
+              : (v % oneSetWidth) - oneSetWidth;
+          }),
+        },
+      });
     });
 
-    return () => ctx.revert();
-  }, [direction, speed, items.length]);
+    return () => {
+      cancelAnimationFrame(raf);
+      tweenRef.current?.kill();
+    };
+  }, [direction, speed]);
 
-  const slowDown = () => {
-    if (tweenRef.current) {
-      gsap.to(tweenRef.current, { timeScale: 0.1, duration: 0.6, ease: "power2.out" });
-    }
-  };
+  const slowDown = () => tweenRef.current?.timeScale(0.15);
+  const speedUp = () => tweenRef.current?.timeScale(1);
 
-  const speedUp = () => {
-    if (tweenRef.current) {
-      gsap.to(tweenRef.current, { timeScale: 1, duration: 0.9, ease: "power2.inOut" });
-    }
-  };
-
-  // Repeat items 15 times to guarantee that even shifting left by 1 set
-  // leaves 14 sets to indefinitely cover the right side of any screen width.
-  const multiplied = Array(15).fill(items).flat();
+  const quintupled = [...items, ...items, ...items, ...items, ...items];
 
   return (
-    <div className="flex w-full overflow-hidden">
+    <div
+      className="w-full overflow-hidden"
+      onMouseEnter={slowDown}
+      onMouseLeave={speedUp}
+    >
       <div
         ref={trackRef}
         className="flex w-max py-2"
-        onMouseEnter={slowDown}
-        onMouseLeave={speedUp}
+        style={{ willChange: "transform" }}
       >
-        {multiplied.map((p, i) => (
+        {quintupled.map((p, i) => (
           <PartnerCard key={`${p.alt}-${i}`} {...p} />
         ))}
       </div>
