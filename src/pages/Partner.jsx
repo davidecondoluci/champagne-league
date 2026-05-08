@@ -58,6 +58,11 @@ const partners = [
     alt: "Powsh",
     href: "https://powshpet.com/",
   },
+  {
+    src: "/partner/health-hub.svg",
+    alt: "Health Hub",
+    href: "https://www.health-hub.it/",
+  },
 ];
 
 const row1 = partners.slice(0, 6);
