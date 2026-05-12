@@ -8,6 +8,7 @@ import Storia from "./pages/Storia";
 import Divise from "./pages/Divise";
 import Iscriviti from "./pages/Iscriviti";
 import Contatti from "./pages/Contatti";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Gallery />
       <Divise />
       <Contatti />
+      <Analytics />
     </>
   );
 }
