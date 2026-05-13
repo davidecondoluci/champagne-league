@@ -9,7 +9,7 @@ const prizes = [
     icon: "emoji_events",
     title: "Primo Posto",
     value: "1.500\u20AC",
-    desc: "+ Coppa + iscrizione gratuita alla prossima edizione",
+    desc: "+ Champagne + Coppa + iscrizione gratuita alla prossima edizione",
     bg: "color-mix(in srgb, var(--color-cyan-600) 60%, var(--color-blue-900))",
     border: "var(--color-cyan-100)",
     text: "var(--color-white)",
