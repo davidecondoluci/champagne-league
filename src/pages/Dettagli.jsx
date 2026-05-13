@@ -134,7 +134,7 @@ function Dettagli() {
       <div ref={pinHeightRef} className="h-[250vh] md:h-[300vh]">
         <div
           ref={containerRef}
-          className="flex h-screen flex-col justify-between p-4 py-16 md:px-8 md:py-24"
+          className="flex h-screen flex-col justify-between p-4 py-8 md:px-8 md:py-24"
         >
           {/* Titolo sezione */}
           <div className="flex flex-row justify-between gap-6 border-b border-white/20 pb-8">

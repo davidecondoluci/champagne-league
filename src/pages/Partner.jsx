@@ -63,6 +63,11 @@ const partners = [
     alt: "Health Hub",
     href: "https://www.health-hub.it/",
   },
+  {
+    src: "/partner/primato.svg",
+    alt: "Primato",
+    href: "https://www.primato.it/",
+  },
 ];
 
 const row1 = partners.slice(0, 6);
