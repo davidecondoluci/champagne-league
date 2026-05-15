@@ -21,7 +21,7 @@ const stats = [
   },
   {
     num: 300,
-    suffix: "K",
+    suffix: "K+",
     label: "Copertura social",
     color: "var(--color-grape-500)",
   },
