@@ -139,8 +139,8 @@ function Dettagli() {
           {/* Titolo sezione */}
           <div className="flex flex-row justify-between gap-6 border-b border-white/20 pb-8">
             <h2 className="text-white">
-              <span className="font-playfair italic">Dettagli </span>
-              <span>2026</span>
+              <span>I </span>
+              <span className="font-playfair italic">Dettagli</span>
             </h2>
             <Button
               onClick={() =>

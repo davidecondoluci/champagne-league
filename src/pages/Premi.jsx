@@ -127,8 +127,8 @@ function Premi() {
       {/* Title */}
       <div className="flex items-center py-16 md:py-0">
         <h2 className="w-full text-center text-white">
-          <span className="font-playfair italic">Premi </span>
-          <span>2026</span>
+          <span>I vostri </span>
+          <span className="font-playfair italic">Premi</span>
         </h2>
       </div>
 

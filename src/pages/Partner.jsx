@@ -205,8 +205,8 @@ function Partner() {
       className="flex h-screen flex-col items-center justify-center overflow-hidden bg-blue-900 pb-16 md:pb-0"
     >
       <h2 className="mb-12 px-4 text-center text-white">
-        <span className="font-playfair italic">Partner </span>
-        <span>2026</span>
+        <span>I nostri </span>
+        <span className="font-playfair italic">Partner</span>
       </h2>
 
       <div

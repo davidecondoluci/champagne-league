@@ -6,6 +6,7 @@ const links = [
   { label: "Dettagli", href: "#dettagli" },
   { label: "Premi", href: "#premi" },
   { label: "Pacchetti", href: "#pacchetti" },
+  { label: "Giornata", href: "#giornata" },
   { label: "Partner", href: "#partner" },
   { label: "Iscriviti", href: "#iscriviti" },
   { label: "Storia", href: "#storia" },

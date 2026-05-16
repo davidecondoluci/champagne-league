@@ -2,6 +2,7 @@ import Hero from "./pages/Hero";
 import Dettagli from "./pages/Dettagli";
 import Premi from "./pages/Premi";
 import Pacchetti from "./pages/Pacchetti";
+import Giornata from "./pages/Giornata";
 import Partner from "./pages/Partner";
 import Gallery from "./pages/Gallery";
 import Storia from "./pages/Storia";
@@ -18,6 +19,7 @@ function App() {
       <Premi />
       <Pacchetti />
       <Partner />
+      <Giornata />
       <Iscriviti />
       <Storia />
       <Gallery />
