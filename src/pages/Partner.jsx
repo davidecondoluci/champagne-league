@@ -68,6 +68,11 @@ const partners = [
     alt: "Primato",
     href: "https://www.primato.it/",
   },
+  {
+    src: "/partner/phoenix-agency.svg",
+    alt: "Phoenix Agency",
+    href: "https://share.google/DWibuk8EXhdciDhxA",
+  },
 ];
 
 const row1 = partners.slice(0, 6);
@@ -93,23 +98,38 @@ function PartnerCard({ src, alt, padding, href }) {
     });
   };
 
+  const cardClass =
+    "group mx-2 flex h-40 w-40 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-6 md:mx-4 md:h-56 md:w-56";
+
+  const inner = (
+    <img
+      src={src}
+      alt={alt}
+      className="pointer-events-none h-full w-full object-contain opacity-50 grayscale transition-all duration-500 select-none group-hover:opacity-100 group-hover:grayscale-0 group-active:opacity-100 group-active:grayscale-0"
+      draggable={false}
+    />
+  );
+
+  if (!href) {
+    return (
+      <div ref={cardRef} className={cardClass} style={{ padding }}>
+        {inner}
+      </div>
+    );
+  }
+
   return (
     <a
       ref={cardRef}
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group mx-2 flex h-40 w-40 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-6 md:mx-4 md:h-56 md:w-56"
+      className={cardClass}
       style={{ padding }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <img
-        src={src}
-        alt={alt}
-        className="pointer-events-none h-full w-full object-contain opacity-50 grayscale transition-all duration-500 select-none group-hover:opacity-100 group-hover:grayscale-0 group-active:opacity-100 group-active:grayscale-0"
-        draggable={false}
-      />
+      {inner}
     </a>
   );
 }

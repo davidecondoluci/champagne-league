@@ -145,7 +145,7 @@ function Premi() {
             <div
               key={i}
               ref={(el) => (cardRefs.current[i] = el)}
-              className="flex aspect-3/4 w-[80vw] min-w-64 shrink-0 flex-col justify-between overflow-hidden rounded-2xl border p-4 whitespace-normal md:w-[28vw] md:p-8"
+              className="flex h-112 w-80 shrink-0 flex-col justify-between overflow-hidden rounded-2xl border p-5 whitespace-normal sm:h-116 sm:w-88 md:h-120 md:w-92 md:p-8 xl:h-128 xl:w-96"
               style={{
                 backgroundColor: prize.bg,
                 borderColor: prize.border,
@@ -155,26 +155,26 @@ function Premi() {
               <div>
                 <span
                   className="material-symbols-rounded"
-                  style={{ fontSize: "clamp(9rem, 22vw, 6rem)" }}
+                  style={{ fontSize: "clamp(7rem, 8vw, 11rem)" }}
                 >
                   {prize.icon}
                 </span>
               </div>
               <div>
                 <p
-                  className="text-sm tracking-widest uppercase opacity-60"
+                  className="text-sm tracking-widest uppercase opacity-60 md:text-base"
                   style={{ color: prize.text }}
                 >
                   {prize.title}
                 </p>
                 <h3
-                  className="mt-2 text-4xl font-medium md:text-6xl"
+                  className="mt-2 text-4xl font-medium md:text-5xl xl:text-6xl"
                   style={{ color: prize.text }}
                 >
                   {prize.value}
                 </h3>
                 <p
-                  className="mt-4 text-base font-extralight md:text-lg"
+                  className="mt-4 text-base leading-snug font-extralight md:text-lg"
                   style={{ color: prize.text }}
                 >
                   {prize.desc}

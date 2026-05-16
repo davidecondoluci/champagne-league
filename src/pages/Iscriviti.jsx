@@ -156,7 +156,7 @@ function Iscriviti() {
                 {/* Card at the top of the circle; GSAP moves it up on scroll */}
                 <div
                   ref={(el) => (cardRefs.current[i] = el)}
-                  className="absolute top-0 left-1/2 flex aspect-3/4 w-[60vw] flex-col justify-between rounded-2xl p-6 will-change-transform md:w-[24vw] md:p-8"
+                  className="absolute top-0 left-1/2 flex h-96 w-72 flex-col justify-between rounded-2xl p-6 will-change-transform sm:h-104 sm:w-76 md:h-112 md:w-80 md:p-8 xl:h-120 xl:w-84"
                   style={{
                     backgroundColor: step.bg,
                     color: step.text,
@@ -169,12 +169,15 @@ function Iscriviti() {
                           src={step.icon}
                           alt=""
                           draggable={false}
-                          className="h-16 w-auto md:h-24"
+                          style={{
+                            height: "clamp(4.5rem, 5vw, 6rem)",
+                            width: "auto",
+                          }}
                         />
                       ) : (
                         <span
                           className="material-symbols-rounded"
-                          style={{ fontSize: "clamp(5rem, 14vw, 7.5rem)" }}
+                          style={{ fontSize: "clamp(6rem, 7vw, 9rem)" }}
                         >
                           {step.icon}
                         </span>

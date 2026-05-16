@@ -1,3 +1,5 @@
+import Button from "../components/Button";
+
 const social = [
   { label: "Instagram", href: "https://www.instagram.com/champagneleague_" },
   { label: "Tik Tok", href: "https://www.tiktok.com/@champagneleague_" },
@@ -30,47 +32,64 @@ function Contatti() {
 
         {/* Right — Social + Contatti + freccia */}
         <div className="flex flex-col gap-6">
-          <div className="flex items-start gap-8 md:gap-8">
-            {/* Social */}
-            <div className="flex flex-col gap-4">
-              <p className="text-xs tracking-widest text-white/40 uppercase">
-                Social
-              </p>
-              <ul className="flex flex-col gap-2">
-                {social.map((s) => (
-                  <li key={s.href}>
-                    <a
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-[linear-gradient(currentColor,currentColor)] bg-size-[0%_1px] bg-bottom-left bg-no-repeat transition-[background-size] duration-300 hover:bg-size-[100%_1px]"
-                    >
-                      {s.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="flex items-start justify-between gap-8 md:gap-8">
+            <div className="flex items-start gap-8">
+              {/* Social */}
+              <div className="flex flex-col gap-4">
+                <p className="text-xs tracking-widest text-white/40 uppercase">
+                  Social
+                </p>
+                <ul className="flex flex-col gap-2">
+                  {social.map((s) => (
+                    <li key={s.href}>
+                      <a
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[linear-gradient(currentColor,currentColor)] bg-size-[0%_1px] bg-bottom-left bg-no-repeat transition-[background-size] duration-300 hover:bg-size-[100%_1px]"
+                      >
+                        {s.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-            {/* Contatti */}
-            <div className="flex min-w-0 flex-col gap-4">
-              <p className="text-xs tracking-widest text-white/40 uppercase">
-                Contatti
-              </p>
-              <ul className="flex flex-col gap-2">
-                {contatti.map((c) => (
-                  <li key={c.href}>
-                    <a
-                      href={c.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-[linear-gradient(currentColor,currentColor)] bg-size-[0%_1px] bg-bottom-left bg-no-repeat break-all transition-[background-size] duration-300 hover:bg-size-[100%_1px]"
-                    >
-                      {c.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              {/* Contatti */}
+              <div className="flex min-w-0 flex-col gap-4">
+                <p className="text-xs tracking-widest text-white/40 uppercase">
+                  Contatti
+                </p>
+                <ul className="flex flex-col gap-2">
+                  {contatti.map((c) => (
+                    <li key={c.href}>
+                      <a
+                        href={c.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[linear-gradient(currentColor,currentColor)] bg-size-[0%_1px] bg-bottom-left bg-no-repeat break-all transition-[background-size] duration-300 hover:bg-size-[100%_1px]"
+                      >
+                        {c.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            {/* Torna su — solo desktop */}
+            <div className="hidden md:block">
+              <Button
+                className="border border-white/20 text-white"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              >
+                Torna su
+                <span
+                  className="material-symbols-rounded"
+                  style={{ fontSize: "1.2em" }}
+                >
+                  arrow_upward
+                </span>
+              </Button>
             </div>
           </div>
         </div>
@@ -78,6 +97,22 @@ function Contatti() {
 
       {/* Bottom */}
       <div className="gap-1">
+        {/* Torna su — solo mobile */}
+        <div className="mb-6 flex justify-start md:hidden">
+          <Button
+            className="border border-white/20 text-white"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            Torna su
+            <span
+              className="material-symbols-rounded"
+              style={{ fontSize: "1.2em" }}
+            >
+              arrow_upward
+            </span>
+          </Button>
+        </div>
+
         {/* Bottom bar */}
         <div className="flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-white/40 md:flex-row md:items-center md:justify-between">
           <p>© 2026 Champagne League</p>
