@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -132,12 +132,12 @@ function Storia() {
             className="flex w-full items-start justify-center md:hidden"
           >
             {row.map((stat, i) => (
-              <>
-                <Stat key={stat.label} {...stat} />
+              <Fragment key={stat.label}>
+                <Stat {...stat} />
                 {i < row.length - 1 && (
                   <div className="mt-4 h-12 w-px shrink-0 bg-blue-900/20" />
                 )}
-              </>
+              </Fragment>
             ))}
           </div>
         ))}
@@ -147,12 +147,12 @@ function Storia() {
             className="hidden items-center justify-center md:flex"
           >
             {row.map((stat, i) => (
-              <>
-                <Stat key={stat.label} {...stat} />
+              <Fragment key={stat.label}>
+                <Stat {...stat} />
                 {i < row.length - 1 && (
                   <div className="h-16 w-px self-center bg-blue-900/20" />
                 )}
-              </>
+              </Fragment>
             ))}
           </div>
         ))}

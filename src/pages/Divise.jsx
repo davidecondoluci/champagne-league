@@ -76,7 +76,7 @@ function Divise() {
   return (
     <section
       id="divise"
-      className="relative flex h-screen flex-col items-center justify-center gap-8 bg-white px-4 py-4 md:gap-16"
+      className="relative flex min-h-dvh flex-col items-center justify-center gap-8 bg-white px-4 py-8 md:gap-16"
     >
       {/* Header */}
       <div className="flex flex-col items-center gap-4">

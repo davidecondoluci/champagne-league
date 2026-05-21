@@ -65,7 +65,7 @@ function Giornata() {
   return (
     <section
       id="giornata"
-      className="flex min-h-screen flex-col items-center justify-center gap-12 bg-white px-4 py-16 md:py-24"
+      className="flex min-h-dvh flex-col items-center justify-center gap-12 bg-white px-4 py-16 md:py-24"
     >
       {/* Header */}
       <div className="flex flex-col items-center gap-4 text-center">

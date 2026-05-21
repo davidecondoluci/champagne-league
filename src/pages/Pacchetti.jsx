@@ -39,7 +39,7 @@ function Pacchetti() {
   return (
     <section
       id="pacchetti"
-      className="flex min-h-screen flex-col items-center justify-center gap-8 bg-blue-900 px-4 py-16 md:h-screen md:gap-8 md:py-0"
+      className="flex min-h-dvh flex-col items-center justify-center gap-8 bg-blue-900 px-4 py-16 md:h-dvh md:gap-8 md:py-0"
     >
       <div className="flex flex-col items-center gap-4 text-center text-white">
         <h2>

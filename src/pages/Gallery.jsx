@@ -6,8 +6,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 // 21.webp is missing from the folder
 const images = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-  23, 24,
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23,
+  24,
 ].map((n) => `/gallery/${n}.webp`);
 
 const containerStyle = {
@@ -43,80 +43,80 @@ function Gallery() {
     const section = sectionRef.current;
     if (!container || !section) return;
 
-    const mediaSize = getMediaSize();
-    const gap = getGridGap();
-    const medias = container.querySelectorAll(".gallery-media");
-    const W = window.innerWidth;
+    const ctx = gsap.context(() => {
+      const mediaSize = getMediaSize();
+      const gap = getGridGap();
+      const medias = container.querySelectorAll(".gallery-media");
+      const W = window.innerWidth;
 
-    medias.forEach((media) => {
-      media.style.width = mediaSize;
-      media.style.height = "auto";
-    });
-    container.querySelector(".gallery-grid").style.gap = gap;
-
-    medias.forEach((media) => {
-      gsap.set(media, {
-        x: (Math.random() - 0.5) * 0.16 * W,
-        y: (Math.random() - 0.5) * 0.1 * W,
-        force3D: true,
+      medias.forEach((media) => {
+        media.style.width = mediaSize;
+        media.style.height = "auto";
       });
-    });
+      container.querySelector(".gallery-grid").style.gap = gap;
 
-    const distance = container.clientWidth - document.body.clientWidth;
 
-    const scrollTween = gsap.to(container, {
-      x: -distance,
-      ease: "none",
-      force3D: true,
-      scrollTrigger: {
-        trigger: section,
-        pin: true,
-        anticipatePin: 1,
-        scrub: 1,
-        fastScrollEnd: true,
-        end: "+=" + distance,
-      },
-    });
+      // Reset position/scale/opacity
+      medias.forEach((media) => {
+        gsap.set(media, {
+          x: 0,
+          y: 0,
+          scale: 0.92,
+          opacity: 0,
+          force3D: true,
+        });
+      });
 
-    medias.forEach((media) => {
-      gsap.from(media, {
-        rotation: (Math.random() - 0.5) * 80,
-        yPercent: (Math.random() - 0.5) * 300,
-        xPercent: Math.random() * 400,
-        ease: "power1.out",
+      const getDistance = () =>
+        container.scrollWidth - document.body.clientWidth;
+
+      const scrollTween = gsap.to(container, {
+        x: () => -getDistance(),
+        ease: "none",
         force3D: true,
         scrollTrigger: {
-          trigger: media,
-          containerAnimation: scrollTween,
-          start: "left 110%",
-          end: "left 65%",
-          scrub: true,
+          trigger: section,
+          pin: true,
+          anticipatePin: 1,
+          scrub: 1,
+          fastScrollEnd: true,
+          end: () => "+=" + getDistance(),
+          invalidateOnRefresh: true,
         },
       });
 
-      gsap.fromTo(
-        media,
-        { rotation: 0, yPercent: 0, xPercent: 0 },
-        {
-          rotation: (Math.random() - 0.5) * 80,
-          yPercent: (Math.random() - 0.5) * 300,
-          xPercent: -Math.random() * 400,
-          ease: "power1.in",
-          force3D: true,
+      medias.forEach((media) => {
+        gsap.to(media, {
+          opacity: 1,
+          scale: 1,
+          duration: 0.7,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: media,
             containerAnimation: scrollTween,
-            start: "right 35%",
-            end: "right -10%",
+            start: "left 90%",
+            end: "left 60%",
             scrub: true,
           },
-        },
-      );
-    });
+        });
+      });
 
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
+      // Refresh once all images have settled (fixes pin distance when images load late)
+      const imgs = container.querySelectorAll("img");
+      let pending = imgs.length;
+      const onLoaded = () => {
+        if (--pending <= 0) ScrollTrigger.refresh();
+      };
+      imgs.forEach((img) => {
+        if (img.complete) onLoaded();
+        else {
+          img.addEventListener("load", onLoaded, { once: true });
+          img.addEventListener("error", onLoaded, { once: true });
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (

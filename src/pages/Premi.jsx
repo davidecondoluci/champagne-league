@@ -73,53 +73,55 @@ function Premi() {
     const cards = cardRefs.current.filter(Boolean);
     if (!container || !cardsContainer || cards.length === 0) return;
 
-    const distance = cardsContainer.scrollWidth - window.innerWidth;
+    const ctx = gsap.context(() => {
+      const getDistance = () =>
+        cardsContainer.scrollWidth - window.innerWidth;
 
-    const scrollTween = gsap.to(cardsContainer, {
-      x: -distance,
-      ease: "none",
-      scrollTrigger: {
-        trigger: container,
-        pin: true,
-        scrub: true,
-        start: "top top",
-        end: "+=" + distance,
-      },
-    });
-
-    cards.forEach((card) => {
-      const values = {
-        x: (Math.random() * 20 + 30) * (Math.random() < 0.5 ? 1 : -1),
-        y: (Math.random() * 6 + 10) * (Math.random() < 0.5 ? 1 : -1),
-        rotation: (Math.random() * 10 + 10) * (Math.random() < 0.5 ? 1 : -1),
-      };
-
-      gsap.fromTo(
-        card,
-        {
-          rotation: values.rotation,
-          xPercent: values.x,
-          yPercent: values.y,
+      const scrollTween = gsap.to(cardsContainer, {
+        x: () => -getDistance(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: container,
+          pin: true,
+          scrub: true,
+          start: "top top",
+          end: () => "+=" + getDistance(),
+          invalidateOnRefresh: true,
         },
-        {
-          rotation: -values.rotation,
-          xPercent: -values.x,
-          yPercent: -values.y,
-          ease: "none",
-          scrollTrigger: {
-            trigger: card,
-            containerAnimation: scrollTween,
-            start: "left 120%",
-            end: "right -20%",
-            scrub: true,
+      });
+
+      cards.forEach((card) => {
+        const values = {
+          x: (Math.random() * 20 + 30) * (Math.random() < 0.5 ? 1 : -1),
+          y: (Math.random() * 6 + 10) * (Math.random() < 0.5 ? 1 : -1),
+          rotation: (Math.random() * 10 + 10) * (Math.random() < 0.5 ? 1 : -1),
+        };
+
+        gsap.fromTo(
+          card,
+          {
+            rotation: values.rotation,
+            xPercent: values.x,
+            yPercent: values.y,
           },
-        },
-      );
-    });
+          {
+            rotation: -values.rotation,
+            xPercent: -values.x,
+            yPercent: -values.y,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              containerAnimation: scrollTween,
+              start: "left 120%",
+              end: "right -20%",
+              scrub: true,
+            },
+          },
+        );
+      });
+    }, containerRef);
 
-    return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -135,7 +137,7 @@ function Premi() {
       {/* Horizontal scroll pinned effect (all screens) */}
       <div
         ref={containerRef}
-        className="flex h-screen flex-col justify-center overflow-hidden"
+        className="flex h-dvh flex-col justify-center overflow-hidden"
       >
         <div
           ref={cardsContainerRef}

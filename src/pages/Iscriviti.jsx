@@ -54,52 +54,52 @@ function Iscriviti() {
     const cards = cardRefs.current.filter(Boolean);
     if (!pinHeight || !container || !cards.length) return;
 
-    ScrollTrigger.create({
-      trigger: pinHeight,
-      start: "top top",
-      end: "bottom bottom",
-      pin: container,
-    });
-
-    const gap = 30;
-    const distPerCard =
-      (pinHeight.clientHeight - window.innerHeight) / cards.length;
-
-    gsap.set(cards, {
-      y: gap * (cards.length - 1),
-      z: -gap * (cards.length - 1),
-    });
-
-    cards.forEach((card, index) => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: pinHeight,
-          start: "top top+=" + distPerCard * index,
-          end: "bottom bottom+=" + distPerCard * index,
-          scrub: 0.5,
-        },
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: pinHeight,
+        start: "top top",
+        end: "bottom bottom",
+        pin: container,
       });
 
-      for (let i = 0; i < cards.length - 1; i++) {
-        tl.to(card, {
-          y: "-=" + gap,
-          z: "+=" + gap,
-          ease: "back.inOut(3)",
+      const gap = 30;
+      const distPerCard =
+        (pinHeight.clientHeight - window.innerHeight) / cards.length;
+
+      gsap.set(cards, {
+        y: gap * (cards.length - 1),
+        z: -gap * (cards.length - 1),
+      });
+
+      cards.forEach((card, index) => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pinHeight,
+            start: "top top+=" + distPerCard * index,
+            end: "bottom bottom+=" + distPerCard * index,
+            scrub: 0.5,
+          },
         });
-      }
 
-      tl.to(card, {
-        yPercent: -80,
-        y: "-50vh",
-        scale: 1.2,
-        rotation: (Math.random() - 0.5) * 50,
-        ease: "power4.in",
+        for (let i = 0; i < cards.length - 1; i++) {
+          tl.to(card, {
+            y: "-=" + gap,
+            z: "+=" + gap,
+            ease: "back.inOut(3)",
+          });
+        }
+
+        tl.to(card, {
+          yPercent: -80,
+          y: "-50vh",
+          scale: 1.2,
+          rotation: (Math.random() - 0.5) * 50,
+          ease: "power4.in",
+        });
       });
-    });
+    }, pinHeightRef);
 
-    return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return (

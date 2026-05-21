@@ -202,7 +202,7 @@ function Partner() {
   return (
     <section
       id="partner"
-      className="flex h-screen flex-col items-center justify-center overflow-hidden bg-blue-900 pb-16 md:pb-0"
+      className="flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-blue-900 py-16 md:py-0"
     >
       <h2 className="mb-12 px-4 text-center text-white">
         <span>I nostri </span>
