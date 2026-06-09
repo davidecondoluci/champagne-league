@@ -6,6 +6,7 @@ const links = [
   { label: "Dettagli", href: "#dettagli" },
   { label: "Premi", href: "#premi" },
   { label: "Pacchetti", href: "#pacchetti" },
+  { label: "Giornata", href: "#giornata" },
   { label: "Partner", href: "#partner" },
   { label: "Iscriviti", href: "#iscriviti" },
   { label: "Storia", href: "#storia" },
@@ -141,16 +142,16 @@ function Navbar() {
           <img src="/logo.svg" alt="Champagne League" className="h-12 w-auto" />
         </a>
 
-        {/* Desktop links — hidden on mobile */}
-        <ul className="hidden items-center gap-6 md:flex">
+        {/* Desktop links — hidden on mobile/tablet */}
+        <ul className="hidden items-center gap-6 lg:flex">
           {links.map((link) => (
             <NavLink key={link.href} label={link.label} href={link.href} />
           ))}
         </ul>
 
-        {/* Hamburger — mobile only */}
+        {/* Hamburger — mobile & tablet only */}
         <a
-          className={`cursor-pointer transition-opacity hover:opacity-60 md:hidden ${navTextColor}`}
+          className={`cursor-pointer transition-opacity hover:opacity-60 lg:hidden ${navTextColor}`}
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "close" : "menu"}
         >

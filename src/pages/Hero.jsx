@@ -108,7 +108,7 @@ function Hero() {
   return (
     <section
       id="home"
-      className="flex min-h-screen flex-col overflow-hidden bg-white text-blue-900 md:h-screen"
+      className="flex min-h-dvh flex-col overflow-hidden bg-white text-blue-900 md:h-dvh"
     >
       <Navbar />
       <div className="flex flex-1 flex-col items-center justify-center px-4 text-center">

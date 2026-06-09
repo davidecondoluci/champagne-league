@@ -46,90 +46,70 @@ const steps = [
 function Iscriviti() {
   const pinHeightRef = useRef(null);
   const containerRef = useRef(null);
-  const circlesWrapRef = useRef(null);
-  const circleRefs = useRef([]);
   const cardRefs = useRef([]);
 
   useEffect(() => {
     const pinHeight = pinHeightRef.current;
     const container = containerRef.current;
-    const circlesWrap = circlesWrapRef.current;
-    const circles = circleRefs.current.filter(Boolean);
     const cards = cardRefs.current.filter(Boolean);
-    if (!pinHeight || !container || !circlesWrap || !circles.length) return;
+    if (!pinHeight || !container || !cards.length) return;
 
-    // Center circles horizontally via GSAP (prevents conflict with CSS transform)
-    gsap.set(circles, { xPercent: -50 });
-
-    // Set initial card position: centred horizontally, pushed below viewport
-    gsap.set(cards, { xPercent: -50, y: "55vh" });
-
-    // Parallax on circles wrapper + pin the container
-    gsap.fromTo(
-      circlesWrap,
-      { y: "5%" },
-      {
-        y: "-5%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: pinHeight,
-          start: "top top",
-          end: "bottom bottom",
-          pin: container,
-          scrub: true,
-        },
-      },
-    );
-
-    const angle = 3;
-    const halfRange = ((circles.length - 1) * angle) / 2;
-    let rot = -halfRange;
-    const distPerCard =
-      (pinHeight.clientHeight - window.innerHeight) / circles.length;
-
-    circles.forEach((circle, i) => {
-      const targetRot = rot;
-
-      // Rotate the wheel spoke
-      gsap.to(circle, {
-        rotation: targetRot,
-        ease: "power1.out",
-        scrollTrigger: {
-          trigger: pinHeight,
-          start: "top top-=" + distPerCard * i,
-          end: "+=" + distPerCard,
-          scrub: true,
-        },
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: pinHeight,
+        start: "top top",
+        end: "bottom bottom",
+        pin: container,
       });
 
-      // Move card up to centre + apply same rotation
-      gsap.to(cards[i], {
-        rotation: targetRot,
-        y: "-40%", // slightly below centre
-        ease: "power1.out",
-        scrollTrigger: {
-          trigger: pinHeight,
-          start: "top top-=" + distPerCard * i,
-          end: "+=" + distPerCard,
-          scrub: true,
-        },
+      const gap = 30;
+      const distPerCard =
+        (pinHeight.clientHeight - window.innerHeight) / cards.length;
+
+      gsap.set(cards, {
+        y: gap * (cards.length - 1),
+        z: -gap * (cards.length - 1),
       });
 
-      rot += angle;
-    });
+      cards.forEach((card, index) => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pinHeight,
+            start: "top top+=" + distPerCard * index,
+            end: "bottom bottom+=" + distPerCard * index,
+            scrub: 0.5,
+          },
+        });
 
-    return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
+        for (let i = 0; i < cards.length - 1; i++) {
+          tl.to(card, {
+            y: "-=" + gap,
+            z: "+=" + gap,
+            ease: "back.inOut(3)",
+          });
+        }
+
+        tl.to(card, {
+          yPercent: -80,
+          y: "-50vh",
+          scale: 1.2,
+          rotation: (Math.random() - 0.5) * 50,
+          ease: "power4.in",
+        });
+      });
+    }, pinHeightRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section id="iscriviti" className="relative overflow-hidden bg-white">
-      {/* Fan-wheel scroll effect — pin-height drives the scroll distance */}
-      <div ref={pinHeightRef} className="h-[320vh] md:h-[300vh]">
-        {/* This 100vh container gets pinned by GSAP */}
-        <div ref={containerRef} className="relative h-dvh bg-white">
-          {/* Title — sticky so it only appears when section is in viewport */}
+    <section id="iscriviti" className="relative bg-white">
+      <div ref={pinHeightRef} className="h-[500vh]">
+        <div
+          ref={containerRef}
+          className="relative flex h-dvh items-center justify-center bg-white"
+        >
+          {/* Title */}
           <div className="pointer-events-none absolute top-0 left-0 z-10 flex h-full w-full flex-col justify-between pt-12 pb-6 md:py-12">
             <h2 className="text-center text-blue-900">
               <span>Come </span>
@@ -145,62 +125,66 @@ function Iscriviti() {
             </div>
           </div>
 
-          {/* Circles wrapper — subtle y parallax */}
-          <div ref={circlesWrapRef} className="h-full">
-            {steps.map((step, i) => (
+          {/* Cards stack with perspective — same structure as mwg_042 */}
+          <div
+            className="relative"
+            style={{
+              width: "clamp(280px, 22vw, 380px)",
+              aspectRatio: "0.75",
+              perspective: "25vw",
+            }}
+          >
+            {[...steps].reverse().map((step, i) => (
               <div
                 key={i}
-                ref={(el) => (circleRefs.current[i] = el)}
-                className="absolute top-1/2 left-1/2 size-[250vw] rounded-full will-change-transform"
+                ref={(el) => (cardRefs.current[i] = el)}
+                className="absolute top-0 left-0 flex h-full w-full flex-col justify-between rounded-2xl p-6 will-change-transform md:p-8"
+                style={{
+                  backgroundColor: step.bg,
+                  color: step.text,
+                }}
               >
-                {/* Card at the top of the circle; GSAP moves it up on scroll */}
-                <div
-                  ref={(el) => (cardRefs.current[i] = el)}
-                  className="absolute top-0 left-1/2 flex aspect-3/4 w-[60vw] flex-col justify-between rounded-2xl p-6 will-change-transform md:w-[24vw] md:p-8"
-                  style={{
-                    backgroundColor: step.bg,
-                    color: step.text,
-                  }}
-                >
-                  {step.icon && (
-                    <div>
-                      {step.icon.startsWith("/") ? (
-                        <img
-                          src={step.icon}
-                          alt=""
-                          draggable={false}
-                          className="h-16 w-auto md:h-24"
-                        />
-                      ) : (
-                        <span
-                          className="material-symbols-rounded"
-                          style={{ fontSize: "clamp(5rem, 14vw, 7.5rem)" }}
-                        >
-                          {step.icon}
-                        </span>
-                      )}
-                    </div>
-                  )}
+                {step.icon && (
                   <div>
-                    <p
-                      className="text-sm tracking-widest uppercase opacity-60"
-                      style={{ color: step.text }}
-                    >
-                      {step.label}
-                    </p>
-                    <h3
-                      className="mt-2 text-2xl font-medium md:text-4xl"
-                      style={{ color: step.text }}
-                    >
-                      {step.title}
-                    </h3>
-                    <p
-                      className="mt-4 text-sm font-extralight md:text-base"
-                      style={{ color: step.text }}
-                    >
-                      {step.desc}
-                    </p>
+                    {step.icon.startsWith("/") ? (
+                      <img
+                        src={step.icon}
+                        alt=""
+                        draggable={false}
+                        style={{
+                          height: "clamp(4.5rem, 5vw, 6rem)",
+                          width: "auto",
+                        }}
+                      />
+                    ) : (
+                      <span
+                        className="material-symbols-rounded"
+                        style={{ fontSize: "clamp(6rem, 7vw, 9rem)" }}
+                      >
+                        {step.icon}
+                      </span>
+                    )}
                   </div>
+                )}
+                <div>
+                  <p
+                    className="text-sm tracking-widest uppercase opacity-60"
+                    style={{ color: step.text }}
+                  >
+                    {step.label}
+                  </p>
+                  <h3
+                    className="mt-2 text-2xl font-medium md:text-4xl"
+                    style={{ color: step.text }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p
+                    className="mt-4 text-sm font-extralight md:text-base"
+                    style={{ color: step.text }}
+                  >
+                    {step.desc}
+                  </p>
                 </div>
               </div>
             ))}
