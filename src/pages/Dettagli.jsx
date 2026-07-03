@@ -86,39 +86,21 @@ function Dettagli() {
         });
       });
 
-      // Mobile: Pin + scrub come desktop
+      // Mobile: niente pin, reveal per pannello al scroll
       mm.add("(max-width: 767px)", () => {
         paras.forEach((para) => {
           gsap.set(para.querySelectorAll("span > span"), { y: "110%" });
-        });
-
-        ScrollTrigger.create({
-          trigger: pinHeight,
-          start: "top top",
-          end: "bottom bottom",
-          pin: container,
-        });
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: pinHeight,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: true,
-          },
-        });
-
-        paras.forEach((para, i) => {
-          const words = para.querySelectorAll("span > span");
-          tl.to(words, {
+          gsap.to(para.querySelectorAll("span > span"), {
             y: "0%",
-            duration: 1,
-            stagger: 0.05,
+            duration: 0.8,
+            stagger: 0.03,
             ease: "power4.out",
+            scrollTrigger: {
+              trigger: para,
+              start: "top 85%",
+              once: true,
+            },
           });
-          if (i < paras.length - 1) {
-            tl.to({}, { duration: 0.8 });
-          }
         });
       });
     });
@@ -129,12 +111,12 @@ function Dettagli() {
   return (
     <section
       id="dettagli"
-      className="relative overflow-hidden bg-blue-900 text-white"
+      className="relative overflow-x-hidden bg-blue-900 text-white"
     >
-      <div ref={pinHeightRef} className="h-[250vh] md:h-[300vh]">
+      <div ref={pinHeightRef} className="h-auto md:h-[300vh]">
         <div
           ref={containerRef}
-          className="flex h-screen flex-col justify-between p-4 py-8 md:px-8 md:py-24"
+          className="z-10 flex flex-col gap-6 p-4 py-8 md:h-screen md:justify-between md:gap-0 md:px-8 md:py-24"
         >
           {/* Titolo sezione */}
           <div className="flex flex-row justify-between gap-6 border-b border-white/20 pb-8">
@@ -153,7 +135,7 @@ function Dettagli() {
           </div>
 
           {/* 3 colonne */}
-          <div className="grid h-full grid-cols-1 md:grid-cols-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 md:h-full">
             {panels.map((panel, i) => (
               <div
                 key={i}

@@ -28,7 +28,7 @@ const steps = [
     icon: "login",
     label: "Passo 3",
     title: "CHAM2026",
-    desc: "Inserisci il codice torneo o cerca \u201CChampagne League\u201D direttamente nell'app.",
+    desc: "Inserisci il codice torneo o cerca “Champagne League” direttamente nell'app.",
     bg: "var(--color-green-700)",
     text: "var(--color-white)",
   },
@@ -37,7 +37,7 @@ const steps = [
     icon: "person_add",
     label: "Passo 4",
     title: "Forma la squadra",
-    desc: "250\u20AC a squadra + 5\u20AC a giocatore. Iscrizioni aperte fino al 27 giugno 2026.",
+    desc: "250€ a squadra + 5€ a giocatore. Iscrizioni aperte fino al 27 giugno 2026.",
     bg: "var(--color-green-800)",
     text: "var(--color-white)",
   },
@@ -125,7 +125,7 @@ function Iscriviti() {
             </div>
           </div>
 
-          {/* Cards stack with perspective — same structure as mwg_042 */}
+          {/* Cards stack with perspective */}
           <div
             className="relative"
             style={{

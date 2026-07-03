@@ -8,11 +8,17 @@ import { lenis } from "./lenis.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
-lenis.on("scroll", ScrollTrigger.update);
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000);
-});
-gsap.ticker.lagSmoothing(0);
+const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+if (isTouchDevice) {
+  ScrollTrigger.normalizeScroll(true);
+} else {
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+  gsap.ticker.lagSmoothing(0);
+}
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
